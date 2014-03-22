@@ -1,0 +1,25 @@
+name: EpicWar
+main: com.gmail.mararok.epicwar.EpicWarPlugin
+author: Mararok
+version: 0.3.1
+
+depend: [WorldEdit, WorldGuard]
+prefix: EW
+commands:
+ ew:
+  description: All commands.
+ ewf:
+  description: All faction commands.
+ ews:
+  description: All sector commands.
+ ewp:
+  description: All control point commands.
+ eww:
+  description: All war commands
+ 
+  
+
+  
+
+  
+ 
