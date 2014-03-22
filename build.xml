@@ -1,0 +1,52 @@
+<project name="EpicWar" default="main">    
+	<property name="projectHome" location="." />
+	<property name="TestServerPlugins" location="../../../../EpicWarServer/plugins" />
+	<property name="major.minor" value="0.3" />
+	
+	<propertyfile file="${projectHome}/build.number"
+		              comment="Build Number for ANT. Edit not!">
+		<entry key="build.number" type="int" 
+		     default="1" />
+		</propertyfile>
+		     	
+	<property file="${projectHome}/build.number"/>
+	<property name="plugin.version" value="${major.minor}.${build.number}" />
+	
+ <target name="clean">
+        <delete dir="${projectHome}/build"/>
+  					<delete file="${projectHome}/plugin.yml"/>
+ </target>
+	
+	<target name="buildJAR">
+		<copy file="${projectHome}/plugin.raw.yml" overwrite="true" tofile="${projectHome}/plugin.yml"/>
+		<replace 
+		    file="${projectHome}/plugin.yml"
+		    value="no">
+		<replacefilter 
+		    token="@VERSION" 
+					value="${plugin.version}"
+		 />
+		</replace>
+		<jar 
+			destfile="${projectHome}/build/EpicWar.jar" 
+			manifest="${projectHome}/EpicWar.manifest"
+			update="true"
+			basedir="${projectHome}/bin">
+			
+			<fileset dir="${projectHome}/" includes="sqlscripts/** wars/** config.yml plugin.yml LICENSE"/>
+		</jar>
+  	
+   <copy file="${projectHome}/build/EpicWar.jar" todir="${TestServerPlugins}"/>
+  </target>    
+	
+	<target name="incrementBuildNumber">
+		<propertyfile file="${projectHome}/build.number"
+		              comment="Build Number for ANT. Edit not!">
+		<entry key="build.number" type="int" 
+		     operation="+" 
+		     default="1" />
+		</propertyfile>
+		</target>
+	
+	<target name="main" depends="clean,buildJAR,incrementBuildNumber"/>
+</project>
