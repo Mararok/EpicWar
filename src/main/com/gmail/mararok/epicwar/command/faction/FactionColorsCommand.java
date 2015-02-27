@@ -1,7 +1,7 @@
 /**
  * EpicWar
  * The MIT License
- * Copyright (C) 2013 Mararok <mararok@gmail.com>
+ * Copyright (C) 2015 Mararok <mararok@gmail.com>
  */
 package com.gmail.mararok.epicwar.command.faction;
 
@@ -12,14 +12,14 @@ import org.bukkit.command.CommandSender;
 
 import com.gmail.mararok.epicwar.EpicWarPlugin;
 import com.gmail.mararok.epicwar.Language;
+import com.gmail.mararok.epicwar.command.CommandArguments;
+import com.gmail.mararok.epicwar.command.PluginParentCommand;
+import com.gmail.mararok.epicwar.command.PluginCommand;
 import com.gmail.mararok.epicwar.utility.ColorConverter;
-import com.gmail.mararok.epicwar.utility.command.CommandArguments;
-import com.gmail.mararok.epicwar.utility.command.CommandsSet;
-import com.gmail.mararok.epicwar.utility.command.PluginCommand;
 
 public class FactionColorsCommand extends PluginCommand {
 
-	public FactionColorsCommand(EpicWarPlugin plugin, CommandsSet parent) {
+	public FactionColorsCommand(EpicWarPlugin plugin, PluginParentCommand parent) {
 		super(plugin, parent,"colors");
 		
 		setDescription(Language.CD_FACTION_COLORS);

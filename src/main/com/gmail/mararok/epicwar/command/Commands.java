@@ -1,7 +1,7 @@
 /**
  * EpicWar
  * The MIT License
- * Copyright (C) 2013 Mararok <mararok@gmail.com>
+ * Copyright (C) 2015 Mararok <mararok@gmail.com>
  */
 package com.gmail.mararok.epicwar.command;
 
@@ -11,9 +11,8 @@ import com.gmail.mararok.epicwar.command.controlpoint.ControlPointCommands;
 import com.gmail.mararok.epicwar.command.faction.FactionCommands;
 import com.gmail.mararok.epicwar.command.sector.SectorCommands;
 import com.gmail.mararok.epicwar.command.war.WarCommands;
-import com.gmail.mararok.epicwar.utility.command.CommandsSet;
 
-public class Commands extends CommandsSet {
+public class Commands extends PluginParentCommand {
 	public Commands(EpicWarPlugin plugin) {
 		super(plugin,null,"ew");
 		

@@ -1,7 +1,7 @@
 /**
  * EpicWar
  * The MIT License
- * Copyright (C) 2013 Mararok <mararok@gmail.com>
+ * Copyright (C) 2015 Mararok <mararok@gmail.com>
  */
 package com.gmail.mararok.epicwar.faction;
 
@@ -19,10 +19,10 @@ import com.gmail.mararok.epicwar.controlpoint.ControlPoint;
 import com.gmail.mararok.epicwar.player.WarPlayer;
 import com.gmail.mararok.epicwar.sector.Sector;
 import com.gmail.mararok.epicwar.utility.ColorConverter;
+import com.gmail.mararok.epicwar.utility.DBConnection;
 import com.gmail.mararok.epicwar.utility.DataObject;
-import com.gmail.mararok.epicwar.utility.database.DB;
 
-public class Faction implements DataObject<FactionInfo> {
+public class Faction implements DataObject<FactionData> {
 	private static int SQLID_AddMember = -1;
 	private static int SQLID_RemoveMember = -1;
 	private static int SQLID_SetPlayerFaction = -1;
@@ -30,7 +30,7 @@ public class Faction implements DataObject<FactionInfo> {
 	private static int SQLID_UpdateControlledSectorsAmount = -1;
 	
 	public static void precompileSQL() throws SQLException {
-		int[] ids = DB.get().prepareCachedQueriesFromScript("FactionQueries");
+		int[] ids = DBConnection.get().prepareCachedQueriesFromScript("FactionQueries");
 		SQLID_AddMember = ids[0];
 		SQLID_RemoveMember = ids[1];
 		SQLID_SetPlayerFaction = ids[2];
@@ -38,12 +38,12 @@ public class Faction implements DataObject<FactionInfo> {
 		SQLID_UpdateControlledSectorsAmount = ids[4];
 	}
 	
-	private FactionInfo Info;
-	private FactionsManager Factions;
+	private FactionData Info;
+	private FactionManager Factions;
 	private List<WarPlayer> OnlineMembers;
 	private Location SpawnLocation;
 	
-	public Faction(FactionInfo info, FactionsManager factions) {
+	public Faction(FactionData info, FactionManager factions) {
 		Info = info;
 		Factions = factions;
 		OnlineMembers = new LinkedList<WarPlayer>();
@@ -54,7 +54,7 @@ public class Faction implements DataObject<FactionInfo> {
 	}
 	
 	public void addMember(WarPlayer player) {
-		DB db = DB.get();
+		DBConnection db = DBConnection.get();
 		try {
 			PreparedStatement st = db.getCachedQuery(SQLID_SetPlayerFaction);
 			st.setInt(1, Info.id);
@@ -81,7 +81,7 @@ public class Faction implements DataObject<FactionInfo> {
 	}
 	
 	public void removeMember(WarPlayer player) {
-		DB db = DB.get();
+		DBConnection db = DBConnection.get();
 		try {
 			PreparedStatement st = db.getCachedQuery(SQLID_SetPlayerFaction);
 			st.setInt(1,0);
@@ -122,16 +122,16 @@ public class Faction implements DataObject<FactionInfo> {
 		Info.spawnY = spawnLocation.getBlockY();
 		Info.spawnZ = spawnLocation.getBlockZ();
 		try {
-			PreparedStatement st = DB.get().getCachedQuery(SQLID_SetSpawn);
+			PreparedStatement st = DBConnection.get().getCachedQuery(SQLID_SetSpawn);
 			st.setInt(1,Info.spawnX);
 			st.setInt(2,Info.spawnY);
 			st.setInt(3,Info.spawnZ);
 			st.setInt(4,Info.id);
 			st.executeUpdate();
-			DB.get().commit();
+			DBConnection.get().commit();
 		} catch (SQLException e) {
 
-			DB.get().rollback();
+			DBConnection.get().rollback();
 			e.printStackTrace();
 		}
 	}
@@ -146,13 +146,13 @@ public class Faction implements DataObject<FactionInfo> {
 	
 	private void updateControlledSectors() {
 		try {
-			PreparedStatement statement = DB.get().getCachedQuery(SQLID_UpdateControlledSectorsAmount);
+			PreparedStatement statement = DBConnection.get().getCachedQuery(SQLID_UpdateControlledSectorsAmount);
 			statement.setInt(1,getInfo().controlledSectors);
 			statement.setInt(2,getID());
 			statement.executeUpdate();
-			DB.get().commit();
+			DBConnection.get().commit();
 		} catch (SQLException e) {
-			DB.get().rollback();
+			DBConnection.get().rollback();
 			getFactions().getPlugin().logCriticalException(e);
 		}
 	}
@@ -204,12 +204,12 @@ public class Faction implements DataObject<FactionInfo> {
 		return ColorConverter.getDyeColor(getChatColor());
 	}
 	
-	public FactionsManager getFactions() {
+	public FactionManager getFactions() {
 		return Factions;
 	}
 	
 	@Override
-	public FactionInfo getInfo() {
+	public FactionData getInfo() {
 		return Info;
 	}
 	

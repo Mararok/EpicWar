@@ -1,7 +1,7 @@
 <project name="EpicWar" default="main">    
 	<property name="projectHome" location="." />
 	<property name="TestServerPlugins" location="../../../../EpicWarServer/plugins" />
-	<property name="major.minor" value="0.3" />
+	<property name="major.minor" value="2.1" />
 	
 	<propertyfile file="${projectHome}/build.number"
 		              comment="Build Number for ANT. Edit not!">

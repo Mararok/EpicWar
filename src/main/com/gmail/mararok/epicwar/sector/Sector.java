@@ -1,7 +1,7 @@
 /**
  * EpicWar
  * The MIT License
- * Copyright (C) 2013 Mararok <mararok@gmail.com>
+ * Copyright (C) 2015 Mararok <mararok@gmail.com>
  */
 package com.gmail.mararok.epicwar.sector;
 
@@ -12,11 +12,11 @@ import java.util.List;
 
 import com.gmail.mararok.epicwar.controlpoint.ControlPoint;
 import com.gmail.mararok.epicwar.faction.Faction;
+import com.gmail.mararok.epicwar.utility.DBConnection;
 import com.gmail.mararok.epicwar.utility.DataObject;
 import com.gmail.mararok.epicwar.utility.NameConverter;
 import com.gmail.mararok.epicwar.utility.RegionsUtlil;
 import com.gmail.mararok.epicwar.utility.UMath;
-import com.gmail.mararok.epicwar.utility.database.DB;
 import com.sk89q.worldedit.BlockVector;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 
@@ -77,11 +77,11 @@ public class Sector implements DataObject<SectorInfo> {
 	public void setOwner(int newOwnerID) {
 		getInfo().ownerFactionID = newOwnerID;
 		try {
-			PreparedStatement st = DB.get().prepareQuery("UPDATE ew_Sectors SET ownerID = ? WHERE id = ?");
+			PreparedStatement st = DBConnection.get().prepareQuery("UPDATE ew_Sectors SET ownerID = ? WHERE id = ?");
 			st.setInt(1,newOwnerID);
 			st.setInt(2,getID());
 			st.executeUpdate();
-			DB.get().commit();
+			DBConnection.get().commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

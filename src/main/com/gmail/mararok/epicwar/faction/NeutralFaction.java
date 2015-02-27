@@ -1,13 +1,13 @@
 /**
  * EpicWar
  * The MIT License
- * Copyright (C) 2013 Mararok <mararok@gmail.com>
+ * Copyright (C) 2015 Mararok <mararok@gmail.com>
  */
 package com.gmail.mararok.epicwar.faction;
 
 public class NeutralFaction extends Faction {
 
-	public NeutralFaction(FactionInfo info, FactionsManager factions) {
+	public NeutralFaction(FactionData info, FactionManager factions) {
 		super(info, factions);
 	}
 	

@@ -1,13 +1,14 @@
 /**
  * EpicWar
  * The MIT License
- * Copyright (C) 2013 Mararok <mararok@gmail.com>
+ * Copyright (C) 2015 Mararok <mararok@gmail.com>
  */
 package com.gmail.mararok.epicwar.player;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -25,8 +26,8 @@ import com.gmail.mararok.epicwar.Language;
 import com.gmail.mararok.epicwar.controlpoint.ControlPoint;
 import com.gmail.mararok.epicwar.faction.Faction;
 import com.gmail.mararok.epicwar.sector.Sector;
+import com.gmail.mararok.epicwar.utility.DBConnection;
 import com.gmail.mararok.epicwar.utility.DataObject;
-import com.gmail.mararok.epicwar.utility.database.DB;
 import com.gmail.mararok.epicwar.war.War;
 
 public class WarPlayer implements DataObject<PlayerInfo> {
@@ -36,7 +37,7 @@ public class WarPlayer implements DataObject<PlayerInfo> {
 	private static int SQLID_LoadPlayerWarData = -1;
 	
 	public static void precompileSQL() throws SQLException {
-		int[] ids = DB.get().prepareCachedQueriesFromScript("PlayerQueries");
+		int[] ids = DBConnection.get().prepareCachedQueriesFromScript("PlayerQueries");
 		SQLID_AddPlayerKill = ids[0];
 		SQLID_AddPlayerDeath = ids[1];
 		SQLID_RegisterPlayerAtWar = ids[2];
@@ -53,12 +54,12 @@ public class WarPlayer implements DataObject<PlayerInfo> {
 	private ControlPoint LastPoint;
 	
 	private Player BukkitPlayer;
-	private PlayersManager Players;
+	private PlayerManager Players;
 	private War CurrentWar;
 	
 	private Scoreboard GUI;
 	private Objective Sidebar;
-	public WarPlayer(Player player,PlayersManager players) {
+	public WarPlayer(Player player,PlayerManager players) {
 		Info = new PlayerInfo();
 		BukkitPlayer = player;
 		Players = players;
@@ -152,14 +153,14 @@ public class WarPlayer implements DataObject<PlayerInfo> {
 		Sidebar.getScore(Bukkit.getOfflinePlayer(ChatColor.BLUE + "Points:")).setScore(Info.points);
 		Sidebar.getScore(Bukkit.getOfflinePlayer(ChatColor.GREEN + "Kills:")).setScore(Info.kills);
 		try {
-			PreparedStatement st = DB.get().getCachedQuery(SQLID_AddPlayerKill);
+			PreparedStatement st = DBConnection.get().getCachedQuery(SQLID_AddPlayerKill);
 			st.setInt(1,getWar().getInfo().pointsKill); 
 			st.setInt(2,getID());
 			st.executeUpdate();
-			DB.get().commit();
+			DBConnection.get().commit();
 	} catch (SQLException e) {
 		getPlayers().getPlugin().logCriticalException(e);
-		DB.get().rollback();
+		DBConnection.get().rollback();
 	}
 	}
 	
@@ -173,14 +174,14 @@ public class WarPlayer implements DataObject<PlayerInfo> {
 		Sidebar.getScore(Bukkit.getOfflinePlayer(ChatColor.BLUE + "Points:")).setScore(Info.points);
 		Sidebar.getScore(Bukkit.getOfflinePlayer(ChatColor.RED + "Deaths:")).setScore(Info.deaths);
 		try {
-			PreparedStatement st = DB.get().getCachedQuery(SQLID_AddPlayerDeath);
+			PreparedStatement st = DBConnection.get().getCachedQuery(SQLID_AddPlayerDeath);
 			st.setInt(1,getWar().getInfo().pointsDeath); 
 			st.setInt(2,getID());
 			st.executeUpdate();
-			DB.get().commit();
+			DBConnection.get().commit();
 		} catch (SQLException e) {
 			getPlayers().getPlugin().logCriticalException(e);
-			DB.get().rollback();
+			DBConnection.get().rollback();
 		}
 	}
 	
@@ -260,7 +261,7 @@ public class WarPlayer implements DataObject<PlayerInfo> {
 	
 	private void loadInfo() {
 		try {
-			PreparedStatement st = DB.get().getCachedQuery(SQLID_LoadPlayerWarData);
+			PreparedStatement st = DBConnection.get().getCachedQuery(SQLID_LoadPlayerWarData);
 			st.setInt(1,getWar().getID());
 			st.setString(2,getName());
 			ResultSet results = st.executeQuery();
@@ -281,11 +282,11 @@ public class WarPlayer implements DataObject<PlayerInfo> {
 	
 	private void registerAtWar() {
 		try {
-			PreparedStatement st = DB.get().getCachedQuery(SQLID_RegisterPlayerAtWar);
-			st.setString(1,getName());
+			PreparedStatement st = DBConnection.get().getCachedQuery(SQLID_RegisterPlayerAtWar);
+			st.setString(1,getUUID().toString());
 			st.setInt(2,getWar().getID());
 			st.executeUpdate();
-			DB.get().commit();
+			DBConnection.get().commit();
 			ResultSet rs = st.getGeneratedKeys();
 			rs.next();
 			getInfo().reset();
@@ -295,11 +296,11 @@ public class WarPlayer implements DataObject<PlayerInfo> {
 			sendMessage("Welcome, Your first time at "+getWar().getName()+" war");
 		} catch (SQLException e) {
 			getPlugin().logCriticalException(e);
-			DB.get().rollback();
+			DBConnection.get().rollback();
 		}
 	}
 	
-	public PlayersManager getPlayers() {
+	public PlayerManager getPlayers() {
 		return Players;
 	}
 	
@@ -307,6 +308,9 @@ public class WarPlayer implements DataObject<PlayerInfo> {
 		return BukkitPlayer;
 	}
 
+	public UUID getUUID() {
+		return getBPlayer().getUniqueId();
+	}
 	public Faction getFaction() {
 		return getWar().getFactions().getByID(getInfo().factionID);
 	}

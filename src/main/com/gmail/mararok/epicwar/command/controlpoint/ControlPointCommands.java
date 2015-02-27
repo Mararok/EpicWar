@@ -1,17 +1,17 @@
 /**
  * EpicWar
  * The MIT License
- * Copyright (C) 2013 Mararok <mararok@gmail.com>
+ * Copyright (C) 2015 Mararok <mararok@gmail.com>
  */
 package com.gmail.mararok.epicwar.command.controlpoint;
 
 import com.gmail.mararok.epicwar.EpicWarPlugin;
 import com.gmail.mararok.epicwar.Language;
-import com.gmail.mararok.epicwar.utility.command.CommandsSet;
+import com.gmail.mararok.epicwar.command.PluginParentCommand;
 
-public class ControlPointCommands extends CommandsSet {
+public class ControlPointCommands extends PluginParentCommand {
 
-	public ControlPointCommands(EpicWarPlugin plugin, CommandsSet parent) {
+	public ControlPointCommands(EpicWarPlugin plugin, PluginParentCommand parent) {
 		super(plugin, parent,"ewp");
 		
 		setDescription(Language.CD_POINT);

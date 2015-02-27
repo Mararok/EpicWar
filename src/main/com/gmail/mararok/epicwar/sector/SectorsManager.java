@@ -1,7 +1,7 @@
 /**
  * EpicWar
  * The MIT License
- * Copyright (C) 2013 Mararok <mararok@gmail.com>
+ * Copyright (C) 2015 Mararok <mararok@gmail.com>
  */
 package com.gmail.mararok.epicwar.sector;
 
@@ -13,9 +13,9 @@ import java.util.List;
 
 import org.bukkit.Location;
 
+import com.gmail.mararok.epicwar.utility.DBConnection;
 import com.gmail.mararok.epicwar.utility.DataSetManager;
 import com.gmail.mararok.epicwar.utility.NameConverter;
-import com.gmail.mararok.epicwar.utility.database.DB;
 import com.gmail.mararok.epicwar.war.War;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
@@ -24,7 +24,7 @@ public class SectorsManager extends DataSetManager<Sector> {
 	private static int SQLID_AddSector = -1;
 	
 	public static void precompileSQL() throws SQLException {
-		int[] ids = DB.get().prepareCachedQueriesFromScript("SectorsQueries");
+		int[] ids = DBConnection.get().prepareCachedQueriesFromScript("SectorsQueries");
 		
 		SQLID_AddSector = ids[0];
 	}
@@ -35,7 +35,7 @@ public class SectorsManager extends DataSetManager<Sector> {
 	
 	public void load() throws Exception {
 		createWildSector();
-		PreparedStatement sectorsInfoStatement = DB.get().prepareQuery(
+		PreparedStatement sectorsInfoStatement = DBConnection.get().prepareQuery(
 			"SELECT id,name,desc,ownerID,centerX,centerZ,size FROM ew_sectors WHERE warID = ?");
 		sectorsInfoStatement.setInt(1,getWar().getID());
 		ResultSet results = sectorsInfoStatement.executeQuery();
@@ -75,7 +75,7 @@ public class SectorsManager extends DataSetManager<Sector> {
 			throw new SectorExistsException(info.name);
 		}
 		
-		PreparedStatement st = DB.get().getCachedQuery(SQLID_AddSector);
+		PreparedStatement st = DBConnection.get().getCachedQuery(SQLID_AddSector);
 		st.setString(1,info.name);
 		st.setInt(2,getWar().getID());
 		st.setInt(3,info.centerX);
@@ -83,7 +83,7 @@ public class SectorsManager extends DataSetManager<Sector> {
 		st.setInt(5,info.size);
 		
 		st.executeUpdate();
-		DB.get().commit();
+		DBConnection.get().commit();
 		ResultSet rs = st.getGeneratedKeys();
 		info.id = rs.getInt(1);
 

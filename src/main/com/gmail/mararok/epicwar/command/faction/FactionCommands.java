@@ -1,16 +1,16 @@
 /**
  * EpicWar
  * The MIT License
- * Copyright (C) 2013 Mararok <mararok@gmail.com>
+ * Copyright (C) 2015 Mararok <mararok@gmail.com>
  */
 package com.gmail.mararok.epicwar.command.faction;
 
 import com.gmail.mararok.epicwar.EpicWarPlugin;
 import com.gmail.mararok.epicwar.Language;
-import com.gmail.mararok.epicwar.utility.command.CommandsSet;
+import com.gmail.mararok.epicwar.command.PluginParentCommand;
 
-public class FactionCommands extends CommandsSet {
-	public FactionCommands(EpicWarPlugin plugin, CommandsSet parent) {
+public class FactionCommands extends PluginParentCommand {
+	public FactionCommands(EpicWarPlugin plugin, PluginParentCommand parent) {
 		super(plugin,parent,"ewf");
 		setDescription(Language.CD_FACTION);
 		setUsage("\\ewf [subcommand]");

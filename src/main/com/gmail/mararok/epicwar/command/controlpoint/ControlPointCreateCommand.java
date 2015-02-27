@@ -1,7 +1,7 @@
 /**
  * EpicWar
  * The MIT License
- * Copyright (C) 2013 Mararok <mararok@gmail.com>
+ * Copyright (C) 2015 Mararok <mararok@gmail.com>
  */
 package com.gmail.mararok.epicwar.command.controlpoint;
 
@@ -9,17 +9,17 @@ import org.bukkit.Location;
 
 import com.gmail.mararok.epicwar.EpicWarPlugin;
 import com.gmail.mararok.epicwar.Language;
+import com.gmail.mararok.epicwar.command.CommandArguments;
+import com.gmail.mararok.epicwar.command.PluginParentCommand;
+import com.gmail.mararok.epicwar.command.PluginCommand;
 import com.gmail.mararok.epicwar.controlpoint.ControlPointExistsException;
 import com.gmail.mararok.epicwar.controlpoint.ControlPointInfo;
 import com.gmail.mararok.epicwar.player.WarPlayer;
 import com.gmail.mararok.epicwar.sector.Sector;
-import com.gmail.mararok.epicwar.utility.command.CommandArguments;
-import com.gmail.mararok.epicwar.utility.command.CommandsSet;
-import com.gmail.mararok.epicwar.utility.command.PluginCommand;
 
 public class ControlPointCreateCommand extends PluginCommand {
 
-	public ControlPointCreateCommand(EpicWarPlugin plugin, CommandsSet parent) {
+	public ControlPointCreateCommand(EpicWarPlugin plugin, PluginParentCommand parent) {
 		super(plugin,parent,"create",true);
 		
 		setOnlyPlayer();

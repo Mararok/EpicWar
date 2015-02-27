@@ -8,15 +8,15 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.gmail.mararok.epicwar.sector.Sector;
+import com.gmail.mararok.epicwar.utility.DBConnection;
 import com.gmail.mararok.epicwar.utility.DataSetManager;
-import com.gmail.mararok.epicwar.utility.database.DB;
 import com.gmail.mararok.epicwar.war.War;
 
 public class ControlPointsManager extends DataSetManager<ControlPoint> {
 	private static int SQLID_AddControlPoint = -1;
 	
 	public static void precompileSQL() throws SQLException {
-		int[] ids = DB.get().prepareCachedQueriesFromScript("ControlPointsQueries");
+		int[] ids = DBConnection.get().prepareCachedQueriesFromScript("ControlPointsQueries");
 		SQLID_AddControlPoint = ids[0];
 	}
 	
@@ -30,7 +30,7 @@ public class ControlPointsManager extends DataSetManager<ControlPoint> {
 	public void load() throws Exception {
 		createNoControlPoint();
 		
-		PreparedStatement controlPointsStatement = DB.get().prepareQuery(
+		PreparedStatement controlPointsStatement = DBConnection.get().prepareQuery(
 			"SELECT id,name,sectorID,ownerID,centerX,centerY,centerZ,radius,power,maxPower FROM ew_controlPoints WHERE warID = ?");
 		controlPointsStatement.setInt(1,getWar().getID());
 		ResultSet results = controlPointsStatement.executeQuery();
@@ -68,7 +68,7 @@ public class ControlPointsManager extends DataSetManager<ControlPoint> {
 		}
 
 		try {
-			PreparedStatement st = DB.get().getCachedQuery(SQLID_AddControlPoint);
+			PreparedStatement st = DBConnection.get().getCachedQuery(SQLID_AddControlPoint);
 			
 			st.setString(1,info.name);
 			st.setInt(2,getWar().getID());
@@ -81,7 +81,7 @@ public class ControlPointsManager extends DataSetManager<ControlPoint> {
 			st.setInt(8,info.power);
 			st.setInt(9,info.maxPower);
 			st.executeUpdate();
-			DB.get().commit();
+			DBConnection.get().commit();
 				
 			ResultSet rs = st.getGeneratedKeys();
 			rs.next();
@@ -93,7 +93,7 @@ public class ControlPointsManager extends DataSetManager<ControlPoint> {
 			getSectors().getByID(info.sectorID).getControlPoints().add(point);
 			put(point);
 		} catch (SQLException e) {
-			DB.get().rollback();
+			DBConnection.get().rollback();
 			e.printStackTrace();
 		}
 	}

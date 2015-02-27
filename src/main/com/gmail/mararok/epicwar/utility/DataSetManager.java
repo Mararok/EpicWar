@@ -1,7 +1,7 @@
 /**
  * EpicWar
  * The MIT License
- * Copyright (C) 2013 Mararok <mararok@gmail.com>
+ * Copyright (C) 2015 Mararok <mararok@gmail.com>
  */
 package com.gmail.mararok.epicwar.utility;
 
@@ -19,17 +19,16 @@ import org.bukkit.World;
 
 import com.gmail.mararok.epicwar.EpicWarPlugin;
 import com.gmail.mararok.epicwar.controlpoint.ControlPointsManager;
-import com.gmail.mararok.epicwar.faction.FactionsManager;
-import com.gmail.mararok.epicwar.player.PlayersManager;
+import com.gmail.mararok.epicwar.faction.FactionManager;
+import com.gmail.mararok.epicwar.player.PlayerManager;
 import com.gmail.mararok.epicwar.sector.SectorsManager;
 import com.gmail.mararok.epicwar.war.War;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 
 public abstract class DataSetManager<DataType extends DataObject<?> > implements Disposable {
-	private War WarInstance;
+	private DataType[] dataSet;
+	private War war;
 	
-	private ArrayList<DataType> DataSet;
-	private HashMap<String,DataType> NamesDataSet;
 	
 	public DataSetManager(War war) {
 		WarInstance = war;
@@ -102,11 +101,11 @@ public abstract class DataSetManager<DataType extends DataObject<?> > implements
 		return getWar().getRegions();
 	}
 	
-	public PlayersManager getPlayers() {
+	public PlayerManager getPlayers() {
 		return getWar().getPlayers();
 	}
 	
-	public FactionsManager getFactions() {
+	public FactionManager getFactions() {
 		return getWar().getFactions();
 	}
 	

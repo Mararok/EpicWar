@@ -8,4 +8,4 @@ UPDATE ew_Players SET deaths = deaths+1, points = points - ? WHERE id = ?;
 INSERT INTO ew_Players (name,warID) VALUES(?,?);
 
 - LoadPlayerData
-SELECT id,factionID,points,kills,deaths FROM ew_Players WHERE warID = ? and name = ? LIMIT 1;
+SELECT id,factionID,points,kills,deaths FROM ew_Players WHERE warID = ? and uuid = ? LIMIT 1;

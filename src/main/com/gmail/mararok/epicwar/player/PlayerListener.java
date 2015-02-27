@@ -1,7 +1,7 @@
 /**
  * EpicWar
  * The MIT License
- * Copyright (C) 2013 Mararok <mararok@gmail.com>
+ * Copyright (C) 2015 Mararok <mararok@gmail.com>
  */
 package com.gmail.mararok.epicwar.player;
 
@@ -21,8 +21,8 @@ import org.kitteh.tag.AsyncPlayerReceiveNameTagEvent;
 import com.gmail.mararok.epicwar.EpicWarPlugin;
 
 public class PlayerListener implements Listener {
-	private PlayersManager Players;
-	public PlayerListener(PlayersManager players) {
+	private PlayerManager Players;
+	public PlayerListener(PlayerManager players) {
 		if (players.getPlugin().isValid()) {
 			Players = players;
 			registerEvents(players.getPlugin());
@@ -72,7 +72,7 @@ public class PlayerListener implements Listener {
 		getPlayers().onNameTag(event);
 	}
 	
-	private PlayersManager getPlayers() {
+	private PlayerManager getPlayers() {
 		return Players;
 	}
 

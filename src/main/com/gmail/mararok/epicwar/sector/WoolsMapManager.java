@@ -1,7 +1,7 @@
 /**
  * EpicWar
  * The MIT License
- * Copyright (C) 2013 Mararok <mararok@gmail.com>
+ * Copyright (C) 2015 Mararok <mararok@gmail.com>
  */
 package com.gmail.mararok.epicwar.sector;
 
@@ -11,8 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.gmail.mararok.epicwar.utility.DBConnection;
 import com.gmail.mararok.epicwar.utility.DataSetManager;
-import com.gmail.mararok.epicwar.utility.database.DB;
 import com.gmail.mararok.epicwar.war.War;
 
 public class WoolsMapManager extends DataSetManager<WoolsMap>{
@@ -22,7 +22,7 @@ public class WoolsMapManager extends DataSetManager<WoolsMap>{
 	}
 
 	public void load() throws SQLException {
-		PreparedStatement mapsInfoStatement = DB.get().prepareQuery("SELECT id,name,orientation,perLine,x,y,z FROM ew_WoolsMaps WHERE warID = ?");
+		PreparedStatement mapsInfoStatement = DBConnection.get().prepareQuery("SELECT id,name,orientation,perLine,x,y,z FROM ew_WoolsMaps WHERE warID = ?");
 		mapsInfoStatement.setInt(1,getWar().getID());
 		ResultSet results = mapsInfoStatement.executeQuery();
 		WoolsMap map;
@@ -44,7 +44,7 @@ public class WoolsMapManager extends DataSetManager<WoolsMap>{
 	
 	public void create(WoolsMapInfo info) {
 		try {
-			PreparedStatement statement = DB.get().prepareQuery("INSERT INTO ew_WoolsMaps (name,warID,orientation,x,y,z) VALUES(?,?,?,?,?,?)");
+			PreparedStatement statement = DBConnection.get().prepareQuery("INSERT INTO ew_WoolsMaps (name,warID,orientation,x,y,z) VALUES(?,?,?,?,?,?)");
 			statement.setString(1,info.name);
 			statement.setInt(2,getWar().getID());
 			statement.setInt(3,0);
@@ -53,7 +53,7 @@ public class WoolsMapManager extends DataSetManager<WoolsMap>{
 			statement.setInt(6,info.z);
 			
 			statement.executeUpdate();
-			DB.get().commit();
+			DBConnection.get().commit();
 			ResultSet rs = statement.getGeneratedKeys();
 			rs.next();
 			info.id = rs.getInt(1);

@@ -1,7 +1,7 @@
 /**
  * EpicWar
  * The MIT License
- * Copyright (C) 2013 Mararok <mararok@gmail.com>
+ * Copyright (C) 2015 Mararok <mararok@gmail.com>
  */
 package com.gmail.mararok.epicwar.command.war;
 
@@ -12,14 +12,14 @@ import org.bukkit.command.CommandSender;
 
 import com.gmail.mararok.epicwar.EpicWarPlugin;
 import com.gmail.mararok.epicwar.Language;
-import com.gmail.mararok.epicwar.utility.command.CommandArguments;
-import com.gmail.mararok.epicwar.utility.command.CommandsSet;
-import com.gmail.mararok.epicwar.utility.command.PluginCommand;
+import com.gmail.mararok.epicwar.command.CommandArguments;
+import com.gmail.mararok.epicwar.command.PluginParentCommand;
+import com.gmail.mararok.epicwar.command.PluginCommand;
 import com.gmail.mararok.epicwar.war.War;
 
 public class WarListCommand extends PluginCommand {
 
-	public WarListCommand(EpicWarPlugin plugin, CommandsSet parent) {
+	public WarListCommand(EpicWarPlugin plugin, PluginParentCommand parent) {
 		super(plugin,parent,"list");
 		setDescription(Language.CD_WAR_LIST);
 		setUsage("\\eww list");

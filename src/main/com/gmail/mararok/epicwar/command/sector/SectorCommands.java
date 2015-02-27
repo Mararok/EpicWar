@@ -1,17 +1,17 @@
 /**
  * EpicWar
  * The MIT License
- * Copyright (C) 2013 Mararok <mararok@gmail.com>
+ * Copyright (C) 2015 Mararok <mararok@gmail.com>
  */
 package com.gmail.mararok.epicwar.command.sector;
 
 import com.gmail.mararok.epicwar.EpicWarPlugin;
 import com.gmail.mararok.epicwar.Language;
-import com.gmail.mararok.epicwar.utility.command.CommandsSet;
+import com.gmail.mararok.epicwar.command.PluginParentCommand;
 
-public class SectorCommands extends CommandsSet {
+public class SectorCommands extends PluginParentCommand {
 
-	public SectorCommands(EpicWarPlugin plugin,CommandsSet parent) {
+	public SectorCommands(EpicWarPlugin plugin,PluginParentCommand parent) {
 		super(plugin,parent,"ews");
 		
 		setOnlyPlayer();

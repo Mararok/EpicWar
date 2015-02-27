@@ -1,7 +1,7 @@
 /**
  * EpicWar
  * The MIT License
- * Copyright (C) 2013 Mararok <mararok@gmail.com>
+ * Copyright (C) 2015 Mararok <mararok@gmail.com>
  */
 package com.gmail.mararok.epicwar.command.sector;
 
@@ -9,17 +9,17 @@ import java.sql.SQLException;
 
 import com.gmail.mararok.epicwar.EpicWarPlugin;
 import com.gmail.mararok.epicwar.Language;
+import com.gmail.mararok.epicwar.command.CommandArguments;
+import com.gmail.mararok.epicwar.command.PluginParentCommand;
+import com.gmail.mararok.epicwar.command.PluginCommand;
 import com.gmail.mararok.epicwar.player.WarPlayer;
 import com.gmail.mararok.epicwar.sector.SectorExistsException;
 import com.gmail.mararok.epicwar.sector.SectorsGeneratorConfigException;
 import com.gmail.mararok.epicwar.sector.SimpleSectorsGenerator;
-import com.gmail.mararok.epicwar.utility.command.CommandArguments;
-import com.gmail.mararok.epicwar.utility.command.CommandsSet;
-import com.gmail.mararok.epicwar.utility.command.PluginCommand;
 
 public class SectorGenCommand extends PluginCommand {
 
-	public SectorGenCommand(EpicWarPlugin plugin, CommandsSet parent) {
+	public SectorGenCommand(EpicWarPlugin plugin, PluginParentCommand parent) {
 		super(plugin,parent,"gen",true);
 		setOnlyPlayer();
 		setDescription(Language.CD_SECTOR_GEN);

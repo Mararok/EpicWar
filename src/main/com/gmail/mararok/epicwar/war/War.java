@@ -1,7 +1,7 @@
 /**
  * EpicWar
  * The MIT License
- * Copyright (C) 2013 Mararok <mararok@gmail.com>
+ * Copyright (C) 2015 Mararok <mararok@gmail.com>
  */
 package com.gmail.mararok.epicwar.war;
 
@@ -15,8 +15,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import com.gmail.mararok.epicwar.EpicWarPlugin;
 import com.gmail.mararok.epicwar.airdrop.AirdropConfig;
 import com.gmail.mararok.epicwar.controlpoint.ControlPointsManager;
-import com.gmail.mararok.epicwar.faction.FactionsManager;
-import com.gmail.mararok.epicwar.player.PlayersManager;
+import com.gmail.mararok.epicwar.faction.FactionManager;
+import com.gmail.mararok.epicwar.player.PlayerManager;
 import com.gmail.mararok.epicwar.sector.SectorsManager;
 import com.gmail.mararok.epicwar.sector.WoolsMapManager;
 import com.gmail.mararok.epicwar.utility.DataObject;
@@ -34,7 +34,7 @@ public class War implements Disposable,DataObject<WarInfo>{
 	private Location NeutralSpawn;
 	private AirdropConfig ADConfig;
 	
-	private FactionsManager Factions;
+	private FactionManager Factions;
 	private SectorsManager Sectors;
 	private ControlPointsManager ControlPoints;
 	private WoolsMapManager WoolMaps;
@@ -48,7 +48,7 @@ public class War implements Disposable,DataObject<WarInfo>{
 		
 		ControlPoints = new ControlPointsManager(this);
 		Sectors = new SectorsManager(this);
-		Factions = new FactionsManager(this);
+		Factions = new FactionManager(this);
 		WoolMaps = new WoolsMapManager(this);
 		
 		loadData();
@@ -104,11 +104,11 @@ public class War implements Disposable,DataObject<WarInfo>{
 	public  World getWorld() {
 		return WarWorld;
 	}
-	public PlayersManager getPlayers() {
+	public PlayerManager getPlayers() {
 		return getPlugin().getPlayers();
 	}
 	
-	public FactionsManager getFactions() {
+	public FactionManager getFactions() {
 		return Factions;
 	}
 	
