@@ -48,6 +48,7 @@ public final class EpicWarPlugin extends JavaPlugin {
       initDatabase();
       initWars();
       //initCommands();
+      // new new provide class
 
     } catch (Exception exception) {
       getLogger().log(Level.SEVERE, "Fatal error, can't continue: ", exception);
