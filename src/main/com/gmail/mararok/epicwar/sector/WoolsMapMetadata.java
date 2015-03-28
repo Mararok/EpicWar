@@ -11,69 +11,69 @@ import org.bukkit.plugin.Plugin;
 import com.gmail.mararok.epicwar.EpicWarPlugin;
 
 public class WoolsMapMetadata implements MetadataValue {
-	private EpicWarPlugin Plugin;
-	public int WoolsMapID;
-	public int SectorID;
-	
-	public WoolsMapMetadata(EpicWarPlugin plugin, int woolsMapID, int sectorID) {
-		Plugin = plugin;
-		WoolsMapID = woolsMapID;
-		SectorID = sectorID;
-	}
-	
-	@Override
-	public boolean asBoolean() {
-		throw new RuntimeException("invalid value type");
-	}
+  private EpicWarPlugin Plugin;
+  public int WoolsMapID;
+  public int SectorID;
 
-	@Override
-	public byte asByte() {
-		throw new RuntimeException("invalid value type");
-	}
+  public WoolsMapMetadata(EpicWarPlugin plugin, int woolsMapID, int sectorID) {
+    Plugin = plugin;
+    WoolsMapID = woolsMapID;
+    SectorID = sectorID;
+  }
 
-	@Override
-	public double asDouble() {
-		throw new RuntimeException("invalid value type");
-	}
+  @Override
+  public boolean asBoolean() {
+    throw new RuntimeException("invalid value type");
+  }
 
-	@Override
-	public float asFloat() {
-		throw new RuntimeException("invalid value type");
-	}
+  @Override
+  public byte asByte() {
+    throw new RuntimeException("invalid value type");
+  }
 
-	@Override
-	public int asInt() {
-		throw new RuntimeException("invalid value type");
-	}
+  @Override
+  public double asDouble() {
+    throw new RuntimeException("invalid value type");
+  }
 
-	@Override
-	public long asLong() {
-		throw new RuntimeException("invalid value type");
-	}
+  @Override
+  public float asFloat() {
+    throw new RuntimeException("invalid value type");
+  }
 
-	@Override
-	public short asShort() {
-		throw new RuntimeException("invalid value type");
-	}
+  @Override
+  public int asInt() {
+    throw new RuntimeException("invalid value type");
+  }
 
-	@Override
-	public String asString() {
-		throw new RuntimeException("invalid value type");
-	}
+  @Override
+  public long asLong() {
+    throw new RuntimeException("invalid value type");
+  }
 
-	@Override
-	public Plugin getOwningPlugin() {
-		return Plugin;
-	}
+  @Override
+  public short asShort() {
+    throw new RuntimeException("invalid value type");
+  }
 
-	@Override
-	public void invalidate() {
-		throw new RuntimeException("invalid value type");
-	}
+  @Override
+  public String asString() {
+    throw new RuntimeException("invalid value type");
+  }
 
-	@Override
-	public Object value() {
-		throw new RuntimeException("invalid value type");
-	}
+  @Override
+  public Plugin getOwningPlugin() {
+    return Plugin;
+  }
+
+  @Override
+  public void invalidate() {
+    throw new RuntimeException("invalid value type");
+  }
+
+  @Override
+  public Object value() {
+    throw new RuntimeException("invalid value type");
+  }
 
 }

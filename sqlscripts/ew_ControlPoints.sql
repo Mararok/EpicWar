@@ -1,16 +1,16 @@
-CREATE TABLE IF NOT EXISTS [ew_ControlPoints] (
-
-  [id] INTEGER PRIMARY KEY AUTOINCREMENT, 
-  [name] VARCHAR(32) NOT NULL, 
-  [warID] INT NOT NULL,
-  [sectorID] INT NOT NULL,
-  [ownerID] INT DEFAULT 0, 
+CREATE TABLE IF NOT EXISTS [ew%s_ControlPoints] (
+  [id] INT PRIMARY KEY AUTOINCREMENT,
+  [shortcut] CHAR(16) NOT NULL, 
+  [name] CHAR(32) NOT NULL,
+  [description] VARCHAR(128) DEFAULT "default description",
   
-  [centerX] INT NOT NULL, 
-  [centerY] INT NOT NULL, 
-  [centerZ] INT NOT NULL,
+  [sectorId] INT NOT NULL,
+  [ownerId] INT DEFAULT 0, 
+  
+  [x] BIGINT NOT NULL, 
+  [y] BIGINT NOT NULL, 
+  [z] BIGINT NOT NULL,
 
-  [radius] INT NOT NULL,
-  [power] INT NOT NULL,
-  [maxPower] INT DEFAULT 100
+  [radius] BIGINT NOT NULL,
+  [maxPower] INT NOT NULL
 );

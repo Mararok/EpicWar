@@ -1,10 +1,6 @@
-CREATE TABLE IF NOT EXISTS [ew_Sectors] (
+CREATE TABLE IF NOT EXISTS [ew%1$s_Sectors] (
   [id] INTEGER PRIMARY KEY AUTOINCREMENT, 
-  [name] VARCHAR(32) NOT NULL, 
-  [desc] VARCHAR(64) DEFAULT 'Default desc',
-  [warID] INT NOT NULL,
-  [ownerID] INT DEFAULT 0, 
-  [centerX] INT NOT NULL, 
-  [centerZ] INT NOT NULL, 
-  [size] INT NOT NULL
+  [name] CHAR(32) NOT NULL,
+  [description] VARCHAR(128) DEFAULT 'Default description',
+  [ownerId] INT DEFAULT 0,
 );

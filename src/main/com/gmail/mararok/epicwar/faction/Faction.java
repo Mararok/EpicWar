@@ -13,213 +13,169 @@ import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Location;
+import org.bukkit.block.banner.PatternType;
 
-import com.gmail.mararok.epicwar.Language;
-import com.gmail.mararok.epicwar.controlpoint.ControlPoint;
+import com.gmail.mararok.bukkit.util.Position3D;
+import com.gmail.mararok.bukkit.util.database.DatabaseConnection;
+import com.gmail.mararok.bukkit.util.language.Language;
+import com.gmail.mararok.epicwar.War;
+import com.gmail.mararok.epicwar.control.ControlPoint;
+import com.gmail.mararok.epicwar.control.Sector;
 import com.gmail.mararok.epicwar.player.WarPlayer;
-import com.gmail.mararok.epicwar.sector.Sector;
-import com.gmail.mararok.epicwar.utility.ColorConverter;
-import com.gmail.mararok.epicwar.utility.DBConnection;
-import com.gmail.mararok.epicwar.utility.DataObject;
+import com.gmail.mararok.epicwar.util.DataObject;
+import com.gmail.mararok.epicwar.util.DescriptionInfo;
 
-public class Faction implements DataObject<FactionData> {
-	private static int SQLID_AddMember = -1;
-	private static int SQLID_RemoveMember = -1;
-	private static int SQLID_SetPlayerFaction = -1;
-	private static int SQLID_SetSpawn = -1;
-	private static int SQLID_UpdateControlledSectorsAmount = -1;
-	
-	public static void precompileSQL() throws SQLException {
-		int[] ids = DBConnection.get().prepareCachedQueriesFromScript("FactionQueries");
-		SQLID_AddMember = ids[0];
-		SQLID_RemoveMember = ids[1];
-		SQLID_SetPlayerFaction = ids[2];
-		SQLID_SetSpawn = ids[3];
-		SQLID_UpdateControlledSectorsAmount = ids[4];
-	}
-	
-	private FactionData Info;
-	private FactionManager Factions;
-	private List<WarPlayer> OnlineMembers;
-	private Location SpawnLocation;
-	
-	public Faction(FactionData info, FactionManager factions) {
-		Info = info;
-		Factions = factions;
-		OnlineMembers = new LinkedList<WarPlayer>();
-	}
-	
-	public void init() {
-		SpawnLocation = new Location(getFactions().getWorld(),getInfo().spawnX,getInfo().spawnY,getInfo().spawnZ);
-	}
-	
-	public void addMember(WarPlayer player) {
-		DBConnection db = DBConnection.get();
-		try {
-			PreparedStatement st = db.getCachedQuery(SQLID_SetPlayerFaction);
-			st.setInt(1, Info.id);
-			st.setInt(2, player.getID());
-			st.executeUpdate();
-					
-			st = db.getCachedQuery(SQLID_AddMember);
-			st.setInt(1,Info.id);
-			st.executeUpdate();
-			
-			db.commit();
-			player.getInfo().factionID = getID();
-			++Info.members;
-			onMemberServerJoin(player);
-			teleport2Capital(player);
-		} catch (SQLException e) {
-			db.rollback();
-			getFactions().getPlugin().logCriticalException(e);
-		}	
-	}
-	
-	public boolean isFull() {
-		return Info.members == Info.maxMembers;
-	}
-	
-	public void removeMember(WarPlayer player) {
-		DBConnection db = DBConnection.get();
-		try {
-			PreparedStatement st = db.getCachedQuery(SQLID_SetPlayerFaction);
-			st.setInt(1,0);
-			st.setInt(2, player.getID());
-			st.executeUpdate();
-			
-			st = db.getCachedQuery(SQLID_RemoveMember);
-			st.setInt(1,Info.id);
-			st.executeUpdate();
-		
-			db.commit();
-			--Info.members;
-			player.getInfo().factionID = 0;
-			player.getBPlayer().setPlayerListName(player.getName());
-			onMemberServerQuite(player);
-		} catch (SQLException e) {
-			Factions.getPlugin().logCriticalException(e);
-			db.rollback();
-		}
-	}
-	
-	public void onMemberServerJoin(WarPlayer player) {
-		player.getBPlayer().setPlayerListName(getInfo().color+player.getName());
-		OnlineMembers.add(player);
-	}
-	
-	public void onMemberServerQuite(WarPlayer player) {
-		OnlineMembers.remove(player);
-	}
+public class Faction  {
+  private int id;
+  private DescriptionInfo description;
+  
+  private FactionAppearance appearance;
+  
+  private Sector capitalSector;
+  private List<WarPlayer> onlineMembers = new LinkedList<WarPlayer>();
+  
+  private FactionManager factions;
 
-	public Location getSpawnLocation() {
-		return SpawnLocation;
-	}
+  public Faction(int id, FactionManager factions) {
+    this.factions = factions;
+  }
 
-	public void setSpawnLocation(Location spawnLocation) {
-		SpawnLocation = spawnLocation;
-		Info.spawnX = spawnLocation.getBlockX();
-		Info.spawnY = spawnLocation.getBlockY();
-		Info.spawnZ = spawnLocation.getBlockZ();
-		try {
-			PreparedStatement st = DBConnection.get().getCachedQuery(SQLID_SetSpawn);
-			st.setInt(1,Info.spawnX);
-			st.setInt(2,Info.spawnY);
-			st.setInt(3,Info.spawnZ);
-			st.setInt(4,Info.id);
-			st.executeUpdate();
-			DBConnection.get().commit();
-		} catch (SQLException e) {
+  public void addMember(WarPlayer player) {
+    FactionDao dao = factions.getDao();
+    try {
+      PreparedStatement st = db.getCachedQuery(SQLID_SetPlayerFaction);
+      st.setInt(1, info.id);
+      st.setInt(2, player.getID());
+      st.executeUpdate();
 
-			DBConnection.get().rollback();
-			e.printStackTrace();
-		}
-	}
+      st = db.getCachedQuery(SQLID_AddMember);
+      st.setInt(1, info.id);
+      st.executeUpdate();
 
-	public Sector getCapitalSector() {
-		return getFactions().getSectors().getByID(getInfo().capitalSectorID);
-	}
+      db.commit();
+      player.getInfo().factionID = getID();
+      ++info.members;
+      onMemberServerJoin(player);
+      teleport2Capital(player);
+    } catch (SQLException e) {
+      db.rollback();
+      getFactions().getPlugin().logCriticalException(e);
+    }
+  }
 
-	public void teleport2Capital(WarPlayer player) {
-		player.getBPlayer().teleport(getSpawnLocation());
-	}
-	
-	private void updateControlledSectors() {
-		try {
-			PreparedStatement statement = DBConnection.get().getCachedQuery(SQLID_UpdateControlledSectorsAmount);
-			statement.setInt(1,getInfo().controlledSectors);
-			statement.setInt(2,getID());
-			statement.executeUpdate();
-			DBConnection.get().commit();
-		} catch (SQLException e) {
-			DBConnection.get().rollback();
-			getFactions().getPlugin().logCriticalException(e);
-		}
-	}
-	
-	public void onCapturePoint(ControlPoint point) {
-		sendFormatMessage2OnlineMembers(Language.FACTION_CAPTURED_POINT,point.getName(),point.getSector().getName());
-	}
-	
-	public void onLostPoint(ControlPoint point) {
-		sendFormatMessage2OnlineMembers(Language.FACTION_LOST_POINT,point.getName(),point.getSector().getName());
-	}
-	
-	public void onCaptureSector(Sector sector) {
-		addControlledSectors();
-		sendFormatMessage2OnlineMembers(Language.FACTION_CAPTURED_SECTOR,sector.getName());
-	}
-	
-	private void addControlledSectors() {
-		++Info.controlledSectors;
-		updateControlledSectors();
-	}
-	
-	public void onLostSector(Sector sector) {
-		subControlledSectors();
-		sendFormatMessage2OnlineMembers(Language.FACTION_LOST_SECTOR,sector.getName());
-	}
-	
-	private void subControlledSectors() {
-		--Info.controlledSectors;
-		updateControlledSectors();
-	}
-	
-	public void sendFormatMessage2OnlineMembers(Language langMessage, Object... args) {
-		String message = String.format(langMessage.toString(),args);
-		for (WarPlayer member : OnlineMembers) {
-			member.sendMessage(message);
-		}
-	}
-	
-	public String getDisplayName() {
-		return getChatColor()+getName();
-	}
-	
-	public ChatColor getChatColor() {
-		return getInfo().color;
-	}
-	
-	public DyeColor getDyeColor() {
-		return ColorConverter.getDyeColor(getChatColor());
-	}
-	
-	public FactionManager getFactions() {
-		return Factions;
-	}
-	
-	@Override
-	public FactionData getInfo() {
-		return Info;
-	}
-	
-	@Override
-	public int getID() {
-		return Info.id;
-	}
+  public void removeMember(WarPlayer player) {
+    DatabaseConnection db = DatabaseConnection.get();
+    try {
+      PreparedStatement st = db.getCachedQuery(SQLID_SetPlayerFaction);
+      st.setInt(1, 0);
+      st.setInt(2, player.getID());
+      st.executeUpdate();
 
-	@Override
-	public String getName() {
-		return Info.name;
-	}
+      st = db.getCachedQuery(SQLID_RemoveMember);
+      st.setInt(1, info.id);
+      st.executeUpdate();
+
+      db.commit();
+      --info.members;
+      player.getInfo().factionID = 0;
+      player.getBPlayer().setPlayerListName(player.getName());
+      onMemberServerQuite(player);
+    } catch (SQLException e) {
+      factions.getPlugin().logCriticalException(e);
+      db.rollback();
+    }
+  }
+
+  public void onMemberServerJoin(WarPlayer player) {
+    player.getBPlayer().setPlayerListName(getInfo().color + player.getName());
+    onlineMembers.add(player);
+  }
+
+  public void onMemberServerQuite(WarPlayer player) {
+    onlineMembers.remove(player);
+  }
+
+  public Location getSpawnLocation() {
+    return spawnLocation;
+  }
+
+  public void setSpawnLocation(Location spawnLocation) {
+    spawnLocation = spawnLocation;
+    info.spawnX = spawnLocation.getBlockX();
+    info.spawnY = spawnLocation.getBlockY();
+    info.spawnZ = spawnLocation.getBlockZ();
+    try {
+      PreparedStatement st = DatabaseConnection.get().getCachedQuery(
+          SQLID_SetSpawn);
+      st.setInt(1, info.spawnX);
+      st.setInt(2, info.spawnY);
+      st.setInt(3, info.spawnZ);
+      st.setInt(4, info.id);
+      st.executeUpdate();
+      DatabaseConnection.get().commit();
+    } catch (SQLException e) {
+
+      DatabaseConnection.get().rollback();
+      e.printStackTrace();
+    }
+  }
+
+  public Sector getCapitalSector() {
+    return capitalSector;
+  }
+  
+  public void setCapitalSector(Sector sector) {
+    
+  }
+
+  public void teleport2Capital(WarPlayer player) {
+    player.getBPlayer().teleport(getSpawnLocation());
+  }
+
+
+  public void onCapturePoint(ControlPoint point) {
+    sendFormatMessage2OnlineMembers(Language.FACTION_CAPTURED_POINT,
+        point.getName(), point.getSector().getName());
+  }
+
+  public void onLostPoint(ControlPoint point) {
+    sendFormatMessage2OnlineMembers(Language.FACTION_LOST_POINT,
+        point.getName(), point.getSector().getName());
+  }
+
+  public void onCaptureSector(Sector sector) {
+    addControlledSectors();
+    sendFormatMessage2OnlineMembers(Language.FACTION_CAPTURED_SECTOR,
+        sector.getName());
+  }
+
+  private void addControlledSectors() {
+    ++info.controlledSectors;
+    updateControlledSectors();
+  }
+
+  public void onLostSector(Sector sector) {
+    subControlledSectors();
+    sendFormatMessage2OnlineMembers(Language.FACTION_LOST_SECTOR,
+        sector.getName());
+  }
+
+  private void subControlledSectors() {
+    --info.controlledSectors;
+    updateControlledSectors();
+  }
+
+  public void sendFormatMessage2OnlineMembers(Language langMessage,
+      Object... args) {
+    String message = String.format(langMessage.toString(), args);
+    for (WarPlayer member : onlineMembers) {
+      member.sendMessage(message);
+    }
+  }
+
+
+  public FactionManager getFactions() {
+    return factions;
+  }
+
 }

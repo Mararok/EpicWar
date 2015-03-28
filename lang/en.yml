@@ -1,0 +1,52 @@
+name: English
+prefix: en
+author: Mararok
+version: 0.1
+
+command: 
+ all: "Shows all EpicWar subcommands"
+ dump: "Dumps selected war data to file"
+ 
+ war: 
+  all: "Shows all war subcommands"
+  list: "Shows all current wars"
+  
+ faction:
+  all: "Shows all EpicWar faction subcommands"
+  info: "Shows player faction info"
+  list: "Shows factions list for current war"
+  join: "Joining player to selected faction"
+  leave: "Left player from current faction"
+  
+  create: "Creates faction with given name and color"
+  spawn: "Teleports player to faction spawn"
+  setspawn: "Sets faction capital spawn"
+  colors: "Shows supported faction colors"
+  
+ sector: 
+  all: "Shows all sectors subcommands"
+  info: "Shows current sector info or when parameter given shows subsector or control point"
+  connect: "Connecting control point to subsector or to other point or to sector"
+  
+message:
+ faction:
+  joined: "You joined to faction %s."
+  full: "Faction %s is full, you can't join."
+  createOnWild: "You can't create Faction on wild."
+  createOnOtherCapital: "You can't create new faction on other faction capital."
+  created: "Faction %s created."
+  exists: "Faction with name %s exists!"
+  notExists: "Faction %s not exists."
+  colorNotSupportedOrUsed: "Can't create faction, color: %s not supported or used."
+  mustLeaveBefore: "You can't join to new faction, you must leave current."
+  capturedSector: "Your faction captured %s sector."
+  lostSector: "Your faction lost %s sector."
+  capturedPoint: "Your faction captured %s point in %s sector."
+  lostPoint: "Your faction lost %s point in %s sector."
+  
+ sector:
+  createOnWild: "You can't create control point on wild."
+  createRadius: "You can't create control point with radius: %d, min is %d."
+  createPower: "You can't create control point with power: %d, min is %d."
+  createExists: "Control point with name %d exists !!!."
+  

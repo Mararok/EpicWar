@@ -1,2 +1,2 @@
-- AddSector
-INSERT INTO ew_Sectors(name,warID,centerX,centerZ,size) VALUES(?,?,?,?,?);
+- set owner
+UPDATE ew?_sectors SET ownerId=? WHERE id=?;

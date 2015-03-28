@@ -1,11 +1,17 @@
-- AddPlayerKill
-UPDATE ew_Players SET kills = kills+1, points = points + ? WHERE id = ?;
+- RegisterPlayer <warId><uid>
+INSERT INTO ew?_Players (uid) VALUES(?);
 
-- AddPlayerDeath
-UPDATE ew_Players SET deaths = deaths+1, points = points - ? WHERE id = ?;
+- AddPlayerPoints <warId><pointsAmount><id>
+UPDATE ew?_Players SET points=points+? WHERE id=?;
 
-- RegisterPlayer
-INSERT INTO ew_Players (name,warID) VALUES(?,?);
+- AddPlayerKill <warId><pointsAmount><id>
+UPDATE ew?_Players SET kills=kills+1, points=points+? WHERE id=?;
 
-- LoadPlayerData
-SELECT id,factionID,points,kills,deaths FROM ew_Players WHERE warID = ? and uuid = ? LIMIT 1;
+- AddPlayerTeamKill <warId><pointsAmount><id>
+UPDATE ew?_Players SET teamKills=teamKills+1, points=points-? WHERE id=?;
+
+- AddPlayerDeath <warId><pointsAmount><id>
+UPDATE ew?_Players SET deaths=deaths+1, points=points-? WHERE id=?;
+
+- LoadPlayerData <warId><uid>
+SELECT id,factionId,points,kills,teamKills,deaths,capturedControlPoints,capturedSectors FROM ew?_Players WHERE uid = ? LIMIT 1;

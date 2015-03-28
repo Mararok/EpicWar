@@ -1,9 +1,8 @@
 name: EpicWar
 main: com.gmail.mararok.epicwar.EpicWarPlugin
 author: Mararok
-version: 0.3.4
+version: "2.0.1"
 
-depend: [WorldEdit, WorldGuard]
 prefix: EW
 commands:
  ew:

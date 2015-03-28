@@ -1,10 +1,11 @@
+language: en
+
 database:
  engine: SQLite
  host: localhost
  name: test
  user: test
  password: test
-
-language: en
-
-wars:
+ 
+ wars:
+  - test

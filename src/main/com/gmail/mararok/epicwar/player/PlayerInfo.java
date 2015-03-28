@@ -8,52 +8,40 @@ package com.gmail.mararok.epicwar.player;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class PlayerInfo implements Cloneable {
-	public int id;
-	public int factionID;
-	public int points;
-	public int kills;
-	public int deaths;
-	
-	public static PlayerInfo fromDBResults(ResultSet results) throws SQLException {
-		PlayerInfo info = new PlayerInfo();
-		
-		info.id = results.getInt(1);
-		info.factionID = results.getInt(2);
-		info.points = results.getInt(3);
-		info.kills = results.getInt(4);
-		info.deaths = results.getInt(5);
-		
-		return info;
-	}
-	
-	public void reset() {
-		id = factionID = kills = deaths = points = 0;
-	}
-	
-	@Override
-	public PlayerInfo clone() {
-		try {
-			return (PlayerInfo) super.clone();
-		} catch (CloneNotSupportedException e) {
-			throw new InternalError(e.toString());
-		}
-	}
-	
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder("P[");
-		sb.append(id);
-		sb.append("] ");
-		sb.append("FID: ");
-		sb.append(factionID);
-		sb.append(" Points: ");
-		sb.append(points);
-		sb.append(" Kills: ");
-		sb.append(kills);
-		sb.append(" deaths: ");
-		sb.append(deaths);
-		
-		return sb.toString();
-	}
+public class PlayerInfo {
+  public int id = 0;
+  public int factionID = 0;
+  public int points = 0;
+  public int kills = 0;
+  public int deaths = 0;
+
+  public static PlayerInfo fromDBResult(ResultSet result) throws SQLException {
+    PlayerInfo info = new PlayerInfo();
+
+    info.id = result.getInt(1);
+    info.factionID = result.getInt(2);
+    info.points = result.getInt(3);
+    info.kills = result.getInt(4);
+    info.deaths = result.getInt(5);
+
+    return info;
+  }
+
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder("P[");
+    sb.append(id);
+    sb.append("] ");
+    sb.append("FID: ");
+    sb.append(factionID);
+    sb.append(" Points: ");
+    sb.append(points);
+    sb.append(" Kills: ");
+    sb.append(kills);
+    sb.append(" deaths: ");
+    sb.append(deaths);
+
+    return sb.toString();
+  }
 }

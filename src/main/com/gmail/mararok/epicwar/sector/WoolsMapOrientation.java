@@ -6,6 +6,5 @@
 package com.gmail.mararok.epicwar.sector;
 
 public enum WoolsMapOrientation {
-	VERTICAL,
-	HORIZONTAL
+  VERTICAL, HORIZONTAL
 }

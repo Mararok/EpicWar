@@ -1,14 +1,11 @@
 - AddMember 
-UPDATE ew_Factions SET members = members + 1 WHERE id = ?;
+UPDATE ew_?Factions SET members=members+1 WHERE id = ?;
 
 - RemoveMember
-UPDATE ew_Factions SET members = members - 1 WHERE id = ?;
+UPDATE ew_?Factions SET members=members-1 WHERE id = ?;
 
 - SetPlayerFaction
-UPDATE ew_Players SET factionID = ? WHERE id = ?;
+UPDATE ew_?Players SET factionId = ? WHERE id = ?;
 
 - SetFactionSpawn
-UPDATE ew_Factions SET spawnX = ?, spawnY = ?, spawnZ = ? WHERE id = ?;
-
-- Update controlled sectors amount
-UPDATE ew_factions SET controlledSectors = ? WHERE id = ?
+UPDATE ew_?Factions SET spawnX = ?, spawnY = ?, spawnZ = ? WHERE id = ?;

@@ -7,13 +7,13 @@ package com.gmail.mararok.epicwar.faction;
 
 public class NeutralFaction extends Faction {
 
-	public NeutralFaction(FactionData info, FactionManager factions) {
-		super(info, factions);
-	}
-	
-	@Override
-	public void init() {
-		setSpawnLocation(getFactions().getWar().getNeutralSpawn());
-	}
+  public NeutralFaction(FactionInfo info, FactionManager factions) {
+    super(info, factions);
+  }
+
+  @Override
+  public void init() {
+    setSpawnLocation(getFactions().getWar().getNeutralSpawn());
+  }
 
 }
