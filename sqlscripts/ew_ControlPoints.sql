@@ -1,6 +1,5 @@
 CREATE TABLE IF NOT EXISTS [ew%s_ControlPoints] (
   [id] INT PRIMARY KEY AUTOINCREMENT,
-  [shortcut] CHAR(16) NOT NULL, 
   [name] CHAR(32) NOT NULL,
   [description] VARCHAR(128) DEFAULT "default description",
   

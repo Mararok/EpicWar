@@ -5,27 +5,21 @@
  */
 package com.gmail.mararok.epicwar.control;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.List;
 
 import com.gmail.mararok.bukkit.util.UMath;
-import com.gmail.mararok.bukkit.util.database.DatabaseConnection;
+import com.gmail.mararok.epicwar.War;
 import com.gmail.mararok.epicwar.faction.Faction;
-import com.gmail.mararok.epicwar.util.DataObject;
 
-public class Sector {
-  private SectorInfo info;
+public class Sector extends NamedControlArea {
+  private Faction owner;
+  
   private List<ControlPoint> controlPoints;
   private SectorManager sectors;
 
-  public Sector(SectorInfo info, SectorManager sectors) {
-    this.info = info;
+  public Sector(int id, SectorManager sectors) {
+    super(id);
     this.sectors = sectors;
-  }
-
-  public void init() {
-    controlPoints = sectors.getControlPoints().getControlPointsFor(this);
   }
 
   public void tryCapture(int newOwner) {
@@ -68,38 +62,37 @@ public class Sector {
   }
 
   public void addControlPoint(ControlPoint point) {
+    point.setSector(this);
     controlPoints.add(point);
   }
 
   public List<ControlPoint> getControlPoints() {
     return controlPoints;
   }
+  
+  public void setControlPoints(List<ControlPoint> newControlPoints) {
+    controlPoints = newControlPoints;
+  }
 
   public Faction getOwner() {
-    return getSectors().getFactions().getByID(getInfo().ownerFactionID);
+    return owner;
+  }
+  
+  public Faction setOwner(Faction newOwner) {
+    Faction oldOwner = owner;
+    owner = newOwner;
+    return oldOwner;
   }
 
   public SectorManager getSectors() {
     return sectors;
   }
-
+  
   @Override
-  public SectorInfo getInfo() {
-    return info;
+  public War getWar() {
+    return sectors.getWar();
   }
 
-  @Override
-  public int getID() {
-    return info.id;
-  }
+  
 
-  @Override
-  public String getName() {
-    return info.name;
-  }
-
-  @Override
-  public String toString() {
-    return info.toString();
-  }
 }

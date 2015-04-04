@@ -32,7 +32,6 @@ public class FactionManager implements Disposable {
   }
 
   public void load() throws Exception {
-    Faction neutralFaction = createNeutralFaction();
     FactionInfo[] factionInfos= factionDao.findAll();
     PreparedStatement factionsInfoStatement = DatabaseConnection
         .get()

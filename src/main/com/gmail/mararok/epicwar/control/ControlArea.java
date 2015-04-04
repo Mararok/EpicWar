@@ -15,8 +15,15 @@ public abstract class ControlArea {
     this.id = id;
   }
   
+  /** Returns current faction area owner. 
+   */
   public abstract Faction getOwner();
-  public abstract Faction setOwner(Faction newOwner);
+  
+  /** Sets new faction area owner and returns old faction owner.
+   */
+  public Faction setOwner(Faction newOwner) {
+    return getOwner();
+  }
   
   public int getId() {
     return id;

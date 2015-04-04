@@ -13,23 +13,27 @@ import java.util.List;
 
 import org.bukkit.Location;
 
+import com.gmail.mararok.bukkit.util.Disposable;
 import com.gmail.mararok.bukkit.util.database.DatabaseConnection;
 import com.gmail.mararok.epicwar.War;
 import com.gmail.mararok.epicwar.sector.SectorExistsException;
 import com.gmail.mararok.epicwar.util.DataSetManager;
 
-public class SectorManager {
-  private static int SQLID_AddSector = -1;
-
-  public static void precompileSQL() throws SQLException {
-    int[] ids = DatabaseConnection.get().prepareCachedQueriesFromScript(
-        "SectorsQueries");
-
-    SQLID_AddSector = ids[0];
-  }
-
-  public SectorManager(SectorDao sectorDao, ControlPointDao controlPointDao, War war) {
-    super(war);
+public class SectorManager implements Disposable {
+  private List<Sector> sectors;
+  private SubsectorMap subsectorMap;
+  
+  private SectorDao sectorDao;
+  private ControlPointDao controlPointDao;
+  private SubsectorDao subsectorDao;
+  
+  private War war;
+  
+  public SectorManager(SectorDao sectorDao, ControlPointDao controlPointDao, SubsectorDao subsectorDao, War war) {
+    this.sectorDao = sectorDao;
+    this.controlPointDao = controlPointDao;
+    this.subsectorDao = subsectorDao;
+    this.war = war;
   }
 
   public void load() throws Exception {
@@ -110,12 +114,12 @@ public class SectorManager {
     return getByID(0);
   }
 
-  @Override
-  public void dump2File() throws IOException {
-    dump2File("Sectors");
-  }
 
   @Override
   public void dispose() {
+  }
+
+  public War getWar() {
+    return 
   }
 }

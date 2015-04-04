@@ -28,6 +28,7 @@ import com.gmail.mararok.epicwar.War;
 import com.gmail.mararok.epicwar.WarManager;
 import com.gmail.mararok.epicwar.control.ControlPoint;
 import com.gmail.mararok.epicwar.control.Sector;
+import com.gmail.mararok.epicwar.faction.Faction;
 
 public class PlayerManager {
   private Map<Player, WarPlayer> players;
@@ -36,15 +37,20 @@ public class PlayerManager {
   private War war;
 
   public PlayerManager(PlayerDao playerDao, War war) {
-    this.war = war;
     players = HashObjObjMaps.newMutableMap();
+    this.playerDao = playerDao;
+    this.war = war;
   }
 
-  public void join(Player player) {
+  public void onPlayerJoined(Player player) {
     if (war.getWorld() == player.getWorld() && get(player) == null) {
-      WarPlayer warPlayer = newPlayer(player);
+      WarPlayer warPlayer = new WarPlayer(id, nativePlayer, players);
       warPlayer.joinToWar(war);
     }
+  }
+  
+  public void onPlayerSelectedFaction(Player player, Faction faction) {
+    
   }
   
   private WarPlayer newPlayer(Player player) {

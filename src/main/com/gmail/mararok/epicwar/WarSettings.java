@@ -24,6 +24,15 @@ public class WarSettings implements Cloneable {
   public int powerDefender;
   public int powerAttacker;
   
+  public int truceStartHour;
+  public int truceHours; 
+  
+  public boolean editMode;
+  
+  public int startChunkX;
+  public int startChunkZ;
+  public int sizeInChunks;
+  
   public WarSettings clone() {
     try {
       return (WarSettings) super.clone();

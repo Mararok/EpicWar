@@ -13,7 +13,11 @@ public class PlayerStats implements Cloneable {
   public int capturedControlPoints;
   public int capturedSectors;
   
-  public PlayerStats clone() throws CloneNotSupportedException {
-    return (PlayerStats) super.clone();
+  public PlayerStats clone() {
+    try {
+      return (PlayerStats) super.clone();
+    } catch (CloneNotSupportedException e) {
+      throw new InternalError(e.toString());
+    }
   }
 }

@@ -29,7 +29,6 @@ import com.gmail.mararok.epicwar.War;
 import com.gmail.mararok.epicwar.control.ControlPoint;
 import com.gmail.mararok.epicwar.control.Sector;
 import com.gmail.mararok.epicwar.faction.Faction;
-import com.gmail.mararok.epicwar.util.DataObject;
 
 public class WarPlayer {
   private int id;
@@ -45,12 +44,12 @@ public class WarPlayer {
   private PlayerManager players;
 
 
-  public WarPlayer(Player nativePlayer, PlayerManager players) {
+  public WarPlayer(int id, Player nativePlayer, PlayerManager players) {
     this.nativePlayer = nativePlayer;
     this.players = players;
   }
 
-  void setData(int id, Faction faction, PlayerStats stats) {
+  void setData(Faction faction, PlayerStats stats) {
     this.id = id;
     this.faction = faction;
     this.stats = stats;
@@ -306,10 +305,6 @@ public class WarPlayer {
     }
   }
 
-  public PlayerManager getPlayers() {
-    return players;
-  }
-
   public Player getNativePlayer() {
     return nativePlayer;
   }
@@ -330,6 +325,10 @@ public class WarPlayer {
     return nativePlayer.getLocation();
   }
 
+  public PlayerManager getPlayers() {
+    return players;
+  }
+  
   public War getWar() {
     return players.getWar();
   }

@@ -5,9 +5,13 @@
  */
 package com.gmail.mararok.epicwar.player;
 
+import java.util.UUID;
+
+import com.gmail.mararok.epicwar.faction.Faction;
+
 public interface PlayerDao {
   
   public void load(WarPlayer player);
   public void updateStats(WarPlayer player);
-  public void addNew(WarPlayer player);
+  public int registerNew(UUID uuid, Faction faction);
 }

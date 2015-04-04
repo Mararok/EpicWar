@@ -7,30 +7,38 @@ package com.gmail.mararok.epicwar.control;
 
 import org.bukkit.Chunk;
 
-public class Subsector {
+import com.gmail.mararok.epicwar.War;
+import com.gmail.mararok.epicwar.faction.Faction;
+
+public class Subsector extends ControlArea {
   public static final int SIZE = 16;
   
-  private int x;
-  private int z;
+  private int chunkX;
+  private int chunkZ;
   
   private ControlPoint controlPoint;
   
-  public Subsector(int x, int z, ControlPoint controlPoint) {
-    this.x = x;
-    this.z = z;
+  public Subsector(int id, int chunkX, int chunkZ, ControlPoint controlPoint) {
+    super(id);
+    this.chunkX = chunkX;
+    this.chunkZ = chunkZ;
     this.controlPoint = controlPoint;
   }
   
-  public int getX() {
-    return x;
+  public int getChunkX() {
+    return chunkX;
   }
   
-  public int getZ() {
-    return z;
+  public int getChunkZ() {
+    return chunkZ;
   }
   
   public ControlPoint getControlPoint() {
     return controlPoint;
+  }
+  
+  public void setControlPoint(ControlPoint newControlPoint) {
+    controlPoint = newControlPoint;
   }
   
   public Sector getSector() {
@@ -38,7 +46,18 @@ public class Subsector {
   }
   
   public Chunk getChunk() {
-    return getSector().getSectors().getWar().getWorld().getChunkAt(x,z);
+    return getWar().getWorld().getChunkAt(chunkX,chunkZ);
+  }
+
+
+  @Override
+  public Faction getOwner() {
+    return getControlPoint().getOwner();
+  }
+  
+  @Override
+  public War getWar() {
+    return getControlPoint().getWar();
   }
   
 }

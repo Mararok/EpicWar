@@ -17,6 +17,7 @@ public class WarComponentsFactory {
   public PlayerDao playerDao;
   public FactionDao factionDao;
   public SectorDao sectorDao;
+  public SubsectorDao subsectorDao;
   public ControlPointDao controlPointDao;
   
   public PlayerManager newPlayerManager(War war) {

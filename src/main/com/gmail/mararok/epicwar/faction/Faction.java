@@ -15,6 +15,7 @@ import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.block.banner.PatternType;
 
+import com.gmail.mararok.bukkit.util.Disposable;
 import com.gmail.mararok.bukkit.util.Position3D;
 import com.gmail.mararok.bukkit.util.database.DatabaseConnection;
 import com.gmail.mararok.bukkit.util.language.Language;
@@ -22,22 +23,21 @@ import com.gmail.mararok.epicwar.War;
 import com.gmail.mararok.epicwar.control.ControlPoint;
 import com.gmail.mararok.epicwar.control.Sector;
 import com.gmail.mararok.epicwar.player.WarPlayer;
-import com.gmail.mararok.epicwar.util.DataObject;
-import com.gmail.mararok.epicwar.util.DescriptionInfo;
 
-public class Faction  {
+public class Faction implements Disposable {
   private int id;
-  private DescriptionInfo description;
-  
+  private String name;
+  private String shortcut;
+  private String description;
   private FactionAppearance appearance;
-  
   private Sector capitalSector;
-  private List<WarPlayer> onlineMembers = new LinkedList<WarPlayer>();
   
+  private List<WarPlayer> onlineMembers;
   private FactionManager factions;
 
   public Faction(int id, FactionManager factions) {
     this.factions = factions;
+    onlineMembers = new LinkedList<WarPlayer>()
   }
 
   public void addMember(WarPlayer player) {
@@ -125,7 +125,7 @@ public class Faction  {
   }
   
   public void setCapitalSector(Sector sector) {
-    
+    capitalSector = sector;
   }
 
   public void teleport2Capital(WarPlayer player) {
@@ -173,9 +173,41 @@ public class Faction  {
     }
   }
 
+  public int getId() {
+    return id;
+  }
+  
+  public String getName() {
+    return name;
+  }
+  
+  public void setName(String newName) {
+    name = newName;
+  }
+  
+  public String getShortcut() {
+    return shortcut;
+  }
+  
+  public void setShortcut(String newShortcut) {
+    shortcut = newShortcut.replace(' ','_').toUpperCase();
+  }
+  
+  public String getDescription() {
+    return description;
+  }
+  
+  public void setDescription(String newDescription) {
+    description = newDescription;
+  }
 
   public FactionManager getFactions() {
     return factions;
+  }
+
+  @Override
+  public void dispose() {
+    
   }
 
 }

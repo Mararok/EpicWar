@@ -5,15 +5,15 @@
  */
 package com.gmail.mararok.epicwar.control;
 
-public class AreaPower {
+public class ControlAreaPower {
   private int current;
   private int max;
   
-  public AreaPower(int max) {
+  public ControlAreaPower(int max) {
     this(max,max);
   }
   
-  public AreaPower(int current, int max) {
+  public ControlAreaPower(int current, int max) {
     this.current = current;
     this.max = max;
   }
@@ -40,6 +40,6 @@ public class AreaPower {
   }
   
   public void setMax(int newMax) {
-    max = newMax;
+    max = Math.max(1,newMax);
   }
 }

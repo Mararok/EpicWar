@@ -26,10 +26,6 @@ public class PlayerPosition {
     
   }
   
-  public WarPlayer getPlayer() {
-    return player;
-  }
-  
   public Position3D getPosition() {
     return position.clone();
   }
@@ -40,6 +36,10 @@ public class PlayerPosition {
   
   public Sector getSector() {
     return sector;
+  }
+  
+  public WarPlayer getPlayer() {
+    return player;
   }
 }
 
