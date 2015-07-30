@@ -9,16 +9,21 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Logger;
 
 public class DatabaseConnectionImpl implements DatabaseConnection {
   private Connection connection;
-  private StatementCache statementCache;
+  private QueriesCache statementCache;
+  
   private DatabaseConnectionConfig config;
+  private Logger log;
 
-  public DatabaseConnectionImpl(Connection connection, DatabaseConnectionConfig config) {
+  public DatabaseConnectionImpl(Connection connection, DatabaseConnectionConfig config, Logger log) {
     this.connection = connection;
-    this.statementCache = new StatementCache(16);
+    this.statementCache = new QueriesCache(32,this);
+    
     this.config = config;
+    this.log = log;
   }
 
   @Override
@@ -35,14 +40,14 @@ public class DatabaseConnectionImpl implements DatabaseConnection {
     return connection.prepareStatement(sql);
   }
 
+  
   @Override
-  public int prepareCachedQuery(String sql) throws SQLException {
-    PreparedStatement st = connection.prepareStatement(sql);
-    return statementCache.add(st);
+  public CachedQuery prepareCachedQuery(String sql) throws SQLException {
+    return statementCache.add(sql);
   }
 
   @Override
-  public PreparedStatement getCachedQuery(int index) throws SQLException {
+  public CachedQuery getCachedQuery(int index) throws SQLException {
     return statementCache.get(index);
   }
 
@@ -50,6 +55,7 @@ public class DatabaseConnectionImpl implements DatabaseConnection {
   public void clearCache() throws SQLException {
     statementCache.clear();
   }
+  
 
   @Override
   public void beginTransaction() throws SQLException {
@@ -82,8 +88,14 @@ public class DatabaseConnectionImpl implements DatabaseConnection {
         clearCache();
         connection.close();
       } catch (SQLException e) {
+        logException(e);
       }
     }
 
+  }
+
+  @Override
+  public void logException(SQLException e) {
+    log.severe("Database error: "+e);
   }
 }

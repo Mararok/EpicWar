@@ -8,13 +8,13 @@ package com.gmail.mararok.bukkit.util.database;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class EntityDatabaseDao {
+public class EntityDatabaseDAO {
   private DatabaseConnection connection;
-  private int[] sqlQueries;
+  private CachedQuery[] cachedQueries;
   
-  public EntityDatabaseDao(DatabaseConnection connection, int[] sqlQueries) {
+  public EntityDatabaseDAO(DatabaseConnection connection, CachedQuery[] sqlQueries) {
     this.connection = connection;
-    this.sqlQueries = sqlQueries;
+    this.cachedQueries = sqlQueries;
   }
   
   protected int executeQuery(String sql) throws SQLException {
@@ -22,7 +22,7 @@ public class EntityDatabaseDao {
   }
   
   protected PreparedStatement getCachedQuery(int index) throws SQLException {
-    return connection.getCachedQuery(sqlQueries[index]);
+    return cachedQueries[index].getCompiledQuery();
   }
   
   protected DatabaseConnection getConnection() {

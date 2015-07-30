@@ -11,11 +11,11 @@ import java.sql.SQLException;
 import com.gmail.mararok.bukkit.util.Disposable;
 
 public interface DatabaseConnection extends Disposable {
-  public int exec(String statement) throws SQLException;
-
+  public int exec(String sql) throws SQLException;
   public PreparedStatement prepareQuery(String sql) throws SQLException;
-  public int prepareCachedQuery(String sql) throws SQLException;
-  public PreparedStatement getCachedQuery(int index) throws SQLException;
+  
+  public CachedQuery prepareCachedQuery(String sql) throws SQLException;
+  public CachedQuery getCachedQuery(int index) throws SQLException;
   public void clearCache() throws SQLException;
   
   public void beginTransaction() throws SQLException;
@@ -24,4 +24,6 @@ public interface DatabaseConnection extends Disposable {
   public void rollback() throws SQLException;
 
   DatabaseConnectionConfig getConfig();
+
+  public void logException(SQLException e);
 }

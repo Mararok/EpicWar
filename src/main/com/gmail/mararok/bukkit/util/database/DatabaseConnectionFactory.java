@@ -19,7 +19,7 @@ public class DatabaseConnectionFactory {
       throws SQLException {
     
     Connection jdbcConnection = createJDBCConnection(config,plugin);
-    return new DatabaseConnectionImpl(jdbcConnection,config);
+    return new DatabaseConnectionImpl(jdbcConnection,config,plugin.getLogger());
   }
 
   private static Connection createJDBCConnection(DatabaseConnectionConfig config, JavaPlugin plugin) 

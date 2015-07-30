@@ -45,26 +45,20 @@ public class SqlScript {
     }
   }
 
-  public int[] prepareCachedQueriesFromScript(DatabaseConnection connection) throws SQLException {
-    LinkedList<Integer> queriesIDs = new LinkedList<Integer>();
+  public CachedQuery[] prepareCachedQueriesFromScript(DatabaseConnection connection) throws SQLException {
+    LinkedList<CachedQuery> queries = new LinkedList<CachedQuery>();
     int currentLine = 0;
     try {
       for (String line : source) {
         if (!line.isEmpty() && !line.startsWith(SCRIPT_COMMENT_PREFIX)) {
-          queriesIDs.add(connection.prepareCachedQuery(line));
+          queries.add(connection.prepareCachedQuery(line));
         }
         ++currentLine;
       }
-      int[] retIDs = new int[queriesIDs.size()];
-      int current = 0;
-      for (Integer qid : queriesIDs) {
-        retIDs[current++] = qid;
-      }
-      return retIDs;
+      return queries.toArray(new CachedQuery[queries.size()]);
       
     } catch (SQLException e) {
-      throw new SQLException("SQL Error in script file " + name + " line "
-          + currentLine + " Error: ", e);
+      throw new SQLException("SQL Error in script file " + name + " line "+ currentLine + " Error: ", e);
     }
   }
 }
