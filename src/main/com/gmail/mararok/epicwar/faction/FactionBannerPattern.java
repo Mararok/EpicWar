@@ -55,7 +55,8 @@ public class FactionBannerPattern {
     return sb.toString();
   }
   
-  public void deserialize(String serialized) {
+  public static FactionBannerPattern createFromSerialized(String serialized) {
+    FactionBannerPattern bannerPattern = new FactionBannerPattern();
     String[] patternStringList = serialized.split(";");
     for (String patternString : patternStringList) {
       String[] pattern = patternString.split(":");
@@ -63,10 +64,11 @@ public class FactionBannerPattern {
         DyeColor color = DyeColor.valueOf(pattern[0]);
         PatternType type = PatternType.valueOf(pattern[1]);
         if (color != null && type != null) {
-          addPattern(color,type);
+          bannerPattern.addPattern(color,type);
         }
       }
     }
+    return bannerPattern;
   }
   
 }

@@ -5,8 +5,6 @@
  */
 package com.gmail.mararok.epicwar.faction;
 
-public interface FactionDao {
-  void updateInfo(Faction faction) throws Exception;
-  FactionInfo[] findAll() throws Exception;
+public class FactionService {
   
 }
