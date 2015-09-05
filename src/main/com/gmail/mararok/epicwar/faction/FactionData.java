@@ -18,7 +18,6 @@ public class FactionData extends EntityData {
   
   public int capitalSectorId;
   
-  
   public List<String> toStringList() {
     List<String> list = super.toStringList();
     list.add(name);
