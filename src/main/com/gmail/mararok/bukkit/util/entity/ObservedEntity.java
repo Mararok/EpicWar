@@ -8,24 +8,38 @@ package com.gmail.mararok.bukkit.util.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Extends Entity type with tracking properties changes. lazy create changed properties list for memory saves.
+ */
 public class ObservedEntity extends Entity {
   private List<PropertyEntry> changedProperties;
-  
+
   public ObservedEntity(int id) {
     super(id);
   }
-  
+
+  /**
+   * Execute when some property changes value. Helper method for integer properties.
+   */
+  protected void onChangeProperty(String name, int newValue) {
+    onChangeProperty(name, Integer.toString(newValue));
+  }
+
+  /**
+   * Execute when some property changes value.
+   */
   protected void onChangeProperty(String name, String newValue) {
     if (!hasAnyChangedProperties()) {
-      changedProperties = new ArrayList<PropertyEntry>(); // lazy create for memory save
+      changedProperties = new ArrayList<PropertyEntry>();
     }
 
     PropertyEntry propertyEntry = getChangedProperty(name);
     if (propertyEntry != null) {
       propertyEntry.value = newValue;
+    } else {
+      changedProperties.add(new PropertyEntry(name, newValue));
     }
 
-    changedProperties.add(new PropertyEntry(name, newValue));
   }
 
   public PropertyEntry getChangedProperty(String name) {
@@ -42,16 +56,10 @@ public class ObservedEntity extends Entity {
   public PropertyEntry[] getChangedProperties() {
     PropertyEntry[] list = null;
     if (hasAnyChangedProperties()) {
-      int number = changedProperties.size();
-      list = new PropertyEntry[number];
+      list = new PropertyEntry[changedProperties.size()];
       int index = 0;
-      try {
-        for (PropertyEntry property : changedProperties) {
-          list[index] = (PropertyEntry) property.clone();
-        }
-      } catch (CloneNotSupportedException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
+      for (PropertyEntry property : changedProperties) {
+        list[index++] = new PropertyEntry(property.name, property.value);
       }
     }
     return list;
@@ -65,7 +73,7 @@ public class ObservedEntity extends Entity {
     return changedProperties != null;
   }
 
-  public class PropertyEntry implements Cloneable {
+  public class PropertyEntry {
     public String name;
     public String value;
 
@@ -74,9 +82,5 @@ public class ObservedEntity extends Entity {
       this.value = value;
     }
 
-    @Override
-    public Object clone() throws CloneNotSupportedException {
-      return super.clone();
-    }
   }
 }
