@@ -20,7 +20,7 @@ public class FileLanguageLoader implements LanguageLoader {
   private Path basePath;
   
   public FileLanguageLoader(Path languagesBasePath) {
-    
+    this.basePath = languagesBasePath;
   }
   
   @Override
