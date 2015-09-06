@@ -5,8 +5,9 @@
  */
 package com.gmail.mararok.epicwar.faction;
 
+import org.bukkit.Location;
+
 import com.gmail.mararok.epicwar.War;
-import com.gmail.mararok.epicwar.control.Sector;
 
 public interface Faction {
   public int getId();
@@ -24,8 +25,8 @@ public interface Faction {
   public FactionBannerPattern getBannerPattern();
   public void setBannerPattern(FactionBannerPattern newBannerPattern);
   
-  public Sector getCapitalSector();
-  public void setCapitalSector(Sector sector);
+  public Location getSpawnLocation();
+  public void setSpawnLocation(Location location);
   
   public War getWar();
 

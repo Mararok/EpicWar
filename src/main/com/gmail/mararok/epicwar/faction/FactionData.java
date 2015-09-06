@@ -7,6 +7,7 @@ package com.gmail.mararok.epicwar.faction;
 
 import java.util.List;
 
+import com.gmail.mararok.bukkit.util.Position3D;
 import com.gmail.mararok.bukkit.util.entity.EntityData;
 
 public class FactionData extends EntityData {
@@ -16,7 +17,7 @@ public class FactionData extends EntityData {
   
   public FactionAppearance appearance;
   
-  public int capitalSectorId;
+  public Position3D spawnPosition;
   
   public List<String> toStringList() {
     List<String> list = super.toStringList();
@@ -25,7 +26,9 @@ public class FactionData extends EntityData {
     list.add(description);
     list.add(Character.toString(appearance.color.getChatColor().getChar()));
     list.add(appearance.bannerPattern.serialize());
-    list.add( Integer.toString(capitalSectorId));
+    list.add(Long.toString(spawnPosition.x));
+    list.add(Long.toString(spawnPosition.y));
+    list.add(Long.toString(spawnPosition.z));
     
     return list;
   }
