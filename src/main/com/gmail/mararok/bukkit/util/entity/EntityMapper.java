@@ -7,13 +7,7 @@ package com.gmail.mararok.bukkit.util.entity;
 
 import java.util.Collection;
 
-public abstract class EntityMapper<E extends ObservedEntity, ED> {
-  protected EntityFactory<E,ED> entityFactory;
-  
-  public EntityMapper(EntityFactory<E,ED> entityFactory) {
-    this.entityFactory = entityFactory;
-  }
-  
+public interface EntityMapper<E extends ObservedEntity, ED> {
   public abstract E findById(int id) throws Exception;
   public abstract Collection<E> findAll() throws Exception;
   
