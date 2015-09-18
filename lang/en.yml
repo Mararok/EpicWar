@@ -27,6 +27,14 @@ command:
   all: "Shows all sectors subcommands"
   info: "Shows current sector info or when parameter given shows subsector or control point"
   connect: "Connecting control point to subsector or to other point or to sector"
+ 
+ error:
+  NotEnoughArguments: "Not enough arguments, Usage: %s"
+
+sector:
+ wild: 
+  name: "WILD SECTOR"
+  description: "That is wild sector, even rats do not go here"
   
 message:
  faction:
