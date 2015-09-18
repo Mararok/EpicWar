@@ -6,6 +6,11 @@ database:
  name: test
  user: test
  password: test
- 
- wars:
-  - test
+
+debug:
+ event:
+  enabled: true
+  logging: true
+   
+wars:
+ - test
