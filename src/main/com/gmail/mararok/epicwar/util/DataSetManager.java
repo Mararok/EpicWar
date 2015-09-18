@@ -21,14 +21,14 @@ import org.bukkit.World;
 
 import com.gmail.mararok.bukkit.util.Disposable;
 import com.gmail.mararok.epicwar.EpicWarPlugin;
-import com.gmail.mararok.epicwar.War;
+import com.gmail.mararok.epicwar.impl.WarImpl;
 
 public abstract class DataSetManager<DataType extends DataObject<?>> implements Disposable {
   private ArrayList<DataType> dataSet;
   private Map<String,DataType> namesDataSet; 
-  private War war;
+  private WarImpl war;
 
-  public DataSetManager(War war) {
+  public DataSetManager(WarImpl war) {
     this.dataSet = new ArrayList<DataType>(16);
     this.namesDataSet = HashObjObjMaps.newMutableMap();
     this.war = war;
@@ -94,7 +94,7 @@ public abstract class DataSetManager<DataType extends DataObject<?>> implements 
     return getWar().getWorld();
   }
 
-  public War getWar() {
+  public WarImpl getWar() {
     return war;
   }
 

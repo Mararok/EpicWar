@@ -7,12 +7,12 @@ package com.gmail.mararok.epicwar.control.event;
 
 import org.bukkit.event.HandlerList;
 
-import com.gmail.mararok.epicwar.control.ControlArea;
-import com.gmail.mararok.epicwar.player.WarPlayer;
+import com.gmail.mararok.epicwar.control.impl.ControlAreaImpl;
+import com.gmail.mararok.epicwar.player.impl.WarPlayerImpl;
 
 public class PlayerAttackingControlAreaEvent extends PlayerControlAreaEvent {
   
-  public PlayerAttackingControlAreaEvent(WarPlayer player, ControlArea controlArea) {
+  public PlayerAttackingControlAreaEvent(WarPlayerImpl player, ControlAreaImpl controlArea) {
     super(player,controlArea);
   }
 

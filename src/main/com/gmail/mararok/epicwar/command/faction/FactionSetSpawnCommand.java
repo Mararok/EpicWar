@@ -5,18 +5,18 @@
  */
 package com.gmail.mararok.epicwar.command.faction;
 
+import com.gmail.mararok.bukkit.util.command.CommandArguments;
+import com.gmail.mararok.bukkit.util.command.ParentPluginCommand;
+import com.gmail.mararok.bukkit.util.command.PluginCommand;
 import com.gmail.mararok.bukkit.util.language.Language;
 import com.gmail.mararok.epicwar.EpicWarPlugin;
-import com.gmail.mararok.epicwar.command.CommandArguments;
-import com.gmail.mararok.epicwar.command.PluginParentCommand;
-import com.gmail.mararok.epicwar.command.PluginCommand;
-import com.gmail.mararok.epicwar.faction.Faction;
-import com.gmail.mararok.epicwar.faction.FactionManager;
-import com.gmail.mararok.epicwar.player.WarPlayer;
+import com.gmail.mararok.epicwar.faction.internal.FactionImpl;
+import com.gmail.mararok.epicwar.faction.internal.FactionManager;
+import com.gmail.mararok.epicwar.player.impl.WarPlayerImpl;
 
 public class FactionSetSpawnCommand extends PluginCommand {
 
-  public FactionSetSpawnCommand(EpicWarPlugin plugin, PluginParentCommand parent) {
+  public FactionSetSpawnCommand(EpicWarPlugin plugin, ParentPluginCommand parent) {
     super(plugin, parent, "setspawn", true);
     setOnlyPlayer();
     setRequiredArgumentsAmount(1);
@@ -24,11 +24,11 @@ public class FactionSetSpawnCommand extends PluginCommand {
     setUsage("\\ewf setspawn <factionName>");
   }
 
-  public boolean onCommandAsAdmin(WarPlayer admin, CommandArguments arguments) {
+  public boolean onCommandAsAdmin(WarPlayerImpl admin, CommandArguments arguments) {
     String factionName = arguments.asString(0);
-    FactionManager factions = admin.getWar().getFactions();
+    FactionManager factions = admin.getWar().getFactionManager();
     if (factions.isExists(factionName)) {
-      Faction faction = factions.getByName(factionName);
+      FactionImpl faction = factions.getByName(factionName);
       if (isInFactionCapitalSector(admin, faction)) {
         faction.setSpawnLocation(admin.getLocation());
         admin.sendMessage("You sets new faction spawn");
@@ -43,8 +43,8 @@ public class FactionSetSpawnCommand extends PluginCommand {
     return true;
   }
 
-  private boolean isInFactionCapitalSector(WarPlayer admin, Faction faction) {
-    return admin.getWar().getSectors().getFromLocation(admin.getLocation())
+  private boolean isInFactionCapitalSector(WarPlayerImpl admin, FactionImpl faction) {
+    return admin.getWar().getSectorManager().getFromLocation(admin.getLocation())
         .getID() == faction.getInfo().capitalSectorID;
   }
 

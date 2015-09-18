@@ -5,13 +5,13 @@
  */
 package com.gmail.mararok.epicwar.command.sector;
 
+import com.gmail.mararok.bukkit.util.command.ParentPluginCommand;
 import com.gmail.mararok.bukkit.util.language.Language;
 import com.gmail.mararok.epicwar.EpicWarPlugin;
-import com.gmail.mararok.epicwar.command.PluginParentCommand;
 
-public class SectorCommands extends PluginParentCommand {
+public class SectorCommands extends ParentPluginCommand {
 
-  public SectorCommands(EpicWarPlugin plugin, PluginParentCommand parent) {
+  public SectorCommands(EpicWarPlugin plugin, ParentPluginCommand parent) {
     super(plugin, parent, "ews");
 
     setOnlyPlayer();

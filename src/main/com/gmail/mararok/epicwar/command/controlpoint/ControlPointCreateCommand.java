@@ -7,20 +7,20 @@ package com.gmail.mararok.epicwar.command.controlpoint;
 
 import org.bukkit.Location;
 
+import com.gmail.mararok.bukkit.util.command.CommandArguments;
+import com.gmail.mararok.bukkit.util.command.ParentPluginCommand;
+import com.gmail.mararok.bukkit.util.command.PluginCommand;
 import com.gmail.mararok.bukkit.util.language.Language;
 import com.gmail.mararok.epicwar.EpicWarPlugin;
-import com.gmail.mararok.epicwar.command.CommandArguments;
-import com.gmail.mararok.epicwar.command.PluginParentCommand;
-import com.gmail.mararok.epicwar.command.PluginCommand;
 import com.gmail.mararok.epicwar.control.ControlPointExistsException;
 import com.gmail.mararok.epicwar.control.ControlPointInfo;
-import com.gmail.mararok.epicwar.control.Sector;
-import com.gmail.mararok.epicwar.player.WarPlayer;
+import com.gmail.mararok.epicwar.control.impl.SectorImpl;
+import com.gmail.mararok.epicwar.player.impl.WarPlayerImpl;
 
 public class ControlPointCreateCommand extends PluginCommand {
 
   public ControlPointCreateCommand(EpicWarPlugin plugin,
-      PluginParentCommand parent) {
+      ParentPluginCommand parent) {
     super(plugin, parent, "create", true);
 
     setOnlyPlayer();
@@ -30,11 +30,11 @@ public class ControlPointCreateCommand extends PluginCommand {
   }
 
   @Override
-  public boolean onCommandAsAdmin(WarPlayer sender, CommandArguments arguments) {
-    ControlPointInfo info = new ControlPointInfo();
+  public boolean onCommandAsAdmin(WarPlayerImpl sender, CommandArguments arguments) {
+    ControlPointData info = new ControlPointData();
     try {
       Location loc = sender.getLocation();
-      Sector s = sender.getWar().getSectors().getFromLocation(loc);
+      SectorImpl s = sender.getWar().getSectorManager().getFromLocation(loc);
       if (s == null) {
         sender.sendMessage(Language.POINT_CREATE_ON_WILD);
         return false;
@@ -66,8 +66,8 @@ public class ControlPointCreateCommand extends PluginCommand {
     return false;
   }
 
-  private void sendSuccessMessage(WarPlayer player, ControlPointInfo info) {
-    String sectorName = player.getWar().getSectors().getByID(info.sectorID)
+  private void sendSuccessMessage(WarPlayerImpl player, ControlPointData info) {
+    String sectorName = player.getWar().getSectorManager().getByID(info.sectorID)
         .getName();
     player.sendMessage("Control point " + info.name + " created in sector "
         + sectorName);

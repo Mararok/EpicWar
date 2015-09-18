@@ -8,19 +8,19 @@ package com.gmail.mararok.epicwar.command.faction;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 
+import com.gmail.mararok.bukkit.util.command.CommandArguments;
+import com.gmail.mararok.bukkit.util.command.ParentPluginCommand;
+import com.gmail.mararok.bukkit.util.command.PluginCommand;
 import com.gmail.mararok.bukkit.util.language.Language;
 import com.gmail.mararok.epicwar.EpicWarPlugin;
-import com.gmail.mararok.epicwar.command.CommandArguments;
-import com.gmail.mararok.epicwar.command.PluginParentCommand;
-import com.gmail.mararok.epicwar.command.PluginCommand;
-import com.gmail.mararok.epicwar.control.Sector;
-import com.gmail.mararok.epicwar.faction.FactionInfo;
-import com.gmail.mararok.epicwar.faction.FactionManager;
-import com.gmail.mararok.epicwar.player.WarPlayer;
+import com.gmail.mararok.epicwar.control.impl.SectorImpl;
+import com.gmail.mararok.epicwar.faction.FactionData;
+import com.gmail.mararok.epicwar.faction.internal.FactionManager;
+import com.gmail.mararok.epicwar.player.impl.WarPlayerImpl;
 import com.gmail.mararok.epicwar.util.ColorConverter;
 
 public class FactionCreateCommand extends PluginCommand {
-  public FactionCreateCommand(EpicWarPlugin plugin, PluginParentCommand parent) {
+  public FactionCreateCommand(EpicWarPlugin plugin, ParentPluginCommand parent) {
     super(plugin, parent, "create", true);
     setOnlyPlayer();
     setRequiredArgumentsAmount(2);
@@ -29,8 +29,8 @@ public class FactionCreateCommand extends PluginCommand {
   }
 
   @Override
-  public boolean onCommandAsAdmin(WarPlayer admin, CommandArguments arguments) {
-    FactionManager factions = admin.getWar().getFactions();
+  public boolean onCommandAsAdmin(WarPlayerImpl admin, CommandArguments arguments) {
+    FactionManager factions = admin.getWar().getFactionManager();
     String factionName = arguments.asString(0);
 
     if (factions.isExists(factionName)) {
@@ -47,7 +47,7 @@ public class FactionCreateCommand extends PluginCommand {
       return false;
     }
 
-    Sector capitalSector = admin.getWar().getSectors()
+    SectorImpl capitalSector = admin.getWar().getSectorManager()
         .getFromLocation(admin.getLocation());
     if (capitalSector.getID() == 0) {
       admin.sendMessage(Language.FACTION_CANT_CREATE_ON_WILD);
@@ -59,7 +59,7 @@ public class FactionCreateCommand extends PluginCommand {
       return false;
     }
 
-    FactionInfo info = new FactionInfo();
+    FactionData info = new FactionData();
     info.name = factionName;
     info.color = color;
 
@@ -76,7 +76,7 @@ public class FactionCreateCommand extends PluginCommand {
     return true;
   }
 
-  private void sendSuccessMessage(WarPlayer player, FactionInfo info) {
+  private void sendSuccessMessage(WarPlayerImpl player, FactionData info) {
     player.sendFormatMessage(Language.FACTION_CREATED, info.color + info.name);
     getPlugin().logInfo(
         player.getName() + " created faction " + info.color + info.name);

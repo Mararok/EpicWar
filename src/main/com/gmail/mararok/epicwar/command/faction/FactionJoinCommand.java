@@ -5,17 +5,17 @@
  */
 package com.gmail.mararok.epicwar.command.faction;
 
+import com.gmail.mararok.bukkit.util.command.CommandArguments;
+import com.gmail.mararok.bukkit.util.command.ParentPluginCommand;
+import com.gmail.mararok.bukkit.util.command.PluginCommand;
 import com.gmail.mararok.bukkit.util.language.Language;
 import com.gmail.mararok.epicwar.EpicWarPlugin;
-import com.gmail.mararok.epicwar.command.CommandArguments;
-import com.gmail.mararok.epicwar.command.PluginParentCommand;
-import com.gmail.mararok.epicwar.command.PluginCommand;
-import com.gmail.mararok.epicwar.faction.Faction;
-import com.gmail.mararok.epicwar.player.WarPlayer;
+import com.gmail.mararok.epicwar.faction.internal.FactionImpl;
+import com.gmail.mararok.epicwar.player.impl.WarPlayerImpl;
 
 public class FactionJoinCommand extends PluginCommand {
 
-  public FactionJoinCommand(EpicWarPlugin plugin, PluginParentCommand parent) {
+  public FactionJoinCommand(EpicWarPlugin plugin, ParentPluginCommand parent) {
     super(plugin, parent, "join");
     setOnlyPlayer();
     setRequiredArgumentsAmount(1);
@@ -24,7 +24,7 @@ public class FactionJoinCommand extends PluginCommand {
   }
 
   @Override
-  public boolean onCommandAsPlayer(WarPlayer player, CommandArguments arguments) {
+  public boolean onCommandAsPlayer(WarPlayerImpl player, CommandArguments arguments) {
     String factionName = arguments.asString(0);
     if (player.hasFaction()) {
       player
@@ -32,8 +32,8 @@ public class FactionJoinCommand extends PluginCommand {
 
     }
 
-    if (player.getWar().getFactions().isExists(factionName)) {
-      Faction faction = player.getWar().getFactions().getByName(factionName);
+    if (player.getWar().getFactionManager().isExists(factionName)) {
+      FactionImpl faction = player.getWar().getFactionManager().getByName(factionName);
       if (faction.isFull()) {
         player.sendMessage("This faction is full, you can't join");
       } else {

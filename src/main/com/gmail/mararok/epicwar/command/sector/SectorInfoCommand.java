@@ -5,17 +5,17 @@
  */
 package com.gmail.mararok.epicwar.command.sector;
 
+import com.gmail.mararok.bukkit.util.command.CommandArguments;
+import com.gmail.mararok.bukkit.util.command.ParentPluginCommand;
+import com.gmail.mararok.bukkit.util.command.PluginCommand;
 import com.gmail.mararok.bukkit.util.language.Language;
 import com.gmail.mararok.epicwar.EpicWarPlugin;
-import com.gmail.mararok.epicwar.command.CommandArguments;
-import com.gmail.mararok.epicwar.command.PluginParentCommand;
-import com.gmail.mararok.epicwar.command.PluginCommand;
-import com.gmail.mararok.epicwar.control.Sector;
-import com.gmail.mararok.epicwar.player.WarPlayer;
+import com.gmail.mararok.epicwar.control.impl.SectorImpl;
+import com.gmail.mararok.epicwar.player.impl.WarPlayerImpl;
 
 public class SectorInfoCommand extends PluginCommand {
 
-  public SectorInfoCommand(EpicWarPlugin plugin, PluginParentCommand parent) {
+  public SectorInfoCommand(EpicWarPlugin plugin, ParentPluginCommand parent) {
     super(plugin, parent, "info");
     setOnlyPlayer();
     setDescription(Language.CD_SECTOR_INFO);
@@ -23,12 +23,12 @@ public class SectorInfoCommand extends PluginCommand {
   }
 
   @Override
-  public boolean onCommandAsPlayer(WarPlayer player, CommandArguments arguments) {
+  public boolean onCommandAsPlayer(WarPlayerImpl player, CommandArguments arguments) {
     if (player.hasFaction()) {
       player.sendMessage("You are at " + player.getSector().getName()
           + " sector");
     } else {
-      Sector sector = player.getWar().getSectors()
+      SectorImpl sector = player.getWar().getSectorManager()
           .getFromLocation(player.getLocation());
       player.sendMessage("You are at " + sector.getName() + " sector");
     }

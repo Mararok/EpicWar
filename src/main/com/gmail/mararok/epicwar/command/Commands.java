@@ -5,6 +5,7 @@
  */
 package com.gmail.mararok.epicwar.command;
 
+import com.gmail.mararok.bukkit.util.command.ParentPluginCommand;
 import com.gmail.mararok.bukkit.util.language.Language;
 import com.gmail.mararok.epicwar.EpicWarPlugin;
 import com.gmail.mararok.epicwar.command.controlpoint.ControlPointCommands;
@@ -12,7 +13,7 @@ import com.gmail.mararok.epicwar.command.faction.FactionCommands;
 import com.gmail.mararok.epicwar.command.sector.SectorCommands;
 import com.gmail.mararok.epicwar.command.war.WarCommands;
 
-public class Commands extends PluginParentCommand {
+public class Commands extends ParentPluginCommand {
   public Commands(EpicWarPlugin plugin) {
     super(plugin, null, "ew");
 

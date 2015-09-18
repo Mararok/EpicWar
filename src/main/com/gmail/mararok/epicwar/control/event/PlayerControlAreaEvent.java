@@ -5,18 +5,18 @@
  */
 package com.gmail.mararok.epicwar.control.event;
 
-import com.gmail.mararok.epicwar.control.ControlArea;
-import com.gmail.mararok.epicwar.player.WarPlayer;
+import com.gmail.mararok.epicwar.control.impl.ControlAreaImpl;
+import com.gmail.mararok.epicwar.player.impl.WarPlayerImpl;
 
 public abstract class PlayerControlAreaEvent extends ControlAreaEvent {
-  private WarPlayer player;
+  private WarPlayerImpl player;
 
-  public PlayerControlAreaEvent(WarPlayer player, ControlArea controlArea) {
+  public PlayerControlAreaEvent(WarPlayerImpl player, ControlAreaImpl controlArea) {
     super(controlArea);
     this.player = player;
   }
   
-  public WarPlayer getPlayer() {
+  public WarPlayerImpl getPlayer() {
     return player;
   }
 }

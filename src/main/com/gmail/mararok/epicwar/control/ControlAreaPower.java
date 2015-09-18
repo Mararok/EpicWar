@@ -18,7 +18,6 @@ public class ControlAreaPower {
     this.max = max;
   }
  
-  
   public int getCurrent() {
     return current;
   }

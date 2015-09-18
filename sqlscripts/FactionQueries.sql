@@ -1,3 +1,6 @@
+- Create
+#INSERT INTO ew?_factions(name,shortcut,description,color,banner) VALUES(?,?,?,?,?);
+
 - AddMember 
 UPDATE ew_?Factions SET members=members+1 WHERE id = ?;
 

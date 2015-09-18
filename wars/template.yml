@@ -8,7 +8,14 @@ enabled: false
 
 world:
  name: <string>
- 
+ fightArea: 
+  startX:
+  startZ:
+  width:
+  length:
+
+faction:
+ onlineBalance: false
 points:
  kill: <number>
  teamKill: <number>

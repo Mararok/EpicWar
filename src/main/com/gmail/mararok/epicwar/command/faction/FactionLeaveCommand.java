@@ -5,16 +5,16 @@
  */
 package com.gmail.mararok.epicwar.command.faction;
 
+import com.gmail.mararok.bukkit.util.command.CommandArguments;
+import com.gmail.mararok.bukkit.util.command.ParentPluginCommand;
+import com.gmail.mararok.bukkit.util.command.PluginCommand;
 import com.gmail.mararok.bukkit.util.language.Language;
 import com.gmail.mararok.epicwar.EpicWarPlugin;
-import com.gmail.mararok.epicwar.command.CommandArguments;
-import com.gmail.mararok.epicwar.command.PluginParentCommand;
-import com.gmail.mararok.epicwar.command.PluginCommand;
-import com.gmail.mararok.epicwar.player.WarPlayer;
+import com.gmail.mararok.epicwar.player.impl.WarPlayerImpl;
 
 public class FactionLeaveCommand extends PluginCommand {
 
-  public FactionLeaveCommand(EpicWarPlugin plugin, PluginParentCommand parent) {
+  public FactionLeaveCommand(EpicWarPlugin plugin, ParentPluginCommand parent) {
     super(plugin, parent, "leave");
     setOnlyPlayer();
     setDescription(Language.CD_FACTION_LEAVE);
@@ -22,7 +22,7 @@ public class FactionLeaveCommand extends PluginCommand {
   }
 
   @Override
-  public boolean onCommandAsPlayer(WarPlayer player, CommandArguments arguments) {
+  public boolean onCommandAsPlayer(WarPlayerImpl player, CommandArguments arguments) {
     player.leaveFromFaction();
     return true;
   }

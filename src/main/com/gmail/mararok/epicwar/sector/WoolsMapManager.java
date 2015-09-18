@@ -12,13 +12,13 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.gmail.mararok.bukkit.util.database.DatabaseConnection;
-import com.gmail.mararok.epicwar.War;
-import com.gmail.mararok.epicwar.control.Sector;
+import com.gmail.mararok.epicwar.control.impl.SectorImpl;
+import com.gmail.mararok.epicwar.impl.WarImpl;
 import com.gmail.mararok.epicwar.util.DataSetManager;
 
 public class WoolsMapManager extends DataSetManager<WoolsMap> {
 
-  public WoolsMapManager(War war) {
+  public WoolsMapManager(WarImpl war) {
     super(war);
   }
 
@@ -75,7 +75,7 @@ public class WoolsMapManager extends DataSetManager<WoolsMap> {
     }
   }
 
-  public void onSectorCapture(Sector sector) {
+  public void onSectorCapture(SectorImpl sector) {
     List<WoolsMap> maps = getList();
     for (WoolsMap map : maps) {
       map.onSectorCapture(sector);

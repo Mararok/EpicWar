@@ -2,18 +2,18 @@ package com.gmail.mararok.epicwar.command.sector;
 
 import org.bukkit.Location;
 
+import com.gmail.mararok.bukkit.util.command.CommandArguments;
+import com.gmail.mararok.bukkit.util.command.ParentPluginCommand;
+import com.gmail.mararok.bukkit.util.command.PluginCommand;
 import com.gmail.mararok.bukkit.util.language.Language;
 import com.gmail.mararok.epicwar.EpicWarPlugin;
-import com.gmail.mararok.epicwar.command.CommandArguments;
-import com.gmail.mararok.epicwar.command.PluginParentCommand;
-import com.gmail.mararok.epicwar.command.PluginCommand;
-import com.gmail.mararok.epicwar.player.WarPlayer;
+import com.gmail.mararok.epicwar.player.impl.WarPlayerImpl;
 import com.gmail.mararok.epicwar.sector.WoolsMapOrientation;
 import com.gmail.mararok.epicwar.sector.WoolsMapInfo;
 
 public class SectorSetMapCommand extends PluginCommand {
 
-  public SectorSetMapCommand(EpicWarPlugin plugin, PluginParentCommand parent) {
+  public SectorSetMapCommand(EpicWarPlugin plugin, ParentPluginCommand parent) {
     super(plugin, parent, "setmap", true);
     setOnlyPlayer();
     setRequiredArgumentsAmount(2);
@@ -22,7 +22,7 @@ public class SectorSetMapCommand extends PluginCommand {
   }
 
   @Override
-  public boolean onCommandAsAdmin(WarPlayer admin, CommandArguments arguments) {
+  public boolean onCommandAsAdmin(WarPlayerImpl admin, CommandArguments arguments) {
     WoolsMapInfo mapInfo = new WoolsMapInfo();
     mapInfo.name = arguments.asString(0);
     mapInfo.sectorsPerLine = arguments.asInt(1);

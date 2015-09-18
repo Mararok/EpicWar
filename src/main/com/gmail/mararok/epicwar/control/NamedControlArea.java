@@ -5,31 +5,11 @@
  */
 package com.gmail.mararok.epicwar.control;
 
-public abstract class NamedControlArea extends ControlArea {
-  private String name;
-  private String description;
+public interface NamedControlArea extends ControlArea {
+  public String getShortName();
+  public String getName();
+  public void setName(String newName);
   
-  public NamedControlArea(int id) {
-    super(id);
-  }
-  
-  public String getName() {
-    return name;
-  }
-  
-  public String getNameWithoutWhitespace() {
-    return name.replace(' ','_');
-  }
-  
-  public void setName(String newName) {
-    name = newName;
-  }
-  
-  public String getDescription() {
-    return description;
-  }
-  
-  public void setDescription(String newDescription) {
-    description = newDescription;
-  }
+  public String getDescription();
+  public void setDescription(String newDescription);
 }

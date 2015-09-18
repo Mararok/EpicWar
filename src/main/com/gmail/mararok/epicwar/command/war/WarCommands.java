@@ -5,13 +5,13 @@
  */
 package com.gmail.mararok.epicwar.command.war;
 
+import com.gmail.mararok.bukkit.util.command.ParentPluginCommand;
 import com.gmail.mararok.bukkit.util.language.Language;
 import com.gmail.mararok.epicwar.EpicWarPlugin;
-import com.gmail.mararok.epicwar.command.PluginParentCommand;
 
-public class WarCommands extends PluginParentCommand {
+public class WarCommands extends ParentPluginCommand {
 
-  public WarCommands(EpicWarPlugin plugin, PluginParentCommand parent) {
+  public WarCommands(EpicWarPlugin plugin, ParentPluginCommand parent) {
     super(plugin, parent, "War");
     setDescription(Language.CD_WAR);
     setUsage("\\eww [subcommand]");

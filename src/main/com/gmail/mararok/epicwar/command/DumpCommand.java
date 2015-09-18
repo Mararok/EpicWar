@@ -7,14 +7,17 @@ package com.gmail.mararok.epicwar.command;
 
 import java.io.IOException;
 
+import com.gmail.mararok.bukkit.util.command.CommandArguments;
+import com.gmail.mararok.bukkit.util.command.ParentPluginCommand;
+import com.gmail.mararok.bukkit.util.command.PluginCommand;
 import com.gmail.mararok.bukkit.util.language.Language;
 import com.gmail.mararok.epicwar.EpicWarPlugin;
-import com.gmail.mararok.epicwar.War;
-import com.gmail.mararok.epicwar.player.WarPlayer;
+import com.gmail.mararok.epicwar.impl.WarImpl;
+import com.gmail.mararok.epicwar.player.impl.WarPlayerImpl;
 
 public class DumpCommand extends PluginCommand {
 
-  public DumpCommand(EpicWarPlugin plugin, PluginParentCommand parent) {
+  public DumpCommand(EpicWarPlugin plugin, ParentPluginCommand parent) {
     super(plugin, parent, "dump", true);
     setOnlyPlayer();
     setRequiredArgumentsAmount(1);
@@ -23,19 +26,19 @@ public class DumpCommand extends PluginCommand {
   }
 
   @Override
-  public boolean onCommandAsAdmin(WarPlayer sender, CommandArguments arguments) {
+  public boolean onCommandAsAdmin(WarPlayerImpl sender, CommandArguments arguments) {
     String dumpType = arguments.asString(0);
-    War currentWar = sender.getWar();
+    WarImpl currentWar = sender.getWar();
     try {
       switch (dumpType) {
       case "players":
-        currentWar.getPlayers().dump2File();
+        currentWar.getPlayerManager().dump2File();
         break;
       case "factions":
-        currentWar.getFactions().dump2File();
+        currentWar.getFactionManager().dump2File();
         break;
       case "sectors":
-        currentWar.getSectors().dump2File();
+        currentWar.getSectorManager().dump2File();
         break;
       case "points":
         currentWar.getControlPoints().dump2File();

@@ -8,7 +8,7 @@ package com.gmail.mararok.epicwar.sector;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.gmail.mararok.epicwar.control.SectorInfo;
+import com.gmail.mararok.epicwar.control.impl.SectorData;
 
 public class WoolsMapInfo implements Cloneable {
   public int id;
@@ -35,9 +35,9 @@ public class WoolsMapInfo implements Cloneable {
   }
 
   @Override
-  public SectorInfo clone() {
+  public SectorData clone() {
     try {
-      return (SectorInfo) super.clone();
+      return (SectorData) super.clone();
     } catch (CloneNotSupportedException e) {
       throw new InternalError(e.toString());
     }

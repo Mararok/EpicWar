@@ -7,19 +7,19 @@ package com.gmail.mararok.epicwar.command.sector;
 
 import java.sql.SQLException;
 
+import com.gmail.mararok.bukkit.util.command.CommandArguments;
+import com.gmail.mararok.bukkit.util.command.ParentPluginCommand;
+import com.gmail.mararok.bukkit.util.command.PluginCommand;
 import com.gmail.mararok.bukkit.util.language.Language;
 import com.gmail.mararok.epicwar.EpicWarPlugin;
-import com.gmail.mararok.epicwar.command.CommandArguments;
-import com.gmail.mararok.epicwar.command.PluginParentCommand;
-import com.gmail.mararok.epicwar.command.PluginCommand;
-import com.gmail.mararok.epicwar.player.WarPlayer;
+import com.gmail.mararok.epicwar.player.impl.WarPlayerImpl;
 import com.gmail.mararok.epicwar.sector.SectorExistsException;
 import com.gmail.mararok.epicwar.sector.SectorsGeneratorConfigException;
 import com.gmail.mararok.epicwar.sector.SimpleSectorsGenerator;
 
 public class SectorGenCommand extends PluginCommand {
 
-  public SectorGenCommand(EpicWarPlugin plugin, PluginParentCommand parent) {
+  public SectorGenCommand(EpicWarPlugin plugin, ParentPluginCommand parent) {
     super(plugin, parent, "gen", true);
     setOnlyPlayer();
     setDescription(Language.CD_SECTOR_GEN);
@@ -27,13 +27,13 @@ public class SectorGenCommand extends PluginCommand {
   }
 
   @Override
-  public boolean onCommandAsAdmin(WarPlayer admin, CommandArguments arguments) {
+  public boolean onCommandAsAdmin(WarPlayerImpl admin, CommandArguments arguments) {
 
     SimpleSectorsGenerator generator = new SimpleSectorsGenerator();
     try {
 
       generator.setConfig(admin.getWar().getSectorsGeneratorConfig());
-      admin.getWar().getSectors()
+      admin.getWar().getSectorManager()
           .createFromList(generator.generate(admin.getLocation()));
       admin.sendMessage("You created sectors");
       return true;

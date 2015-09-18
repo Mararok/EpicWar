@@ -5,12 +5,12 @@
  */
 package com.gmail.mararok.epicwar.command.faction;
 
+import com.gmail.mararok.bukkit.util.command.ParentPluginCommand;
 import com.gmail.mararok.bukkit.util.language.Language;
 import com.gmail.mararok.epicwar.EpicWarPlugin;
-import com.gmail.mararok.epicwar.command.PluginParentCommand;
 
-public class FactionCommands extends PluginParentCommand {
-  public FactionCommands(EpicWarPlugin plugin, PluginParentCommand parent) {
+public class FactionCommands extends ParentPluginCommand {
+  public FactionCommands(EpicWarPlugin plugin, ParentPluginCommand parent) {
     super(plugin, parent, "ewf");
     setDescription(Language.CD_FACTION);
     setUsage("\\ewf [subcommand]");

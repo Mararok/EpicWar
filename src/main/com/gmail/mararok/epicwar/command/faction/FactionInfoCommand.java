@@ -5,17 +5,17 @@
  */
 package com.gmail.mararok.epicwar.command.faction;
 
+import com.gmail.mararok.bukkit.util.command.CommandArguments;
+import com.gmail.mararok.bukkit.util.command.ParentPluginCommand;
+import com.gmail.mararok.bukkit.util.command.PluginCommand;
 import com.gmail.mararok.bukkit.util.language.Language;
 import com.gmail.mararok.epicwar.EpicWarPlugin;
-import com.gmail.mararok.epicwar.command.CommandArguments;
-import com.gmail.mararok.epicwar.command.PluginParentCommand;
-import com.gmail.mararok.epicwar.command.PluginCommand;
-import com.gmail.mararok.epicwar.faction.Faction;
-import com.gmail.mararok.epicwar.player.WarPlayer;
+import com.gmail.mararok.epicwar.faction.internal.FactionImpl;
+import com.gmail.mararok.epicwar.player.impl.WarPlayerImpl;
 
 public class FactionInfoCommand extends PluginCommand {
 
-  public FactionInfoCommand(EpicWarPlugin plugin, PluginParentCommand parent) {
+  public FactionInfoCommand(EpicWarPlugin plugin, ParentPluginCommand parent) {
     super(plugin, parent, "info");
     setOnlyPlayer();
     setDescription(Language.CD_FACTION_INFO);
@@ -23,9 +23,9 @@ public class FactionInfoCommand extends PluginCommand {
   }
 
   @Override
-  public boolean onCommandAsPlayer(WarPlayer player, CommandArguments arguments) {
+  public boolean onCommandAsPlayer(WarPlayerImpl player, CommandArguments arguments) {
     if (player.hasFaction()) {
-      Faction faction = player.getFaction();
+      FactionImpl faction = player.getFaction();
       player.sendMessage("Your faction: " + faction.getChatColor()
           + faction.getName());
     } else {

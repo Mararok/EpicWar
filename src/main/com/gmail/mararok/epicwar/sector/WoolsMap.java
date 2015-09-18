@@ -12,7 +12,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
-import com.gmail.mararok.epicwar.control.Sector;
+import com.gmail.mararok.epicwar.control.impl.SectorImpl;
 import com.gmail.mararok.epicwar.util.DataObject;
 
 public class WoolsMap implements DataObject<WoolsMapInfo> {
@@ -34,17 +34,17 @@ public class WoolsMap implements DataObject<WoolsMapInfo> {
     Block currentBlock = getMaps().getWorld().getBlockAt(getInfo().x,
         getInfo().y, getInfo().z);
 
-    int sectorsAmount = getMaps().getSectors().size() - 1;
+    int sectorsAmount = getMaps().getSectorManager().size() - 1;
     int lines = sectorsAmount / getInfo().sectorsPerLine;
 
-    List<Sector> sectors = getMaps().getSectors().getList();
+    List<SectorImpl> sectors = getMaps().getSectorManager().getList();
 
     for (int y = 0; y < lines; ++y) {
       for (int x = 0; x < getInfo().sectorsPerLine; ++x) {
 
         currentBlock.setType(Material.WOOL);
         int sectorID = y * getInfo().sectorsPerLine + x + 1;
-        Sector sector = sectors.get(sectorID);
+        SectorImpl sector = sectors.get(sectorID);
 
         currentBlock.setData(sector.getOwner().getDyeColor().getWoolData());
 
@@ -62,7 +62,7 @@ public class WoolsMap implements DataObject<WoolsMapInfo> {
     }
   }
 
-  public void onSectorCapture(Sector sector) {
+  public void onSectorCapture(SectorImpl sector) {
     MapBlocks.get(sector.getID()).setData(
         sector.getOwner().getDyeColor().getWoolData());
   }
