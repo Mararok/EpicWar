@@ -5,8 +5,6 @@
  */
 package com.gmail.mararok.epicwar.control.impl;
 
-import com.gmail.mararok.epicwar.control.ControlAreaData;
+public class DatabaseControlPointMapper {
 
-public class SectorData extends ControlAreaData {
-  public int ownerId;
 }

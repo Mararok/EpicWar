@@ -8,20 +8,20 @@ package com.gmail.mararok.epicwar.control.impl;
 import org.bukkit.Chunk;
 
 import com.gmail.mararok.epicwar.control.Subsector;
+import com.gmail.mararok.epicwar.control.SubsectorMap;
 
 /**
  * Represents all war action terrian
  * Map can be only defined on positive chunk coordinates !!!
  */
-public class SubsectorMap {
+public class SubsectorMapImpl implements SubsectorMap {
   private int startChunkX;
   private int startChunkZ;
-
   private int sizeInChunks;
 
   private Subsector[] subsectors;
 
-  public SubsectorMap(int startChunkX, int startChunkZ, int sizeInChunks) {
+  public SubsectorMapImpl(int startChunkX, int startChunkZ, int sizeInChunks) {
     this.startChunkX = startChunkX;
     this.startChunkZ = startChunkZ;
     this.sizeInChunks = sizeInChunks;
@@ -29,15 +29,17 @@ public class SubsectorMap {
     subsectors = new SubsectorImpl[sizeInChunks * sizeInChunks];
   }
 
-  /** Return subsector or null when not exists */
+  @Override
   public Subsector get(Chunk chunk) {
     return get(chunk.getX(), chunk.getZ());
   }
 
+  @Override
   public Subsector get(int chunkX, int chunkZ) {
     return getLocal(getLocalChunkX(chunkX), getLocalChunkZ(chunkZ));
   }
 
+  @Override
   public Subsector getLocal(int localChunkX, int localChunkZ) {
     return (isLocalPointInner(localChunkX, localChunkX)) ? subsectors[getLocalIndex(localChunkX, localChunkZ)] : null;
   }
@@ -51,30 +53,37 @@ public class SubsectorMap {
     }
   }
 
-  public final int getLocalIndex(int localChunkX, int localChunkZ) {
+  @Override
+  public int getLocalIndex(int localChunkX, int localChunkZ) {
     return localChunkX * sizeInChunks + localChunkX;
   }
 
-  public final int getLocalChunkX(int chunkX) {
+  @Override
+  public int getLocalChunkX(int chunkX) {
     return chunkX - startChunkX;
   }
 
-  public final int getLocalChunkZ(int chunkZ) {
+  @Override
+  public int getLocalChunkZ(int chunkZ) {
     return chunkZ - startChunkZ;
   }
 
-  public final boolean isLocalPointInner(int chunkX, int chunkZ) {
-    return (chunkX >= 0 && chunkX < sizeInChunks && chunkZ >= 0 && chunkZ < sizeInChunks);
+  @Override
+  public boolean isLocalPointInner(int localChunkX, int localchunkZ) {
+    return (localChunkX >= 0 && localChunkX < sizeInChunks && localchunkZ >= 0 && localchunkZ < sizeInChunks);
   }
 
+  @Override
   public int getStartX() {
     return startChunkX;
   }
 
+  @Override
   public int getStartZ() {
     return startChunkZ;
   }
 
+  @Override
   public int getSizeInChunks() {
     return sizeInChunks;
   }

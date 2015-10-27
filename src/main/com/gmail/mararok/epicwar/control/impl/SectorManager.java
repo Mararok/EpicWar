@@ -5,68 +5,64 @@
  */
 package com.gmail.mararok.epicwar.control.impl;
 
-import java.util.List;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Vector;
-import java.util.logging.Logger;
 
-import com.gmail.mararok.bukkit.util.Disposable;
-import com.gmail.mararok.bukkit.util.language.Language;
-import com.gmail.mararok.epicwar.impl.WarImpl;
+import com.gmail.mararok.epicwar.War;
+import com.gmail.mararok.epicwar.control.Sector;
+import com.gmail.mararok.epicwar.control.SectorData;
 
-public class SectorManager implements Disposable {
+public class SectorManager {
   private Vector<SectorImpl> sectors;
-  private SubsectorMap subsectorMap;
-  
-  private SectorDAO sectorDao;
-  private ControlPointMapper controlPointDao;
-  private SubsectorDAO subsectorDao;
-  
-  private WarImpl war;
-  
-  public SectorManager(SectorDAO sectorDAO, ControlPointMapper controlPointDAO, SubsectorDAO subsectorDAO, WarImpl war) {
-    this.sectorDao = sectorDAO;
-    this.controlPointDao = controlPointDAO;
-    this.subsectorDao = subsectorDAO;
+  private SectorMapper mapper;
+  private War war;
+
+  public SectorManager(SectorMapper mapper, War war) throws Exception {
+    this.mapper = mapper;
     this.war = war;
+    loadAll();
   }
 
-  public void load() throws Exception {
-    SectorImpl wildSector = createWildSector();
-    sectors.set(0,wildSector);
-    
-    Logger log = getWar().getPlugin().getLogger();
-    log.info("Loading sectors: ");
-    List<SectorData> infoList = sectorDao.findAll(getWar());
-    for (SectorData info : infoList) {
-      sectors.set(info.id,SectorImpl.createFromInfo(info,this));
-      log.info(" Loaded: "+info.id+":"+info.name);
+  private void loadAll() throws Exception {
+    Collection<SectorImpl> collection = mapper.findAll();
+    for (SectorImpl sector : collection) {
+      sectors.set(sector.getId(), sector);
     }
   }
 
-  private SectorImpl createWildSector() {
-    Language lang = getWar().getPlugin().getLanguage();
-    SectorImpl wildSector = new SectorImpl(0,lang.getString("sector.wild.name"),this);
-    wildSector.setDescription(lang.getString("sector.wild.description"));
-    return wildSector;
-  }
-
-  public void create(String name) throws Exception {
-    SectorData info = sectorDao.create(getWar(), name);
-    if (info.id != 0) {
-      sectors.set(info.id, SectorImpl.createFromInfo(info,this));
-    }
-  }
-
-  public SectorImpl getById(int id) {
+  public Sector findById(int id) {
     return sectors.get(id);
   }
 
-  @Override
-  public void dispose() {
-    
+  public Collection<Sector> findAll() {
+    return Collections.unmodifiableCollection(sectors);
   }
 
-  public WarImpl getWar() {
+  public Sector create(SectorData data) throws Exception {
+    SectorImpl sector = mapper.insert(data);
+    sectors.set(sector.getId(), sector);
+    return sector;
+  }
+
+  public void update(Sector sector) throws Exception {
+    SectorImpl s = (SectorImpl) findById(sector.getId());
+    if (s != null) {
+      mapper.update(s);
+    }
+  }
+
+  /**
+   * TODO unlink all references to deleted sector in control points
+   */
+  public void delete(Sector sector) throws Exception {
+    SectorImpl s = (SectorImpl) findById(sector.getId());
+    if (s != null) {
+      mapper.delete(s);
+    }
+  }
+
+  public War getWar() {
     return war;
   }
 }

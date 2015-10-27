@@ -5,16 +5,19 @@
  */
 package com.gmail.mararok.epicwar.control;
 
-import java.util.List;
+import java.util.Collection;
 
-import com.gmail.mararok.epicwar.control.impl.SectorManager;
+import com.gmail.mararok.epicwar.faction.Faction;
 
 /**
- * Its set of control points
+ * It's set of control points
  * 
  */
 public interface Sector extends NamedControlArea {
-  List<ControlPoint> getControlPoints();
+  Collection<ControlPoint> getControlPoints();
 
-  SectorManager getSectors();
+  boolean canCapture(Faction other);
+
+  void setOwner(Faction newOwner);
+
 }

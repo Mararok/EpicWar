@@ -5,16 +5,16 @@
  */
 package com.gmail.mararok.epicwar.control;
 
-import com.gmail.mararok.bukkit.util.Position3D;
-import com.gmail.mararok.epicwar.control.impl.NamedControlAreaData;
+import com.gmail.mararok.epiccore.util.Position3D;
 
 public class ControlPointData extends NamedControlAreaData {
 
   public int ownerId;
   public int sectorId;
-  
-  public Position3D location;
+
+  public Position3D position;
   public int radius;
   public ControlAreaPower power;
-  
+  public int[] connections;
+
 }

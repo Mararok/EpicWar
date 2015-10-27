@@ -29,6 +29,8 @@ public interface ControlPoint extends NamedControlArea {
 
   public Sector getSector();
 
+  public void setSector(Sector newSector);
+
   public Collection<ControlPoint> getConnections();
 
   void addSubsector(Subsector subsector);

@@ -10,6 +10,7 @@ import org.bukkit.Chunk;
 import com.gmail.mararok.epicwar.War;
 import com.gmail.mararok.epicwar.control.ControlPoint;
 import com.gmail.mararok.epicwar.control.Subsector;
+import com.gmail.mararok.epicwar.control.SubsectorData;
 import com.gmail.mararok.epicwar.faction.Faction;
 
 public class SubsectorImpl extends ControlAreaImpl implements Subsector {
@@ -20,11 +21,8 @@ public class SubsectorImpl extends ControlAreaImpl implements Subsector {
 
   private ControlPoint controlPoint;
 
-  public SubsectorImpl(int id, int chunkX, int chunkZ, ControlPoint controlPoint) {
-    super(id);
-    this.chunkX = chunkX;
-    this.chunkZ = chunkZ;
-    this.controlPoint = controlPoint;
+  public SubsectorImpl(SubsectorData data, ControlPoint controlPoint) {
+    super(data);
   }
 
   @Override
@@ -39,7 +37,7 @@ public class SubsectorImpl extends ControlAreaImpl implements Subsector {
 
   @Override
   public Chunk getChunk() {
-    return controlPoint.getWar().getWorld().getChunkAt(chunkX, chunkZ);
+    return getWar().getWorld().getChunkAt(chunkX, chunkZ);
   }
 
   @Override
@@ -50,6 +48,11 @@ public class SubsectorImpl extends ControlAreaImpl implements Subsector {
   @Override
   public void setControlPoint(ControlPoint newControlPoint) {
     controlPoint = newControlPoint;
+  }
+
+  @Override
+  public boolean isOwner(Faction faction) {
+    return controlPoint.isOwner(faction);
   }
 
   @Override

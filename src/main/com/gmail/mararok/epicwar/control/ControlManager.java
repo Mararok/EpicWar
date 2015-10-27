@@ -5,7 +5,7 @@
  */
 package com.gmail.mararok.epicwar.control;
 
-import com.gmail.mararok.epiccore.util.entity.EntityData;
+public interface ControlManager {
+  public SubsectorMap getSubsectorMap();
 
-public class ControlAreaData extends EntityData {
 }

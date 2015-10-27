@@ -7,23 +7,28 @@ package com.gmail.mararok.epicwar.control.event;
 
 import org.bukkit.event.HandlerList;
 
-import com.gmail.mararok.epicwar.control.impl.ControlAreaImpl;
-import com.gmail.mararok.epicwar.faction.internal.FactionImpl;
+import com.gmail.mararok.epicwar.control.ControlArea;
+import com.gmail.mararok.epicwar.faction.Faction;
 
 public class CapturedControlAreaEvent extends ControlAreaEvent {
-  private FactionImpl oldOwner;
-  
-  public CapturedControlAreaEvent(ControlAreaImpl controlArea, FactionImpl oldOwner) {
+  private Faction previousOwner;
+
+  public CapturedControlAreaEvent(ControlArea controlArea, Faction previousOwner) {
     super(controlArea);
-    this.oldOwner = oldOwner;
+    this.previousOwner = previousOwner;
   }
-  
+
+  public Faction getPreviousOwner() {
+    return previousOwner;
+  }
+
   private static final HandlerList handlers = new HandlerList();
-  
+
+  @Override
   public HandlerList getHandlers() {
     return handlers;
   }
- 
+
   public static HandlerList getHandlerList() {
     return handlers;
   }

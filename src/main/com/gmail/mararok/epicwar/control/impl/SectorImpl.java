@@ -5,41 +5,29 @@
  */
 package com.gmail.mararok.epicwar.control.impl;
 
+import java.util.Collection;
 import java.util.List;
 
-import com.gmail.mararok.bukkit.util.UMath;
+import com.gmail.mararok.epicwar.War;
 import com.gmail.mararok.epicwar.control.ControlPoint;
 import com.gmail.mararok.epicwar.control.Sector;
+import com.gmail.mararok.epicwar.control.SectorData;
 import com.gmail.mararok.epicwar.faction.Faction;
-import com.gmail.mararok.epicwar.faction.internal.FactionImpl;
-import com.gmail.mararok.epicwar.impl.WarImpl;
 
 public class SectorImpl extends NamedControlAreaImpl implements Sector {
   private Faction owner;
   private List<ControlPoint> controlPoints;
+  private War war;
 
-  public SectorImpl(int id, String shortName, String name) {
-    super(id, shortName, name);
-  }
-
-  public static SectorImpl createFromData(SectorData data, SectorManager sectors) {
-    SectorImpl sector = new SectorImpl(data.id, data.shortName, data.name);
-    sector.setDescription(info.description);
-    FactionImpl owner = sectors.getWar().getFactionManager().getById(info.ownerId);
-    sector.setOwner(owner);
-
-  }
-
-  public void tryCapture(FactionImpl newOwner) {
-    if (canCapture(newOwner)) {
-      setOwner(newOwner);
-    }
+  public SectorImpl(SectorData data, War war) {
+    super(data, war);
+    this.war = war;
   }
 
   @Override
-  public boolean canCapture(FactionImpl newOwner) {
-    for (ControlPointImpl cp : controlPoints) {
-      if (cp.getOwner() != newOwner)
+  public boolean canCapture(Faction faction) {
+    for (ControlPoint controlPoint : controlPoints) {
+      if (controlPoint.isOwner(faction))
         return false;
     }
     return true;
@@ -51,7 +39,7 @@ public class SectorImpl extends NamedControlAreaImpl implements Sector {
   }
 
   @Override
-  public List<ControlPointImpl> getControlPoints() {
+  public Collection<ControlPoint> getControlPoints() {
     return controlPoints;
   }
 
@@ -60,7 +48,7 @@ public class SectorImpl extends NamedControlAreaImpl implements Sector {
   }
 
   @Override
-  public FactionImpl getOwner() {
+  public Faction getOwner() {
     return owner;
   }
 
@@ -70,13 +58,13 @@ public class SectorImpl extends NamedControlAreaImpl implements Sector {
   }
 
   @Override
-  public SectorManager getSectors() {
-    return sectors;
+  public boolean isOwner(Faction faction) {
+    return owner == faction;
   }
 
   @Override
-  public WarImpl getWar() {
-    return sectors.getWar();
+  public War getWar() {
+    return war;
   }
 
 }

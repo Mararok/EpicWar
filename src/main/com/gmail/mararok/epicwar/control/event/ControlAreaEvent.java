@@ -6,18 +6,17 @@
 package com.gmail.mararok.epicwar.control.event;
 
 import com.gmail.mararok.epicwar.EpicWarEvent;
-import com.gmail.mararok.epicwar.control.impl.ControlAreaImpl;
+import com.gmail.mararok.epicwar.control.ControlArea;
 
 public abstract class ControlAreaEvent extends EpicWarEvent {
-  private ControlAreaImpl controlArea;
-  
-  public ControlAreaEvent(ControlAreaImpl controlArea) {
+  private ControlArea controlArea;
+
+  public ControlAreaEvent(ControlArea controlArea) {
     this.controlArea = controlArea;
   }
-  
-  public ControlAreaImpl getControlArea() {
+
+  public ControlArea getControlArea() {
     return controlArea;
   }
-  
 
 }

@@ -4,16 +4,13 @@
  */
 package com.gmail.mararok.epicwar.control.impl;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import org.bukkit.Location;
 
 import com.gmail.mararok.epicwar.War;
 import com.gmail.mararok.epicwar.control.ControlAreaPower;
 import com.gmail.mararok.epicwar.control.ControlPoint;
+import com.gmail.mararok.epicwar.control.ControlPointData;
 import com.gmail.mararok.epicwar.control.Sector;
-import com.gmail.mararok.epicwar.control.Subsector;
 import com.gmail.mararok.epicwar.faction.Faction;
 
 public class ControlPointImpl extends NamedControlAreaImpl implements ControlPoint {
@@ -24,18 +21,17 @@ public class ControlPointImpl extends NamedControlAreaImpl implements ControlPoi
   private Faction owner;
   private Occupiers occupiers;
 
-  private List<Subsector> subsectors;
+  private ControlPoint[] connections;
   private Sector sector;
 
-  public ControlPointImpl(int id, String shortName, String name, Location location) {
-    super(id, shortName, name);
-    this.location = location;
+  public ControlPointImpl(ControlPointData data, War war) {
+    super(data, war);
+    this.location = new Location(sector.getWar().getWorld(), data.position.x, data.position.y, data.position.z);
 
-    radius = 2;
-    power = new ControlAreaPower(100);
+    radius = data.radius;
+    power = data.power;
     occupiers = new Occupiers(this);
 
-    subsectors = new LinkedList<Subsector>();
   }
 
   @Override
@@ -75,21 +71,16 @@ public class ControlPointImpl extends NamedControlAreaImpl implements ControlPoi
     return occupiers;
   }
 
-  @Override
-  public void addSubsector(Subsector subsector) {
+  public void addSubsector(SubsectorImpl subsector) {
     if (subsector.getControlPoint() != null) {
       subsector.getControlPoint().removeSubsector(subsector);
     }
 
-    subsectors.add(subsector);
     subsector.setControlPoint(this);
   }
 
-  @Override
-  public void removeSubsector(Subsector subsector) {
-    if (subsectors.remove(subsector)) {
-      subsector.setControlPoint(null);
-    }
+  public void removeSubsector(SubsectorImpl subsector) {
+    subsector.setControlPoint(null);
   }
 
   @Override
@@ -97,14 +88,17 @@ public class ControlPointImpl extends NamedControlAreaImpl implements ControlPoi
     return sector;
   }
 
-  public void setSector(SectorImpl newSector) {
+  public void setSector(Sector newSector) {
     sector = newSector;
   }
-
 
   @Override
   public War getWar() {
     return sector.getWar();
   }
 
+  @Override
+  public int[] getConnections() {
+    return connections;
+  }
 }

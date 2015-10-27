@@ -5,11 +5,13 @@
  */
 package com.gmail.mararok.epicwar.control.impl;
 
-import com.gmail.mararok.bukkit.util.entity.Entity;
+import com.gmail.mararok.epiccore.util.entity.ObservedEntity;
 import com.gmail.mararok.epicwar.control.ControlArea;
+import com.gmail.mararok.epicwar.control.ControlAreaData;
 
-public abstract class ControlAreaImpl extends Entity implements ControlArea {
-  public ControlAreaImpl(int id) {
-    super(id);
+public abstract class ControlAreaImpl extends ObservedEntity implements ControlArea {
+
+  public ControlAreaImpl(ControlAreaData data) {
+    super(data.id);
   }
 }
