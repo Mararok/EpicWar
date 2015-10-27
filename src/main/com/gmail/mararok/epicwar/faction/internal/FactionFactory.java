@@ -5,7 +5,7 @@
  */
 package com.gmail.mararok.epicwar.faction.internal;
 
-import com.gmail.mararok.bukkit.util.entity.EntityFactory;
+import com.gmail.mararok.epiccore.util.entity.EntityFactory;
 import com.gmail.mararok.epicwar.War;
 import com.gmail.mararok.epicwar.faction.FactionData;
 

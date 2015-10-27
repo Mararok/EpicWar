@@ -7,8 +7,8 @@ package com.gmail.mararok.epicwar.faction;
 
 import java.util.List;
 
-import com.gmail.mararok.bukkit.util.Position3D;
-import com.gmail.mararok.bukkit.util.entity.EntityData;
+import com.gmail.mararok.epiccore.util.Position3D;
+import com.gmail.mararok.epiccore.util.entity.EntityData;
 
 public class FactionData extends EntityData {
   public String name;

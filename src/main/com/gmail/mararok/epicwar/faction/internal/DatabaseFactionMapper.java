@@ -10,22 +10,21 @@ import java.sql.SQLException;
 
 import org.bukkit.craftbukkit.libs.joptsimple.internal.Strings;
 
-import com.gmail.mararok.bukkit.util.Position3D;
-import com.gmail.mararok.bukkit.util.database.CachedQuery;
-import com.gmail.mararok.bukkit.util.database.DatabaseConnection;
-import com.gmail.mararok.bukkit.util.entity.DatabaseEntityMapper;
+import com.gmail.mararok.epiccore.util.Position3D;
+import com.gmail.mararok.epiccore.util.database.DMQL;
+import com.gmail.mararok.epiccore.util.entity.DatabaseEntityMapper;
 import com.gmail.mararok.epicwar.faction.FactionBannerPattern;
 import com.gmail.mararok.epicwar.faction.FactionColor;
 import com.gmail.mararok.epicwar.faction.FactionData;
 
 public class DatabaseFactionMapper extends DatabaseEntityMapper<FactionImpl, FactionData>implements FactionMapper {
 
-  public DatabaseFactionMapper(DatabaseConnection connection, CachedQuery[] sqlQueries, String tableName, FactionFactory factory) {
-    super(connection, sqlQueries, tableName, factory);
+  public DatabaseFactionMapper(DMQL queries, String tableName, FactionFactory factory) {
+    super(queries, tableName, factory);
   }
 
   @Override
-  public FactionImpl create(FactionData data) throws Exception {
+  public FactionImpl insert(FactionData data) throws Exception {
     String columns = "(id,name,shortcut,color,bannerPattern,spawnPositionX,spawnPositionY,spawnPositionZ)";
     data.id = data.color.ordinal(); // faction id is color;
     String values = "(" + Strings.join(data.toStringList(), ",") + ")";
