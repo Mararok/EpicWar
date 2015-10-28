@@ -9,6 +9,7 @@ import org.bukkit.Chunk;
 
 import com.gmail.mararok.epicwar.War;
 import com.gmail.mararok.epicwar.control.ControlPoint;
+import com.gmail.mararok.epicwar.control.Sector;
 import com.gmail.mararok.epicwar.control.Subsector;
 import com.gmail.mararok.epicwar.control.SubsectorData;
 import com.gmail.mararok.epicwar.faction.Faction;
@@ -48,6 +49,11 @@ public class SubsectorImpl extends ControlAreaImpl implements Subsector {
   @Override
   public void setControlPoint(ControlPoint newControlPoint) {
     controlPoint = newControlPoint;
+  }
+
+  @Override
+  public Sector getSector() {
+    return getControlPoint().getSector();
   }
 
   @Override

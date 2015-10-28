@@ -5,13 +5,13 @@
  */
 package com.gmail.mararok.epicwar.command.faction;
 
-import com.gmail.mararok.bukkit.util.command.CommandArguments;
-import com.gmail.mararok.bukkit.util.command.ParentPluginCommand;
-import com.gmail.mararok.bukkit.util.command.PluginCommand;
-import com.gmail.mararok.bukkit.util.language.Language;
+import com.gmail.mararok.epiccore.command.CommandArguments;
+import com.gmail.mararok.epiccore.command.ParentPluginCommand;
+import com.gmail.mararok.epiccore.command.PluginCommand;
+import com.gmail.mararok.epiccore.language.Language;
 import com.gmail.mararok.epicwar.EpicWarPlugin;
+import com.gmail.mararok.epicwar.faction.FactionManager;
 import com.gmail.mararok.epicwar.faction.internal.FactionImpl;
-import com.gmail.mararok.epicwar.faction.internal.FactionManager;
 import com.gmail.mararok.epicwar.player.impl.WarPlayerImpl;
 
 public class FactionSetSpawnCommand extends PluginCommand {

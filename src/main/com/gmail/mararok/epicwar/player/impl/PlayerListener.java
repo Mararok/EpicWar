@@ -5,7 +5,6 @@
  */
 package com.gmail.mararok.epicwar.player.impl;
 
-import org.bukkit.World;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,7 +12,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -21,7 +19,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import com.gmail.mararok.epicwar.EpicWarPlugin;
 import com.gmail.mararok.epicwar.War;
 import com.gmail.mararok.epicwar.WarManager;
-import com.gmail.mararok.epicwar.impl.WarImpl;
 import com.gmail.mararok.epicwar.player.WarPlayer;
 
 public class PlayerListener implements Listener {

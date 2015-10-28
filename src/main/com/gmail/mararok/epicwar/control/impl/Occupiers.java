@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.gmail.mararok.epiccore.util.database.DatabaseConnection;
+import com.gmail.mararok.epiccore.database.DatabaseConnection;
 import com.gmail.mararok.epicwar.control.ControlPoint;
 import com.gmail.mararok.epicwar.control.event.ControlAreaEvent;
 import com.gmail.mararok.epicwar.control.event.PlayerAttackingControlAreaEvent;

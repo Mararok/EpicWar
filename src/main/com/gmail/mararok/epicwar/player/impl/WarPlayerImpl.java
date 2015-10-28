@@ -8,29 +8,28 @@ package com.gmail.mararok.epicwar.player.impl;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-import com.gmail.mararok.bukkit.util.entity.ObservedEntity;
+import com.gmail.mararok.epiccore.entity.ObservedEntity;
 import com.gmail.mararok.epicwar.War;
-
 import com.gmail.mararok.epicwar.control.ControlPoint;
 import com.gmail.mararok.epicwar.control.Sector;
 import com.gmail.mararok.epicwar.control.Subsector;
-
 import com.gmail.mararok.epicwar.faction.Faction;
 import com.gmail.mararok.epicwar.player.PlayerStats;
 import com.gmail.mararok.epicwar.player.WarPlayer;
+import com.gmail.mararok.epicwar.player.WarPlayerData;
 
 public class WarPlayerImpl extends ObservedEntity implements WarPlayer {
   private Player nativePlayer;
   private PlayerStats stats;
   private Faction faction;
-  
+
   private PlayerPosition currentPosition;
 
-  public WarPlayerImpl(int id, Player nativePlayer, Faction faction, PlayerStats stats) {
-    super(id);
+  public WarPlayerImpl(WarPlayerData data, Player nativePlayer, War war) {
+    super(data.id);
     this.nativePlayer = nativePlayer;
-    this.faction = faction;
-    this.stats = stats; 
+    this.stats = data.stats;
+    this.faction = war.getFactionManager().findById(data.factionId);
     currentPosition = new PlayerPosition(this);
   }
 
@@ -140,15 +139,15 @@ public class WarPlayerImpl extends ObservedEntity implements WarPlayer {
   public PlayerStats getStats() {
     return stats;
   }
-  
+
   @Override
   public Faction getFaction() {
     return faction;
   }
-  
+
   public void setFaction(Faction newFaction) {
     faction = newFaction;
-    onChangeProperty("factionId",faction.getId());
+    onChangeProperty("factionId", faction.getId());
   }
 
   @Override
@@ -165,7 +164,7 @@ public class WarPlayerImpl extends ObservedEntity implements WarPlayer {
   public Subsector getSubsector() {
     return currentPosition.getSubsector();
   }
-  
+
   @Override
   public War getWar() {
     return faction.getWar();

@@ -7,7 +7,7 @@ package com.gmail.mararok.epicwar.faction.internal;
 
 import org.bukkit.Location;
 
-import com.gmail.mararok.epiccore.util.entity.ObservedEntity;
+import com.gmail.mararok.epiccore.entity.ObservedEntity;
 import com.gmail.mararok.epicwar.War;
 import com.gmail.mararok.epicwar.faction.Faction;
 import com.gmail.mararok.epicwar.faction.FactionBannerPattern;

@@ -8,11 +8,12 @@ package com.gmail.mararok.epicwar.impl;
 
 import java.util.Map;
 
-import net.openhft.koloboke.collect.map.hash.HashObjObjMaps;
-
 import org.bukkit.World;
+
 import com.gmail.mararok.epicwar.EpicWarPlugin;
 import com.gmail.mararok.epicwar.War;
+
+import net.openhft.koloboke.collect.map.hash.HashObjObjMaps;
 
 public class WarManagerImpl {
   private Map<String, WarImpl> wars;

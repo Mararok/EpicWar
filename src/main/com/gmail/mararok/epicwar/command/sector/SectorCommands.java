@@ -5,8 +5,8 @@
  */
 package com.gmail.mararok.epicwar.command.sector;
 
-import com.gmail.mararok.bukkit.util.command.ParentPluginCommand;
-import com.gmail.mararok.bukkit.util.language.Language;
+import com.gmail.mararok.epiccore.command.ParentPluginCommand;
+import com.gmail.mararok.epiccore.language.Language;
 import com.gmail.mararok.epicwar.EpicWarPlugin;
 
 public class SectorCommands extends ParentPluginCommand {

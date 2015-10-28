@@ -5,12 +5,12 @@
  */
 package com.gmail.mararok.epicwar.player;
 
-import org.bukkit.entity.Player;
+import java.util.UUID;
 
-import com.gmail.mararok.bukkit.util.entity.EntityData;
+import com.gmail.mararok.epiccore.entity.EntityData;
 
 public class WarPlayerData extends EntityData {
-  public Player nativePlayer;
+  public UUID uuid;
   public int factionId;
   public PlayerStats stats;
 }

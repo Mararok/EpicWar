@@ -10,13 +10,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 
-import com.gmail.mararok.bukkit.util.database.DatabaseConnection;
-import com.gmail.mararok.bukkit.util.entity.DatabaseEntityMapper;
+import com.gmail.mararok.epiccore.database.DatabaseConnection;
+import com.gmail.mararok.epiccore.entity.EntityDatabaseMapper;
 import com.gmail.mararok.epicwar.faction.internal.FactionImpl;
 import com.gmail.mararok.epicwar.impl.WarImpl;
 import com.gmail.mararok.epicwar.player.WarPlayerData;
 
-public class DatabasePlayerDao extends DatabaseEntityMapper implements PlayerDAO {
+public class DatabasePlayerDao extends EntityDatabaseMapper implements PlayerDAO {
   private final static int REGISTER_SQLID = 0;
   private final static int LOAD_INFO_SQLID = 1;
   private final static int UPDATE_STATS_SQLID = 2;

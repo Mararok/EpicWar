@@ -12,7 +12,10 @@ public class PlayerStats {
   public int points;
   public int capturedControlPoints;
   public int capturedSectors;
-  
+
+  public PlayerStats() {
+  }
+
   public PlayerStats(PlayerStats other) {
     kills = other.kills;
     deaths = other.deaths;

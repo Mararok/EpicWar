@@ -24,19 +24,18 @@ public class ControlPointImpl extends NamedControlAreaImpl implements ControlPoi
   private ControlPoint[] connections;
   private Sector sector;
 
-  public ControlPointImpl(ControlPointData data, War war) {
-    super(data, war);
+  public ControlPointImpl(ControlPointData data, Sector sector) {
+    super(data);
     this.location = new Location(sector.getWar().getWorld(), data.position.x, data.position.y, data.position.z);
 
     radius = data.radius;
     power = data.power;
     occupiers = new Occupiers(this);
-
   }
 
   @Override
   public Location getLocation() {
-    return location.clone();
+    return location;
   }
 
   @Override
@@ -44,9 +43,10 @@ public class ControlPointImpl extends NamedControlAreaImpl implements ControlPoi
     return radius;
   }
 
+  @Override
   public void setRadius(int newRadius) {
     if (newRadius < 2) {
-      throw new IllegalArgumentException("Can't set radius < 2 for ControlPoint " + location);
+      throw new IllegalArgumentException("Can't set radius < 2 for ControlPoint " + getName());
     }
 
     radius = newRadius;
@@ -67,20 +67,13 @@ public class ControlPointImpl extends NamedControlAreaImpl implements ControlPoi
   }
 
   @Override
+  public boolean isOwner(Faction faction) {
+    return owner == faction;
+  }
+
+  @Override
   public Occupiers getOccupiers() {
     return occupiers;
-  }
-
-  public void addSubsector(SubsectorImpl subsector) {
-    if (subsector.getControlPoint() != null) {
-      subsector.getControlPoint().removeSubsector(subsector);
-    }
-
-    subsector.setControlPoint(this);
-  }
-
-  public void removeSubsector(SubsectorImpl subsector) {
-    subsector.setControlPoint(null);
   }
 
   @Override
@@ -88,8 +81,14 @@ public class ControlPointImpl extends NamedControlAreaImpl implements ControlPoi
     return sector;
   }
 
+  @Override
   public void setSector(Sector newSector) {
     sector = newSector;
+  }
+
+  @Override
+  public ControlPoint[] getConnections() {
+    return connections;
   }
 
   @Override
@@ -97,8 +96,4 @@ public class ControlPointImpl extends NamedControlAreaImpl implements ControlPoi
     return sector.getWar();
   }
 
-  @Override
-  public int[] getConnections() {
-    return connections;
-  }
 }

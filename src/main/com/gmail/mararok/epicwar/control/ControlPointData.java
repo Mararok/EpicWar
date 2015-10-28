@@ -5,7 +5,7 @@
  */
 package com.gmail.mararok.epicwar.control;
 
-import com.gmail.mararok.epiccore.util.Position3D;
+import com.gmail.mararok.epiccore.Position3D;
 
 public class ControlPointData extends NamedControlAreaData {
 

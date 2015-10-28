@@ -1,0 +1,33 @@
+# positive number > 0
+id: <number>
+name: <string>
+description: <string>
+startDateTime: <string> "DD.MM.YYYY HH:MM"
+
+editMode: <boolean>
+
+world:
+ name: <string>
+ fightArea: 
+  startChunk:
+   x: <number>
+   z: <number>
+  sizeInChunks: <number>
+
+faction:
+ onlineBalance:
+  enabled: <boolean>
+  percentPerFaction: <number>
+  
+points:
+  kill: <number>
+  death: <number>
+  capture:
+   controlPoint: <number>
+   sector: <number>
+   
+controlPoint:
+ power:
+  updateInterval: <number>
+  defender: <number>
+  attacker: <number>

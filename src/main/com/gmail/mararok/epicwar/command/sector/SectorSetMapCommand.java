@@ -2,14 +2,14 @@ package com.gmail.mararok.epicwar.command.sector;
 
 import org.bukkit.Location;
 
-import com.gmail.mararok.bukkit.util.command.CommandArguments;
-import com.gmail.mararok.bukkit.util.command.ParentPluginCommand;
-import com.gmail.mararok.bukkit.util.command.PluginCommand;
-import com.gmail.mararok.bukkit.util.language.Language;
+import com.gmail.mararok.epiccore.command.CommandArguments;
+import com.gmail.mararok.epiccore.command.ParentPluginCommand;
+import com.gmail.mararok.epiccore.command.PluginCommand;
+import com.gmail.mararok.epiccore.language.Language;
 import com.gmail.mararok.epicwar.EpicWarPlugin;
+import com.gmail.mararok.epicwar.control.impl.WoolsMapInfo;
+import com.gmail.mararok.epicwar.control.impl.WoolsMapOrientation;
 import com.gmail.mararok.epicwar.player.impl.WarPlayerImpl;
-import com.gmail.mararok.epicwar.sector.WoolsMapOrientation;
-import com.gmail.mararok.epicwar.sector.WoolsMapInfo;
 
 public class SectorSetMapCommand extends PluginCommand {
 

@@ -5,7 +5,7 @@
  */
 package com.gmail.mararok.epicwar.control;
 
-import com.gmail.mararok.epiccore.util.entity.EntityData;
+import com.gmail.mararok.epiccore.entity.EntityData;
 
 public class ControlAreaData extends EntityData {
 }

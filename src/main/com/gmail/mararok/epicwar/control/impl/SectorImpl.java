@@ -20,7 +20,7 @@ public class SectorImpl extends NamedControlAreaImpl implements Sector {
   private War war;
 
   public SectorImpl(SectorData data, War war) {
-    super(data, war);
+    super(data);
     this.war = war;
   }
 

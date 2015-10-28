@@ -10,12 +10,12 @@ import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
-import com.gmail.mararok.bukkit.util.command.CommandArguments;
-import com.gmail.mararok.bukkit.util.command.ParentPluginCommand;
-import com.gmail.mararok.bukkit.util.command.PluginCommand;
-import com.gmail.mararok.bukkit.util.language.Language;
+import com.gmail.mararok.epiccore.command.CommandArguments;
+import com.gmail.mararok.epiccore.command.ParentPluginCommand;
+import com.gmail.mararok.epiccore.command.PluginCommand;
+import com.gmail.mararok.epiccore.language.Language;
 import com.gmail.mararok.epicwar.EpicWarPlugin;
-import com.gmail.mararok.epicwar.util.ColorConverter;
+import com.sun.javafx.css.converters.ColorConverter;
 
 public class FactionColorsCommand extends PluginCommand {
 

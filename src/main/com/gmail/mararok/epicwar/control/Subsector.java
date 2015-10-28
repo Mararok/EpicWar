@@ -20,4 +20,6 @@ public interface Subsector extends ControlArea {
   public ControlPoint getControlPoint();
 
   public void setControlPoint(ControlPoint newControlPoint);
+
+  public Sector getSector();
 }

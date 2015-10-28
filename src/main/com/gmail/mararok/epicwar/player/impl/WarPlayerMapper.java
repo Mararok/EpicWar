@@ -5,11 +5,15 @@
  */
 package com.gmail.mararok.epicwar.player.impl;
 
+import java.util.UUID;
+
 import org.bukkit.entity.Player;
 
-import com.gmail.mararok.epicwar.player.WarPlayer;
+import com.gmail.mararok.epiccore.entity.EntityMapper;
+import com.gmail.mararok.epicwar.player.WarPlayerData;
 
-public interface WarPlayerMapper {
-  public WarPlayer findById(int id);
-  public WarPlayer findByPlayer(Player player);
+public interface WarPlayerMapper extends EntityMapper<WarPlayerImpl, WarPlayerData> {
+  public WarPlayerImpl findByUUID(UUID uuid) throws Exception;
+
+  public WarPlayerImpl findByPlayer(Player player) throws Exception;
 }

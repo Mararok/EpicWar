@@ -14,16 +14,24 @@ import com.gmail.mararok.epicwar.control.Subsector;
 import com.gmail.mararok.epicwar.faction.Faction;
 
 public interface WarPlayer {
- 
+
   public int getId();
+
   public Player getNativePlayer();
+
   public PlayerStats getStats();
-  
+
   public Faction getFaction();
-  
+
+  public void addKill();
+
+  public void addDeath();
+
   public Subsector getSubsector();
+
   public ControlPoint getControlPoint();
+
   public Sector getSector();
-  
+
   public War getWar();
 }

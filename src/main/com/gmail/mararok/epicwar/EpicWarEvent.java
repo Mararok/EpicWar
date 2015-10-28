@@ -8,5 +8,4 @@ package com.gmail.mararok.epicwar;
 import org.bukkit.event.Event;
 
 public abstract class EpicWarEvent extends Event {
-
 }

@@ -10,29 +10,18 @@ import java.util.Date;
 public class WarSettings implements Cloneable {
   public String name;
   public String description;
-  
   public Date startDateTime;
-  public String worldName;
 
-  public int pointsKill;
-  public int pointsTeamkill;
-  public int pointsDeath;
-  
-  public int pointsCapturePoint;
-  public int pointsCaptureSector;
-
-  public int powerDefender;
-  public int powerAttacker;
-  
-  public int truceStartHour;
-  public int truceHours; 
-  
+  /** If true war map is editable(you can add more sectors, more control points and changing all settings) */
   public boolean editMode;
-  
-  public int startChunkX;
-  public int startChunkZ;
-  public int sizeInChunks;
-  
+
+  public PointsWarSettings points;
+  public FactionWarSettings faction;
+  public ControlPointWarSettings controlPoint;
+
+  public WorldWarSettings world;
+
+  @Override
   public WarSettings clone() {
     try {
       return (WarSettings) super.clone();

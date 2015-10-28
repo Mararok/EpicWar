@@ -5,8 +5,6 @@
  */
 package com.gmail.mararok.epicwar.control;
 
-import java.util.Collection;
-
 import org.bukkit.Location;
 
 import com.gmail.mararok.epicwar.control.impl.Occupiers;
@@ -23,6 +21,8 @@ public interface ControlPoint extends NamedControlArea {
 
   public int getRadius();
 
+  public void setRadius(int newRadius);
+
   public ControlAreaPower getPower();
 
   public Occupiers getOccupiers();
@@ -31,10 +31,6 @@ public interface ControlPoint extends NamedControlArea {
 
   public void setSector(Sector newSector);
 
-  public Collection<ControlPoint> getConnections();
-
-  void addSubsector(Subsector subsector);
-
-  void removeSubsector(Subsector subsector);
+  public ControlPoint[] getConnections();
 
 }

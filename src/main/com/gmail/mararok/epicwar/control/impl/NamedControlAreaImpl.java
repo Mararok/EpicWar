@@ -5,7 +5,6 @@
  */
 package com.gmail.mararok.epicwar.control.impl;
 
-import com.gmail.mararok.epicwar.War;
 import com.gmail.mararok.epicwar.control.NamedControlArea;
 import com.gmail.mararok.epicwar.control.NamedControlAreaData;
 
@@ -13,8 +12,8 @@ public abstract class NamedControlAreaImpl extends ControlAreaImpl implements Na
   private String name;
   private String description;
 
-  public NamedControlAreaImpl(NamedControlAreaData data, War war) {
-    super(data, war);
+  public NamedControlAreaImpl(NamedControlAreaData data) {
+    super(data);
     this.name = data.name;
     this.description = data.description;
   }
