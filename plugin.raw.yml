@@ -2,23 +2,5 @@ name: EpicWar
 main: com.gmail.mararok.epicwar.EpicWarPlugin
 author: Mararok
 version: "@VERSION"
-
 prefix: EW
-commands:
- ew:
-  description: All commands.
- ewf:
-  description: All faction commands.
- ews:
-  description: All sector commands.
- ewp:
-  description: All control point commands.
- eww:
-  description: All war commands
- 
-  
-
-  
-
-  
  
