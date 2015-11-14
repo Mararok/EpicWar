@@ -11,7 +11,6 @@ import java.util.List;
 
 import com.gmail.mararok.epicwar.War;
 import com.gmail.mararok.epicwar.faction.Faction;
-import com.gmail.mararok.epicwar.faction.FactionColor;
 import com.gmail.mararok.epicwar.faction.FactionData;
 import com.gmail.mararok.epicwar.faction.FactionManager;
 
@@ -21,7 +20,7 @@ public class FactionManagerImpl implements FactionManager {
   private War war;
 
   public FactionManagerImpl(FactionMapper mapper, War war) throws Exception {
-    factions = new FactionImpl[FactionColor.values().length];
+    factions = new FactionImpl[Faction.Color.values().length];
     this.mapper = mapper;
 
     Collection<FactionImpl> collection = mapper.findAll();
@@ -37,8 +36,28 @@ public class FactionManagerImpl implements FactionManager {
   }
 
   @Override
-  public Faction findByColor(FactionColor color) {
+  public Faction findByColor(Faction.Color color) {
     return factions[color.ordinal()];
+  }
+
+  @Override
+  public Faction findByName(String name) {
+    for (Faction faction : factions) {
+      if (faction.getName().equals(name)) {
+        return faction;
+      }
+    }
+    return null;
+  }
+
+  @Override
+  public Faction findByShortcut(String shortcut) {
+    for (Faction faction : factions) {
+      if (faction.getShortcut().equals(shortcut)) {
+        return faction;
+      }
+    }
+    return null;
   }
 
   @Override
@@ -87,4 +106,5 @@ public class FactionManagerImpl implements FactionManager {
   public War getWar() {
     return war;
   }
+
 }
