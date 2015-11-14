@@ -19,7 +19,17 @@ public interface FactionManager {
   /**
    * Returns faction with selected color or null when faction doesn't exist;
    */
-  Faction findByColor(FactionColor color);
+  Faction findByColor(Faction.Color color);
+
+  /**
+   * Returns faction with selected shortcut or null when faction doesn't exist;
+   */
+  Faction findByShortcut(String shortcut);
+
+  /**
+   * Returns faction with selected name or null when faction doesn't exist;
+   */
+  Faction findByName(String factionName);
 
   /**
    * Returns all exists factions
