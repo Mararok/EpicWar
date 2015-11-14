@@ -10,16 +10,14 @@ import org.bukkit.Location;
 import com.gmail.mararok.epiccore.entity.ObservedEntity;
 import com.gmail.mararok.epicwar.War;
 import com.gmail.mararok.epicwar.faction.Faction;
-import com.gmail.mararok.epicwar.faction.FactionBannerPattern;
-import com.gmail.mararok.epicwar.faction.FactionColor;
 import com.gmail.mararok.epicwar.faction.FactionData;
 
 public class FactionImpl extends ObservedEntity implements Faction {
   private String name;
   private String shortcut;
   private String description;
-  private FactionColor color;
-  private FactionBannerPattern bannerPattern;
+  private Color color;
+  private BannerPattern bannerPattern;
   private Location spawnLocation;
 
   private War war;
@@ -69,21 +67,20 @@ public class FactionImpl extends ObservedEntity implements Faction {
   }
 
   @Override
-  public FactionColor getColor() {
+  public Color getColor() {
     return color;
   }
 
   @Override
-  public FactionBannerPattern getBannerPattern() {
+  public BannerPattern getBannerPattern() {
     return bannerPattern;
   }
 
   @Override
-  public void setBannerPattern(FactionBannerPattern newBannerPattern) {
+  public void setBannerPattern(BannerPattern newBannerPattern) {
     bannerPattern = newBannerPattern;
     onChangeProperty("bannerPattern", newBannerPattern.serialize());
   }
-
 
   @Override
   public War getWar() {
