@@ -5,9 +5,10 @@
  */
 package com.mararok.epicwar.player.internal;
 
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerMoveEvent;
 
+import com.mararok.epiccore.Position3D;
 import com.mararok.epiccore.entity.ObservedEntity;
 import com.mararok.epicwar.War;
 import com.mararok.epicwar.control.ControlPoint;
@@ -23,18 +24,30 @@ public class WarPlayerImpl extends ObservedEntity implements WarPlayer {
   private PlayerStats stats;
   private Faction faction;
 
-  private PlayerPosition currentPosition;
+  private Position3D position = new Position3D();
+  private Subsector subsector;
 
   public WarPlayerImpl(WarPlayerData data, Player nativePlayer, War war) {
     super(data.id);
     this.nativePlayer = nativePlayer;
     this.stats = data.stats;
     this.faction = war.getFactionManager().findById(data.factionId);
-    currentPosition = new PlayerPosition(this);
+    position = new Position3D();
   }
 
-  public void updatePosition(PlayerMoveEvent event) {
-    currentPosition.update(event);
+  public void update(Location nextPosition) {
+    int newX = nextPosition.getBlockX();
+    int newY = nextPosition.getBlockY();
+    int newZ = nextPosition.getBlockZ();
+
+    if (position.x != newX || position.y != newY || position.z != newZ) {
+      position.set(newX, newY, newZ);
+      subsector = getWar().getSubsectorMap().get(nextPosition.getChunk());
+    }
+  }
+
+  public boolean isWithinControlPointRange() {
+    return position.isWithinSphere(getControlPoint().getPosition(), getControlPoint().getRadius());
   }
 
   /*
@@ -141,6 +154,26 @@ public class WarPlayerImpl extends ObservedEntity implements WarPlayer {
   }
 
   @Override
+  public void addKill() {
+    stats.kills++;
+    onChangeProperty("kills", stats.kills);
+    addPoints(getWar().getSettings().points.kill);
+  }
+
+  @Override
+  public void addDeath() {
+    stats.deaths++;
+    onChangeProperty("deaths", stats.deaths);
+    addPoints(getWar().getSettings().points.death);
+  }
+
+  @Override
+  public void addPoints(int points) {
+    stats.points += points;
+    onChangeProperty("points", stats.points);
+  }
+
+  @Override
   public Faction getFaction() {
     return faction;
   }
@@ -152,44 +185,26 @@ public class WarPlayerImpl extends ObservedEntity implements WarPlayer {
 
   @Override
   public Sector getSector() {
-    return currentPosition.getSector();
+    return getSubsector().getSector();
   }
 
   @Override
   public ControlPoint getControlPoint() {
-    return currentPosition.getControlPoint();
+    return getSubsector().getControlPoint();
   }
 
   @Override
   public Subsector getSubsector() {
-    return currentPosition.getSubsector();
+    return subsector;
+  }
+
+  public Position3D getPosition() {
+    return position.clone();
   }
 
   @Override
   public War getWar() {
     return faction.getWar();
-  }
-
-  @Override
-  public void addKill() {
-    stats.kills++;
-    onChangeProperty("kills", stats.kills);
-
-    addPoints(-getWar().getSettings().points.kill);
-  }
-
-  @Override
-  public void addDeath() {
-    stats.deaths++;
-    onChangeProperty("kills", stats.deaths);
-
-    addPoints(-getWar().getSettings().points.death);
-  }
-
-  @Override
-  public void addPoints(int points) {
-    stats.points += points;
-    onChangeProperty("points", stats.points);
   }
 
 }

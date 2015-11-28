@@ -6,12 +6,12 @@
 package com.mararok.epicwar.player.internal;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerMoveEvent;
 
 import com.mararok.epicwar.EpicWarEvent;
 import com.mararok.epicwar.War;
@@ -19,15 +19,13 @@ import com.mararok.epicwar.faction.Faction;
 import com.mararok.epicwar.player.PlayerManager;
 import com.mararok.epicwar.player.WarPlayer;
 
-import net.openhft.koloboke.collect.map.hash.HashObjObjMaps;
-
-public class PlayerManagerImpl implements PlayerManager {
+public class WarPlayerManagerImpl implements PlayerManager {
   private Map<UUID, WarPlayerImpl> players;
   private WarPlayerMapper mapper;
   private War war;
 
-  public PlayerManagerImpl(WarPlayerMapper mapper, War war) {
-    players = HashObjObjMaps.newMutableMap();
+  public WarPlayerManagerImpl(WarPlayerMapper mapper, War war) {
+    players = new HashMap<UUID, WarPlayerImpl>();
     this.mapper = mapper;
     this.war = war;
   }
@@ -84,13 +82,6 @@ public class PlayerManagerImpl implements PlayerManager {
         // warKiller.addKills();
         // warVictim.addDeaths();
       }
-    }
-  }
-
-  public void updatePosition(PlayerMoveEvent event) {
-    WarPlayerImpl warPlayer = players.get(event.getPlayer().getUniqueId());
-    if (warPlayer != null) {
-      warPlayer.updatePosition(event);
     }
   }
 
