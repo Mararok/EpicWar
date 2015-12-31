@@ -8,6 +8,7 @@ package com.mararok.epicwar.command.faction;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import com.mararok.epiccore.MessageBuilder;
 import com.mararok.epiccore.command.CommandArguments;
 import com.mararok.epiccore.command.CommandMetadata;
 import com.mararok.epicwar.EpicWarPlugin;
@@ -23,7 +24,7 @@ public class FactionInfoCommand extends EpicWarCommand {
 
     setMetadata(CommandMetadata.command("info")
         .description(plugin.getLanguage().getText("command.faction.info"))
-        .usage("\\ewf info"));
+        .usage("\\ewf info [shortcut]"));
   }
 
   @Override
@@ -52,13 +53,10 @@ public class FactionInfoCommand extends EpicWarCommand {
   }
 
   private void sendFactionInfoToPlayer(Faction faction, Player sender) {
-    String[] messages = new String[3];
-    int i = 0;
-    messages[i++] = faction.getColor().getChatColor() + "[" + faction.getShortcut() + "]" + ChatColor.RESET;
-    messages[i++] = faction.getName();
-    messages[i++] = faction.getDescription();
-
-    sender.sendMessage(messages);
+    sender.sendMessage(MessageBuilder.message()
+        .line(faction.getColor().getChatColor() + "[" + faction.getShortcut() + "]" + ChatColor.RESET)
+        .line(faction.getName())
+        .line(faction.getDescription()).toArray());
   }
 
 }

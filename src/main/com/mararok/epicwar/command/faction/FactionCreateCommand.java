@@ -26,7 +26,7 @@ public class FactionCreateCommand extends EpicWarCommand {
         .description(plugin.getLanguage().getText("command.faction.create"))
         .usage("\\ewf create <name> <colorName>")
         .permission("epicwar.faction.create")
-        .requiredArgumentAmount(2));
+        .requiredArguments(2));
 
   }
 
