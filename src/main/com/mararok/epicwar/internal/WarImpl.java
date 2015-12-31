@@ -14,13 +14,11 @@ import com.mararok.epicwar.EpicWarPlugin;
 import com.mararok.epicwar.War;
 import com.mararok.epicwar.WarManager;
 import com.mararok.epicwar.WarSettings;
+import com.mararok.epicwar.control.ControlPointManager;
 import com.mararok.epicwar.control.SectorManager;
 import com.mararok.epicwar.control.SubsectorMap;
-import com.mararok.epicwar.control.internal.SubsectorMapImpl;
 import com.mararok.epicwar.faction.FactionManager;
-import com.mararok.epicwar.faction.internal.FactionManagerImpl;
-import com.mararok.epicwar.player.PlayerManager;
-import com.mararok.epicwar.player.internal.PlayerManagerImpl;
+import com.mararok.epicwar.player.WarPlayerManager;
 
 public class WarImpl implements War {
   private int id;
@@ -28,25 +26,27 @@ public class WarImpl implements War {
 
   private World world;
 
-  private PlayerManagerImpl playerManager;
-  private FactionManagerImpl factionManager;
+  private WarPlayerManager playerManager;
+  private FactionManager factionManager;
   private SectorManager sectorManager;
-  // private ControlPointManagerImpl controlPointManager;
+  private ControlPointManager controlPointManager;
   private SubsectorMap subsectorMap;
 
   private WarManager warManager;
 
-  public WarImpl(int id, WarSettings settings, WarComponentsFactory warFactory, WarManager warManager) {
+  public WarImpl(int id, WarSettings settings, WarComponentsFactory warFactory, WarManager warManager) throws Exception {
     this.id = id;
     this.settings = settings;
     this.world = warManager.getPlugin().getServer().getWorld(settings.world.name);
+
+    playerManager = warFactory.newPlayerManager(this);
+    factionManager = warFactory.newFactionManager(this);
+
+    controlPointManager = warFactory.newControlPointManager(this);
+    subsectorMap = warFactory.newSubsectorMap(this);
+    sectorManager = warFactory.newSectorManager(this);
+
     this.warManager = warManager;
-
-    // playerManager = warFactory.newPlayerManager(this);
-    // factionManager = warFactory.newFactionManager(this);
-    // sectorManager = warFactory.newSectorManager(this);
-
-    subsectorMap = new SubsectorMapImpl(settings.world.startChunkX, settings.world.startChunkZ, settings.world.sizeInChunks);
   }
 
   public void load() throws Exception {
@@ -55,11 +55,6 @@ public class WarImpl implements War {
     // sectorManager.load();
     // factionManager.load();
     log.info(String.format("War: %s data loaded", settings.name));
-  }
-
-  @Override
-  public Location getNeutralSpawn() {
-    return world.getSpawnLocation();
   }
 
   @Override
@@ -78,7 +73,7 @@ public class WarImpl implements War {
   }
 
   @Override
-  public PlayerManager getPlayerManager() {
+  public WarPlayerManager getPlayerManager() {
     return playerManager;
   }
 
@@ -88,18 +83,28 @@ public class WarImpl implements War {
   }
 
   @Override
+  public SubsectorMap getSubsectorMap() {
+    return subsectorMap;
+  }
+
+  @Override
+  public ControlPointManager getControlPointManager() {
+    return controlPointManager;
+  }
+
+  @Override
   public SectorManager getSectorManager() {
     return sectorManager;
   }
 
   @Override
-  public SubsectorMap getSubsectorMap() {
-    return null;
+  public WarManager getWarManager() {
+    return warManager;
   }
 
   @Override
-  public WarManager getWarManager() {
-    return warManager;
+  public Location getNeutralSpawn() {
+    return world.getSpawnLocation();
   }
 
   @Override
