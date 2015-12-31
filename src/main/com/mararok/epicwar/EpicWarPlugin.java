@@ -11,10 +11,15 @@ import java.util.logging.Level;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.mararok.epiccore.EventManager;
 import com.mararok.epiccore.database.DatabaseConnection;
+import com.mararok.epiccore.event.DummyEventManager;
+import com.mararok.epiccore.event.EventManager;
+import com.mararok.epiccore.event.LoggableEventManager;
+import com.mararok.epiccore.event.SimpleEventManager;
+import com.mararok.epiccore.language.FileLanguageLoader;
 import com.mararok.epiccore.language.Language;
 import com.mararok.epicwar.command.Commands;
+import com.mararok.epicwar.internal.DatabaseInitializer;
 import com.mararok.epicwar.internal.WarComponentsFactory;
 import com.mararok.epicwar.internal.WarManagerImpl;
 import com.mararok.epicwar.internal.YamlWarLoader;
@@ -27,12 +32,15 @@ public final class EpicWarPlugin extends JavaPlugin {
   private WarManager warManager;
 
   private Commands commands;
-  private EventManager eventManager;
+
+  private EventManager<EpicWarPlugin, EpicWarEvent> eventManager;
 
   @Override
   public void onEnable() {
     try {
       config = new EpicWarConfig(this);
+
+      initLanguage();
       initDatabase();
       initWarManager();
 
@@ -47,26 +55,40 @@ public final class EpicWarPlugin extends JavaPlugin {
     }
   }
 
-  private void initDatabase() throws Exception {
+  private void initLanguage() throws Exception {
+    FileLanguageLoader loader = new FileLanguageLoader(this.getDataFolder().toPath().resolve("lang"));
+    language = loader.load(config.getLanguagePrefix());
+  }
 
+  private void initDatabase() throws Exception {
+    DatabaseInitializer initializer = new DatabaseInitializer(this);
+    databaseConnection = initializer.createConnection(config.getDatabaseConnectionConfig());
   }
 
   private void initWarManager() throws Exception {
-    WarComponentsFactory componentsFactory = new WarComponentsFactory();
-    warManager = new WarManagerImpl(this, new YamlWarLoader(this.getDataFolder().getPath(), componentsFactory, this););
+    WarComponentsFactory componentsFactory = new WarComponentsFactory(this);
+    YamlWarLoader warLoader = new YamlWarLoader(this.getDataFolder().getPath(), componentsFactory, this);
+    warManager = new WarManagerImpl(this, warLoader);
   }
 
-  private void initEventManager() {
-    eventManager = new EventManager(this);
-    eventManager.setEnabled(config.getDebugEventEnabled());
-    eventManager.setLogging(config.getDebugEventLogging());
+  private void initEventManager() throws Exception {
+    if (config.getDebugEventEnabled()) {
+      eventManager = new SimpleEventManager<EpicWarPlugin, EpicWarEvent>(this);
+    } else {
+      eventManager = new DummyEventManager<EpicWarPlugin, EpicWarEvent>(this);
+    }
+
+    if (config.getDebugEventLogging()) {
+      eventManager = new LoggableEventManager<EpicWarPlugin, EpicWarEvent>(eventManager);
+    }
   }
 
-  private void initCommands() {
+  private void initCommands() throws Exception {
     commands = new Commands(this);
+    commands.register();
   }
 
-  private void checkReload() {
+  private void checkReload() throws Exception {
     Collection<?> playersOnline = getServer().getOnlinePlayers();
     if (playersOnline.size() > 0) {
       // getWarManager().onServerReload(playersOnline);
@@ -82,7 +104,7 @@ public final class EpicWarPlugin extends JavaPlugin {
     return warManager;
   }
 
-  public EventManager getEventManager() {
+  public EventManager<EpicWarPlugin, EpicWarEvent> getEventManager() {
     return eventManager;
   }
 
@@ -92,10 +114,6 @@ public final class EpicWarPlugin extends JavaPlugin {
 
   public EpicWarConfig getPluginConfig() {
     return config;
-  }
-
-  public String getDataDumpPath() {
-    return getDataFolder().getPath() + "/datadump";
   }
 
 }
