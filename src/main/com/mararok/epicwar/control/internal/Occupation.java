@@ -13,6 +13,7 @@ import com.mararok.epicwar.control.event.ControlAreaEvent;
 import com.mararok.epicwar.control.event.PlayerAttackingControlAreaEvent;
 import com.mararok.epicwar.control.event.PlayerDefendingControlAreaEvent;
 import com.mararok.epicwar.control.event.PlayerLeavingControlAreaEvent;
+import com.mararok.epicwar.control.point.internal.ControlPointImpl;
 import com.mararok.epicwar.faction.Faction;
 import com.mararok.epicwar.faction.FactionManager;
 import com.mararok.epicwar.player.WarPlayer;
