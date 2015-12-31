@@ -8,10 +8,11 @@ package com.mararok.epicwar;
 import org.bukkit.Location;
 import org.bukkit.World;
 
+import com.mararok.epicwar.control.ControlPointManager;
 import com.mararok.epicwar.control.SectorManager;
 import com.mararok.epicwar.control.SubsectorMap;
 import com.mararok.epicwar.faction.FactionManager;
-import com.mararok.epicwar.player.PlayerManager;
+import com.mararok.epicwar.player.WarPlayerManager;
 
 public interface War {
   public int getId();
@@ -22,13 +23,14 @@ public interface War {
 
   public Location getNeutralSpawn();
 
-  public PlayerManager getPlayerManager();
+  public WarPlayerManager getPlayerManager();
 
   public FactionManager getFactionManager();
 
   public SectorManager getSectorManager();
 
-  // public ControlPointManager getControlPointManager();
+  public ControlPointManager getControlPointManager();
+
   public SubsectorMap getSubsectorMap();
 
   public WarManager getWarManager();
