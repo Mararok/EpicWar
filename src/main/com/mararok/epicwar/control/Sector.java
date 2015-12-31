@@ -10,10 +10,10 @@ import java.util.Collection;
 import com.mararok.epicwar.faction.Faction;
 
 /**
- * It's set of control points
- * 
+ * Represents set of control points
  */
 public interface Sector extends NamedControlArea {
+
   Collection<ControlPoint> getControlPoints();
 
   boolean canCapture(Faction other);

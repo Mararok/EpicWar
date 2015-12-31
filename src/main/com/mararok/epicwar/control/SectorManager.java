@@ -9,6 +9,9 @@ import java.util.Collection;
 
 import com.mararok.epicwar.War;
 
+/**
+ * Manage all war sectors
+ */
 public interface SectorManager {
 
   Sector findById(int id);
