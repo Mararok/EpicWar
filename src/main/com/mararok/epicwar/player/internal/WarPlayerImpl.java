@@ -31,6 +31,7 @@ public class WarPlayerImpl extends ObservedEntity implements WarPlayer {
     super(data.id);
     this.nativePlayer = nativePlayer;
     this.stats = data.stats;
+
     this.faction = war.getFactionManager().findById(data.factionId);
     position = new Position3D();
   }
