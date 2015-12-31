@@ -12,7 +12,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 public interface WarManager {
-  public War findByPlayer(Player player);
+  public War findByPlayerWorld(Player player);
 
   public War findByWorld(World world);
 

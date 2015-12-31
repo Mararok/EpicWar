@@ -7,7 +7,6 @@
 package com.mararok.epicwar.internal;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.World;
@@ -19,27 +18,19 @@ import com.mararok.epicwar.WarManager;
 
 public class WarManagerImpl implements WarManager {
   private Map<World, War> wars;
-  YamlWarLoader loader;
   private EpicWarPlugin plugin;
 
-  public WarManagerImpl(YamlWarLoader loader, EpicWarPlugin plugin) {
-    wars = new HashMap<World, War>();
-    this.loader = loader;
+  public WarManagerImpl(EpicWarPlugin plugin, YamlWarLoader loader) throws Exception {
     this.plugin = plugin;
+
+    for (War war : loader.loadAll("wars")) {
+      wars.put(war.getWorld(), war);
+    }
+
   }
 
-  /*
-   * private void load(YamlWarLoader loader) throws Exception {
-   * for (String warName : getPlugin().getPluginConfig().getWarList()) {
-   * WarImpl war = loader.load(warName);
-   * wars.put(warName, war);
-   * plugin.getLogger().info("War " + warName + " loaded");
-   * }
-   * }
-   */
-
   @Override
-  public War findByPlayer(Player player) {
+  public War findByPlayerWorld(Player player) {
     return findByWorld(player.getWorld());
   }
 

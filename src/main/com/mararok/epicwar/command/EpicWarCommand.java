@@ -30,7 +30,7 @@ public abstract class EpicWarCommand extends ChildPluginCommand<EpicWarPlugin> {
   @Override
   protected boolean onCommandAsPlayer(Player sender, CommandArguments<EpicWarPlugin> arguments) throws Exception {
     if (checkPermission(sender)) {
-      War war = getPlugin().getWarManager().findByPlayer(sender);
+      War war = getPlugin().getWarManager().findByPlayerWorld(sender);
       if (war != null) {
         return onCommandOnWarWorld(war, sender, arguments);
       }
