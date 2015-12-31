@@ -1,6 +1,0 @@
-name: EpicWar
-main: com.gmail.mararok.epicwar.EpicWarPlugin
-author: Mararok
-version: "@VERSION"
-prefix: EW
- 

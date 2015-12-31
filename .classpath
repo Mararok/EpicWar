@@ -3,16 +3,11 @@
 	<classpathentry kind="src" path="src/main"/>
 	<classpathentry kind="src" path="src/test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/koloboke-api-jdk8-0.6.6.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="http://openhft.github.io/Koloboke/api/0.6/java8/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/koloboke-impl-jdk8-0.6.6.jar"/>
 	<classpathentry kind="lib" path="lib/spigot-1.8.8.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="https://hub.spigotmc.org/javadocs/spigot/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry combineaccessrules="false" kind="src" path="/EpicCore"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
