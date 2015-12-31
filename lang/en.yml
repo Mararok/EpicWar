@@ -26,8 +26,21 @@ command:
  sector: 
   all: "Shows all sectors subcommands"
   info: "Shows current sector info or when parameter given shows subsector or control point"
-  connect: "Connecting control point to subsector or to other point or to sector"
+  create: "c"
+  delete: "d"
+  
+ controlPoint:
+  all: "Shows all Control Points subcommands"
+  info: "i"
+  create: "c"
+  delete: "d"
  
+ subsector: 
+  all: "Shows all Control Points subcommands"
+  info: "i"
+  assign: "a"
+  delete: "d"
+  
  error:
   NotEnoughArguments: "Not enough arguments, Usage: %s"
 
@@ -38,10 +51,9 @@ sector:
   
 message:
  faction:
+  supportedColors: "Supported colors: "
   joined: "You joined to faction %s."
   full: "Faction %s is full, you can't join."
-  createOnWild: "You can't create Faction on wild."
-  createOnOtherCapital: "You can't create new faction on other faction capital."
   created: "Faction %s created."
   exists: "Faction with name %s exists!"
   notExists: "Faction %s not exists."
@@ -52,9 +64,11 @@ message:
   capturedPoint: "Your faction captured %s point in %s sector."
   lostPoint: "Your faction lost %s point in %s sector."
   
- sector:
-  createOnWild: "You can't create control point on wild."
-  createRadius: "You can't create control point with radius: %d, min is %d."
-  createPower: "You can't create control point with power: %d, min is %d."
-  createExists: "Control point with name %d exists !!!."
+ controlPoint:
+  create:
+   error:
+    radius: "You can't create control point with radius: %d, min is %d."
+    power: "You can't create control point with power: %d, min is %d."
+  notExists: "Control point with id: %d isn't exists."
+  
   
