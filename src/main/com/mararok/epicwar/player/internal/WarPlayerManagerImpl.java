@@ -16,10 +16,10 @@ import org.bukkit.entity.Player;
 import com.mararok.epicwar.EpicWarEvent;
 import com.mararok.epicwar.War;
 import com.mararok.epicwar.faction.Faction;
-import com.mararok.epicwar.player.PlayerManager;
 import com.mararok.epicwar.player.WarPlayer;
+import com.mararok.epicwar.player.WarPlayerManager;
 
-public class WarPlayerManagerImpl implements PlayerManager {
+public class WarPlayerManagerImpl implements WarPlayerManager {
   private Map<UUID, WarPlayerImpl> players;
   private WarPlayerMapper mapper;
   private War war;
@@ -68,10 +68,16 @@ public class WarPlayerManagerImpl implements PlayerManager {
 
   @Override
   public void update(WarPlayer player) throws Exception {
+    if (isFromThisWar(player)) {
+      mapper.update((WarPlayerImpl) player);
+    }
   }
 
   @Override
   public void delete(WarPlayer player) throws Exception {
+    if (isFromThisWar(player)) {
+      mapper.delete((WarPlayerImpl) player);
+    }
   }
 
   public void addKill(Player killer, Player victim) throws Exception {
@@ -91,6 +97,10 @@ public class WarPlayerManagerImpl implements PlayerManager {
 
   public void onServerReload(Collection<Player> playersOnline) {
 
+  }
+
+  public boolean isFromThisWar(WarPlayer player) {
+    return getWar() == player.getWar();
   }
 
   @Override
