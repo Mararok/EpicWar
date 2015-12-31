@@ -6,6 +6,8 @@
 
 package com.mararok.epicwar.internal;
 
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.World;
@@ -15,14 +17,14 @@ import com.mararok.epicwar.EpicWarPlugin;
 import com.mararok.epicwar.War;
 import com.mararok.epicwar.WarManager;
 
-import net.openhft.koloboke.collect.map.hash.HashObjObjMaps;
-
 public class WarManagerImpl implements WarManager {
-  private Map<World, WarImpl> wars;
+  private Map<World, War> wars;
+  YamlWarLoader loader;
   private EpicWarPlugin plugin;
 
-  public WarManagerImpl(EpicWarPlugin plugin, YamlWarLoader loader) {
-    wars = HashObjObjMaps.newMutableMap();
+  public WarManagerImpl(YamlWarLoader loader, EpicWarPlugin plugin) {
+    wars = new HashMap<World, War>();
+    this.loader = loader;
     this.plugin = plugin;
   }
 
@@ -47,7 +49,13 @@ public class WarManagerImpl implements WarManager {
   }
 
   @Override
+  public Collection<War> findAll() {
+    return wars.values();
+  }
+
+  @Override
   public EpicWarPlugin getPlugin() {
     return plugin;
   }
+
 }

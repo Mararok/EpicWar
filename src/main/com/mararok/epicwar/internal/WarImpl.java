@@ -5,8 +5,6 @@
  */
 package com.mararok.epicwar.internal;
 
-import java.util.logging.Logger;
-
 import org.bukkit.Location;
 import org.bukkit.World;
 
@@ -47,14 +45,6 @@ public class WarImpl implements War {
     sectorManager = warFactory.newSectorManager(this);
 
     this.warManager = warManager;
-  }
-
-  public void load() throws Exception {
-    Logger log = warManager.getPlugin().getLogger();
-    log.info(String.format("Loading war: %s data", settings.name));
-    // sectorManager.load();
-    // factionManager.load();
-    log.info(String.format("War: %s data loaded", settings.name));
   }
 
   @Override
