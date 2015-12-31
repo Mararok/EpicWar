@@ -12,22 +12,22 @@ import com.mararok.epicwar.War;
 public interface FactionManager {
 
   /**
-   * Returns faction with selected id or null when faction doesn't exist;
+   * Returns faction with selected id or null when faction doesn't exists
    */
   Faction findById(int id);
 
   /**
-   * Returns faction with selected color or null when faction doesn't exist;
+   * Returns faction with selected color or null when faction doesn't exists
    */
   Faction findByColor(Faction.Color color);
 
   /**
-   * Returns faction with selected shortcut or null when faction doesn't exist;
+   * Returns faction with selected shortcut or null when faction doesn't exists
    */
   Faction findByShortcut(String shortcut);
 
   /**
-   * Returns faction with selected name or null when faction doesn't exist;
+   * Returns faction with selected name or null when faction doesn't exists
    */
   Faction findByName(String factionName);
 
