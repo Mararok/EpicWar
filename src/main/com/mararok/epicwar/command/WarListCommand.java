@@ -5,41 +5,43 @@
  */
 package com.mararok.epicwar.command;
 
-import java.util.List;
+import java.util.Collection;
 
-import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 
 import com.mararok.epiccore.command.CommandArguments;
-import com.mararok.epiccore.command.ParentPluginCommand;
-import com.mararok.epiccore.command.PluginCommand;
-import com.mararok.epiccore.language.Language;
+import com.mararok.epiccore.command.CommandMetadata;
 import com.mararok.epicwar.EpicWarPlugin;
-import com.mararok.epicwar.internal.WarImpl;
+import com.mararok.epicwar.War;
 
-public class WarListCommand extends PluginCommand {
+public class WarListCommand extends EpicWarCommand {
 
-  public WarListCommand(EpicWarPlugin plugin, ParentPluginCommand parent) {
-    super(plugin, parent, "list");
-    setDescription(Language.CD_WAR_LIST);
-    setUsage("\\eww list");
+  public WarListCommand(EpicWarPlugin plugin) {
+    super(plugin);
+    setMetadata(CommandMetadata.command("list")
+        .description(getLanguage().getText("command.war.list"))
+        .usage("\\ew list")
+        .permission("epicwar.war.list"));
   }
 
   @Override
-  public boolean onCommandAsConsole(CommandSender sender,
-      CommandArguments arguments) {
+  public boolean onCommand(CommandSender sender, CommandArguments<EpicWarPlugin> arguments) {
+    if (checkPermission(sender)) {
+      Collection<War> wars = getPlugin().getWarManager().findAll();
+      if (!wars.isEmpty()) {
+        String[] messages = new String[wars.size() + 1];
+        messages[0] = getLanguage().getText("message.war.list.header");
+        int i = 1;
 
-    List<World> worlds = getPlugin().getServer().getWorlds();
-    String[] messages = new String[worlds.size() + 1];
-    messages[0] = "World - WarName or none";
-    int i = 0;
-    for (World world : worlds) {
-      WarImpl war = getPlugin().getWarManager().getByWorld(world);
-      messages[i] = world.getName() + " - "
-          + ((war != null) ? war.getName() : "none");
-      ++i;
+        for (War war : wars) {
+          messages[i++] = getLanguage().getFormatedText("message.war.list.row", war.getId(), war.getSettings().name, war.getWorld().getName());
+        }
+      } else {
+        sender.sendMessage(getLanguage().getText("message.war.list.empty"));
+      }
+
     }
-    sender.sendMessage(messages);
+
     return true;
   }
 }
