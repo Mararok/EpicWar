@@ -1,6 +1,5 @@
 CREATE TABLE IF NOT EXISTS [ew%s_Factions] (
   [id] INT PRIMARY KEY AUTOINCREMENT,
-  
   [name] CHAR(32) NOT NULL, 
   [shortcut] CHAR(8) NOT NULL,
   [description] VARCHAR(255) DEFAULT 'Default description',
