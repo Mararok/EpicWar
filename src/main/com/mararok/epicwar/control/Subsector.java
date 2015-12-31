@@ -8,7 +8,7 @@ package com.mararok.epicwar.control;
 import org.bukkit.Chunk;
 
 /**
- * Represents fragment of sector(in minecraft world its one chunk), must be connected to Control Point
+ * Represents fragment of sector(in minecraft world its one chunk), must be connected to Control Point for exists
  */
 public interface Subsector extends ControlArea {
   public int getChunkX();
