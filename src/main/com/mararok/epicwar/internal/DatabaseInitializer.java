@@ -15,15 +15,14 @@ import com.mararok.epicwar.EpicWarPlugin;
 public class DatabaseInitializer {
   public static final String SQL_SCRIPTS_PATH = "sqlscripts/";
   private EpicWarPlugin plugin;
-  private DatabaseConnection databaseConnection;
 
   public DatabaseInitializer(EpicWarPlugin plugin) {
     this.plugin = plugin;
   }
 
-  public void init(DatabaseConnectionConfig config) throws SQLException {
-    databaseConnection = DatabaseConnectionFactory.newConnection(config, plugin);
+  public DatabaseConnection createConnection(DatabaseConnectionConfig config) throws SQLException {
     initSQLs();
+    return DatabaseConnectionFactory.newConnection(config, plugin);
   }
 
   private void initSQLs() throws SQLException {
