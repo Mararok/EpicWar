@@ -12,27 +12,22 @@ import com.mararok.epiccore.database.DatabaseConnectionConfig;
 import com.mararok.epiccore.database.DatabaseConnectionFactory;
 import com.mararok.epicwar.EpicWarPlugin;
 
-public class DatabaseInitializer {
+public class DatabaseHelper {
   public static final String SQL_SCRIPTS_PATH = "sqlscripts/";
-  private EpicWarPlugin plugin;
 
-  public DatabaseInitializer(EpicWarPlugin plugin) {
-    this.plugin = plugin;
-  }
-
-  public DatabaseConnection createConnection(DatabaseConnectionConfig config) throws SQLException {
-    initSQLs();
+  public static DatabaseConnection createConnection(DatabaseConnectionConfig config, EpicWarPlugin plugin) throws SQLException {
     return DatabaseConnectionFactory.newConnection(config, plugin);
   }
 
-  private void initSQLs() throws SQLException {
-    updateSQLScript("ew_Players");
-    updateSQLScript("ew_Factions");
-    updateSQLScript("ew_Sectors");
-    updateSQLScript("ew_ControlPoints");
+  public static void updateSqlScripts(EpicWarPlugin plugin) throws SQLException {
+    updateSqlScript("ew_Players", plugin);
+    updateSqlScript("ew_Factions", plugin);
+    updateSqlScript("ew_Sectors", plugin);
+    updateSqlScript("ew_ControlPoints", plugin);
+    updateSqlScript("ew_Subsectors", plugin);
   }
 
-  private void updateSQLScript(String scriptName) {
+  private static void updateSqlScript(String scriptName, EpicWarPlugin plugin) {
     plugin.saveResource(SQL_SCRIPTS_PATH + scriptName + ".sql", true);
   }
 

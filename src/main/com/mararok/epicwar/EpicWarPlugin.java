@@ -19,7 +19,7 @@ import com.mararok.epiccore.event.SimpleEventManager;
 import com.mararok.epiccore.language.FileLanguageLoader;
 import com.mararok.epiccore.language.Language;
 import com.mararok.epicwar.command.Commands;
-import com.mararok.epicwar.internal.DatabaseInitializer;
+import com.mararok.epicwar.internal.DatabaseHelper;
 import com.mararok.epicwar.internal.WarComponentsFactory;
 import com.mararok.epicwar.internal.WarManagerImpl;
 import com.mararok.epicwar.internal.YamlWarLoader;
@@ -42,9 +42,8 @@ public final class EpicWarPlugin extends JavaPlugin {
 
       initLanguage();
       initDatabase();
-      initWarManager();
-
       initEventManager();
+      initWarManager();
       initCommands();
 
       checkReload();
@@ -61,8 +60,8 @@ public final class EpicWarPlugin extends JavaPlugin {
   }
 
   private void initDatabase() throws Exception {
-    DatabaseInitializer initializer = new DatabaseInitializer(this);
-    databaseConnection = initializer.createConnection(config.getDatabaseConnectionConfig());
+    DatabaseHelper.updateSqlScripts(this);
+    databaseConnection = DatabaseHelper.createConnection(config.getDatabaseConnectionConfig(), this);
   }
 
   private void initWarManager() throws Exception {
