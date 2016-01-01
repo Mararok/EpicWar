@@ -17,8 +17,6 @@ public interface WarPlayer {
 
   public int getId();
 
-  public Player getNativePlayer();
-
   public PlayerStats getStats();
 
   public Faction getFaction();
@@ -27,7 +25,7 @@ public interface WarPlayer {
 
   public void addDeath();
 
-  void addPoints(int points);
+  public void addPoints(int points);
 
   public Subsector getSubsector();
 
@@ -36,5 +34,7 @@ public interface WarPlayer {
   public Sector getSector();
 
   public War getWar();
+
+  public Player getNativePlayer();
 
 }
