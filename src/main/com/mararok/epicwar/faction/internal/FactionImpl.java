@@ -29,7 +29,8 @@ public class FactionImpl extends ObservedEntity implements Faction {
     description = data.description;
     color = data.color;
     bannerPattern = data.bannerPattern;
-    this.spawnLocation = new Location(war.getWorld(), data.spawnPosition.x, data.spawnPosition.y, data.spawnPosition.z);
+    spawnLocation = new Location(war.getWorld(), data.spawnPosition.x, data.spawnPosition.y, data.spawnPosition.z);
+
     this.war = war;
   }
 
@@ -95,51 +96,9 @@ public class FactionImpl extends ObservedEntity implements Faction {
   @Override
   public void setSpawnLocation(Location location) {
     spawnLocation = location;
+    onChangeProperty("spawnX", spawnLocation.getBlockX());
+    onChangeProperty("spawnY", spawnLocation.getBlockY());
+    onChangeProperty("spawnZ", spawnLocation.getBlockZ());
   }
-
-  /*
-   * public void addMember(WarPlayerImpl player) { FactionDao dao = factionManager.getDao(); try { PreparedStatement st =
-   * db.getCachedQuery(SQLID_SetPlayerFaction); st.setInt(1, info.id); st.setInt(2, player.getID()); st.executeUpdate();
-   * 
-   * st = db.getCachedQuery(SQLID_AddMember); st.setInt(1, info.id); st.executeUpdate();
-   * 
-   * db.commit(); player.getInfo().factionID = getID(); ++info.members; onMemberServerJoin(player); teleport2Capital(player); } catch (SQLException e) {
-   * db.rollback(); getFactions().getPlugin().logCriticalException(e); } }
-   * 
-   * public void removeMember(WarPlayerImpl player) { DatabaseConnection db = DatabaseConnection.get(); try { PreparedStatement st =
-   * db.getCachedQuery(SQLID_SetPlayerFaction); st.setInt(1, 0); st.setInt(2, player.getID()); st.executeUpdate();
-   * 
-   * st = db.getCachedQuery(SQLID_RemoveMember); st.setInt(1, info.id); st.executeUpdate();
-   * 
-   * db.commit(); --info.members; player.getInfo().factionID = 0; player.getBPlayer().setPlayerListName(player.getName()); onMemberServerQuite(player); } catch
-   * (SQLException e) { factionManager.getPlugin().logCriticalException(e); db.rollback(); } }
-   * 
-   * public void onMemberServerJoin(WarPlayerImpl player) { player.getBPlayer().setPlayerListName(getInfo().color + player.getName());
-   * onlineMembers.add(player); }
-   * 
-   * public void onMemberServerQuite(WarPlayerImpl player) { onlineMembers.remove(player); }
-   * 
-   * public void teleport2Capital(WarPlayerImpl player) { player.getBPlayer().teleport(getSpawnLocation()); }
-   * 
-   * 
-   * public void onCapturePoint(ControlPointImpl point) { sendFormatMessage2OnlineMembers(Language.FACTION_CAPTURED_POINT, point.getName(),
-   * point.getSector().getName()); }
-   * 
-   * public void onLostPoint(ControlPointImpl point) { sendFormatMessage2OnlineMembers(Language.FACTION_LOST_POINT, point.getName(),
-   * point.getSector().getName()); }
-   * 
-   * public void onCaptureSector(SectorImpl sector) { addControlledSectors(); sendFormatMessage2OnlineMembers(Language.FACTION_CAPTURED_SECTOR,
-   * sector.getName()); }
-   * 
-   * private void addControlledSectors() { ++info.controlledSectors; updateControlledSectors(); }
-   * 
-   * public void onLostSector(SectorImpl sector) { subControlledSectors(); sendFormatMessage2OnlineMembers(Language.FACTION_LOST_SECTOR, sector.getName()); }
-   * 
-   * private void subControlledSectors() { --info.controlledSectors; updateControlledSectors(); }
-   * 
-   * public void sendFormatMessage2OnlineMembers(Language langMessage, Object... args) { String message = String.format(langMessage.toString(), args); for
-   * (WarPlayerImpl member : onlineMembers) { member.sendMessage(message); } }
-   * 
-   */
 
 }
