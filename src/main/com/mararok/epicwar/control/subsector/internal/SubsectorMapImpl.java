@@ -78,6 +78,7 @@ public class SubsectorMapImpl implements SubsectorMap {
       Subsector current = getLocal(localChunkX, localChunkZ);
       if (current != null) {
         current.setControlPoint(controlPoint);
+        mapper.update((SubsectorImpl) current);
       } else {
         SubsectorData data = new SubsectorData();
         data.id = getLocalIndex(localChunkX, localChunkZ);
