@@ -49,8 +49,9 @@ public class SubsectorImpl extends ControlAreaImpl implements Subsector {
   }
 
   @Override
-  public void setControlPoint(ControlPoint newControlPoint) {
-    controlPoint = newControlPoint;
+  public void setControlPoint(ControlPoint controlPoint) {
+    this.controlPoint = controlPoint;
+    onChangeProperty("controlPointId", controlPoint.getId());
   }
 
   @Override
