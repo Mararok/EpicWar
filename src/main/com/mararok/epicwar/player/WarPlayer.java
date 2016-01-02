@@ -27,6 +27,8 @@ public interface WarPlayer {
 
   public void addPoints(int points);
 
+  public boolean isInWarArea();
+
   public Subsector getSubsector();
 
   public ControlPoint getControlPoint();
