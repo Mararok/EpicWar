@@ -7,8 +7,8 @@ package com.mararok.epicwar;
 
 import org.bukkit.configuration.Configuration;
 
-import com.mararok.epiccore.PluginConfig;
 import com.mararok.epiccore.database.DatabaseConnectionConfig;
+import com.mararok.epiccore.misc.PluginConfig;
 
 public class EpicWarConfig extends PluginConfig {
 
@@ -25,7 +25,8 @@ public class EpicWarConfig extends PluginConfig {
     DatabaseConnectionConfig db = new DatabaseConnectionConfig();
     db.engine = config.getString("database.engine");
     db.host = config.getString("database.host");
-    db.dbName = config.getString("database.dbName");
+    db.port = config.getInt("database.port");
+    db.name = config.getString("database.name");
     db.user = config.getString("database.user");
     db.password = config.getString("database.password");
 
