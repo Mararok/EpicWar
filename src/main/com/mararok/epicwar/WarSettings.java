@@ -15,12 +15,12 @@ public class WarSettings implements Cloneable {
   /** If true war map is editable(you can add more sectors, more control points and changing all settings) */
   public boolean editMode;
 
-  public Points points;
-  public Faction faction;
-  public ControlPoint controlPoint;
-  public World world;
+  public PointsSettings points;
+  public FactionSettions faction;
+  public ControlPointSettings controlPoint;
+  public WorldSettings world;
 
-  public static class Points {
+  public static class PointsSettings {
     public int kill;
     public int death;
 
@@ -28,7 +28,7 @@ public class WarSettings implements Cloneable {
     public int captureSector;
   }
 
-  public static class ControlPoint {
+  public static class ControlPointSettings {
     /** control point occupiers power checks interval in seconds */
     public int updateInterval;
 
@@ -36,12 +36,12 @@ public class WarSettings implements Cloneable {
     public int powerAttacker;
   }
 
-  public static class Faction {
+  public static class FactionSettions {
     public boolean onlineBalance;
     public int onlineBalancePercentPerFaction;
   }
 
-  public static class World {
+  public static class WorldSettings {
     public String name;
     public int startChunkX;
     public int startChunkZ;
