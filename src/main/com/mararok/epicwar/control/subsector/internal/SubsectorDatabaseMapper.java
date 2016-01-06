@@ -23,17 +23,18 @@ public class SubsectorDatabaseMapper extends EntityDatabaseMapper<SubsectorImpl,
 
   @Override
   public SubsectorImpl insert(SubsectorData data) throws Exception {
-    insert(insertColumns, super.values(Integer.toString(data.id), Integer.toString(data.chunkX), Integer.toString(data.chunkZ), Integer.toString(data.controlPointId)));
+    insert(insertColumns, super.values(data.id, data.chunkX, data.chunkZ, data.controlPointId));
     return getFactory().create(data);
   }
 
   @Override
   protected SubsectorData createData(ResultSet resultSet) throws SQLException {
     SubsectorData data = new SubsectorData();
-    data.id = resultSet.getInt(1);
-    data.chunkX = resultSet.getInt(2);
-    data.chunkZ = resultSet.getInt(3);
-    data.controlPointId = resultSet.getInt(4);
+    int column = 1;
+    data.id = resultSet.getInt(column++);
+    data.chunkX = resultSet.getInt(column++);
+    data.chunkZ = resultSet.getInt(column++);
+    data.controlPointId = resultSet.getInt(column++);
     return data;
   }
 }
