@@ -8,8 +8,8 @@ package com.mararok.epicwar.player.internal;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import com.mararok.epiccore.Position3D;
 import com.mararok.epiccore.entity.ObservedEntity;
+import com.mararok.epiccore.math.Position3D;
 import com.mararok.epicwar.War;
 import com.mararok.epicwar.control.ControlPoint;
 import com.mararok.epicwar.control.Sector;
@@ -36,7 +36,7 @@ public class WarPlayerImpl extends ObservedEntity implements WarPlayer {
     position = new Position3D();
   }
 
-  public void update(Location nextPosition) {
+  public void updatePosition(Location nextPosition) {
     int newX = nextPosition.getBlockX();
     int newY = nextPosition.getBlockY();
     int newZ = nextPosition.getBlockZ();
