@@ -5,10 +5,11 @@
  */
 package com.mararok.epicwar.control.point.internal;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
-import java.util.Vector;
+import java.util.List;
 
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -18,7 +19,7 @@ import com.mararok.epicwar.control.ControlPointData;
 import com.mararok.epicwar.control.ControlPointManager;
 
 public class ControlPointManagerImpl implements ControlPointManager {
-  private Vector<ControlPointImpl> controlPoints;
+  private List<ControlPoint> controlPoints;
   private Collection<ControlPointImpl> occupiedControlPoints;
   private ControlPointMapper mapper;
   private UpdateTask updateTask;
@@ -27,12 +28,14 @@ public class ControlPointManagerImpl implements ControlPointManager {
   public ControlPointManagerImpl(ControlPointMapper mapper, War war) throws Exception {
     this.mapper = mapper;
     this.war = war;
+
+    controlPoints = new ArrayList<ControlPoint>();
     loadAll();
   }
 
   private void loadAll() throws Exception {
     Collection<ControlPointImpl> collection = mapper.findAll();
-    for (ControlPointImpl controlPoint : collection) {
+    for (ControlPoint controlPoint : collection) {
       controlPoints.set(controlPoint.getId(), controlPoint);
     }
 
@@ -45,7 +48,10 @@ public class ControlPointManagerImpl implements ControlPointManager {
 
   @Override
   public ControlPoint findById(int id) {
-    return controlPoints.get(id);
+    if (id > 0 && id < controlPoints.size()) {
+      return controlPoints.get(id);
+    }
+    return null;
   }
 
   @Override
@@ -62,18 +68,15 @@ public class ControlPointManagerImpl implements ControlPointManager {
 
   @Override
   public void update(ControlPoint controlPoint) throws Exception {
-    ControlPointImpl s = (ControlPointImpl) findById(controlPoint.getId());
-    if (s != null) {
-      mapper.update(s);
-    }
+    ControlPointImpl entity = (ControlPointImpl) controlPoint;
+    mapper.update(entity);
   }
 
   @Override
   public void delete(ControlPoint controlPoint) throws Exception {
-    ControlPointImpl s = (ControlPointImpl) findById(controlPoint.getId());
-    if (s != null) {
-      mapper.delete(s);
-    }
+    ControlPointImpl entity = (ControlPointImpl) controlPoint;
+    mapper.delete(entity);
+    controlPoints.remove(entity.getId());
   }
 
   @Override
