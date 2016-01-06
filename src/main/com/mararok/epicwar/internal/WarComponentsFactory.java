@@ -5,6 +5,8 @@
  */
 package com.mararok.epicwar.internal;
 
+import java.sql.SQLException;
+
 import com.mararok.epiccore.database.DMQL;
 import com.mararok.epicwar.EpicWarPlugin;
 import com.mararok.epicwar.War;
@@ -27,13 +29,13 @@ import com.mararok.epicwar.player.internal.WarPlayerManagerImpl;
 public class WarComponentsFactory {
   private DMQL queries;
 
-  public WarComponentsFactory(EpicWarPlugin plugin) {
+  public WarComponentsFactory(EpicWarPlugin plugin) throws SQLException {
     queries = new DMQL(plugin.getDatabaseConnection());
   }
 
   public WarPlayerManagerImpl newPlayerManager(War war) throws Exception {
     WarPlayerFactory factory = new WarPlayerFactory(war);
-    String tableName = createTableName(war, "players");
+    String tableName = createTableName(war, "Players");
     WarPlayerDatabaseMapper mapper = new WarPlayerDatabaseMapper(queries, tableName, factory);
 
     return new WarPlayerManagerImpl(mapper, war);
@@ -41,7 +43,7 @@ public class WarComponentsFactory {
 
   public FactionManagerImpl newFactionManager(War war) throws Exception {
     FactionFactory factory = new FactionFactory(war);
-    String tableName = createTableName(war, "factions");
+    String tableName = createTableName(war, "Factions");
     FactionDatabaseMapper mapper = new FactionDatabaseMapper(queries, tableName, factory);
 
     return new FactionManagerImpl(mapper, war);
@@ -49,7 +51,7 @@ public class WarComponentsFactory {
 
   public SectorManagerImpl newSectorManager(War war) throws Exception {
     SectorFactory factory = new SectorFactory(war);
-    String tableName = createTableName(war, "sectors");
+    String tableName = createTableName(war, "Sectors");
     SectorDatabaseMapper mapper = new SectorDatabaseMapper(queries, tableName, factory);
 
     return new SectorManagerImpl(mapper, war);
@@ -57,7 +59,7 @@ public class WarComponentsFactory {
 
   public ControlPointManagerImpl newControlPointManager(War war) throws Exception {
     ControlPointFactory factory = new ControlPointFactory(war);
-    String tableName = createTableName(war, "controlPoints");
+    String tableName = createTableName(war, "ControlPoints");
     ControlPointDatabaseMapper mapper = new ControlPointDatabaseMapper(queries, tableName, factory);
 
     return new ControlPointManagerImpl(mapper, war);
@@ -65,7 +67,7 @@ public class WarComponentsFactory {
 
   public SubsectorMapImpl newSubsectorMap(War war) throws Exception {
     SubsectorFactory factory = new SubsectorFactory(war);
-    String tableName = createTableName(war, "subsectors");
+    String tableName = createTableName(war, "Subsectors");
     SubsectorDatabaseMapper mapper = new SubsectorDatabaseMapper(queries, tableName, factory);
 
     return new SubsectorMapImpl(mapper, war);
