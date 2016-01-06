@@ -17,12 +17,16 @@ import com.mararok.epicwar.control.Sector;
 
 public class ControlPointSetPropertyCommand extends EpicWarCommand {
 
+  private final static int ID_ARGUMENT = 0;
+  private final static int PROPERTY_ARGUMENT = 1;
+  private final static int VALUE_ARGUMENT = 2;
+
   public ControlPointSetPropertyCommand(EpicWarPlugin plugin) {
     super(plugin);
 
     setMetadata(CommandMetadata.command("set")
         .description(getLanguage().getText("command.controlPoint.set"))
-        .usage("\\ewcp set <id> <propertyName> <value>")
+        .usage("\\ewcp set <id> <property> <value>")
         .permission("epicwar.controlPoint.set")
         .requiredArguments(3));
 
@@ -31,50 +35,49 @@ public class ControlPointSetPropertyCommand extends EpicWarCommand {
   @Override
   protected boolean onCommandOnWarWorld(War war, Player sender, CommandArguments<EpicWarPlugin> arguments) throws Exception {
     if (checkIsEditableWar(sender, war)) {
-      if (!arguments.isNumber(0)) {
+      if (!arguments.isNumber(ID_ARGUMENT)) {
         return false;
       }
 
-      int controlPointId = arguments.asInt(0);
+      int controlPointId = arguments.asInt(ID_ARGUMENT);
       ControlPoint controlPoint = war.getControlPointManager().findById(controlPointId);
       if (controlPoint != null) {
-
-        String propertyName = arguments.get(1).toLowerCase();
+        String propertyName = arguments.get(PROPERTY_ARGUMENT).toLowerCase();
         switch (propertyName) {
         case "name":
-          controlPoint.setName(arguments.join(2, " "));
+          controlPoint.setName(arguments.join(VALUE_ARGUMENT, " "));
           break;
         case "description":
-          controlPoint.setDescription(arguments.join(2, " "));
+          controlPoint.setDescription(arguments.join(VALUE_ARGUMENT, " "));
           break;
         case "radius":
-          if (arguments.isNumber(2)) {
-            controlPoint.setRadius(Math.abs(arguments.asInt(2)));
+          if (arguments.isNumber(VALUE_ARGUMENT)) {
+            controlPoint.setRadius(Math.abs(arguments.asInt(VALUE_ARGUMENT)));
           } else {
             sender.sendMessage(getLanguage().getText("message.controlPoint.error.radius"));
           }
           break;
-        case "power":
-          if (arguments.isNumber(2)) {
-            controlPoint.getPower().setMax(Math.abs(arguments.asInt(2)));
+        case "maxpower":
+          if (arguments.isNumber(VALUE_ARGUMENT)) {
+            controlPoint.getPower().setMax(Math.abs(arguments.asInt(VALUE_ARGUMENT)));
           } else {
-            sender.sendMessage(getLanguage().getText("message.controlPoint.error.power"));
+            sender.sendMessage(getLanguage().getText("message.controlPoint.error.maxPower"));
           }
           break;
-        case "sectorId":
-          if (arguments.isNumber(2)) {
-            Sector sector = war.getSectorManager().findById(arguments.asInt(2));
+        case "sectorid":
+          if (arguments.isNumber(VALUE_ARGUMENT)) {
+            Sector sector = war.getSectorManager().findById(arguments.asInt(VALUE_ARGUMENT));
             if (sector != null) {
               controlPoint.setSector(sector);
             } else {
-              sender.sendMessage(getLanguage().getFormatedText("messsage.sector.notExists", arguments.asInt(2)));
+              sender.sendMessage(getLanguage().getFormatedText("messsage.sector.notExists", arguments.asInt(VALUE_ARGUMENT)));
             }
           } else {
             sender.sendMessage(getLanguage().getText("message.controlPoint.error.sectorId"));
           }
           break;
         default:
-          sender.sendMessage(getLanguage().getFormatedText("message.controlPoint.set.propertiesList", "name, description, radius, power, sectorId"));
+          sender.sendMessage(getLanguage().getFormatedText("message.controlPoint.set.propertiesList", "name, description, radius, maxpower, sectorid"));
         }
 
         war.getControlPointManager().update(controlPoint);
