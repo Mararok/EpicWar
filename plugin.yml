@@ -2,11 +2,35 @@ name: EpicWar
 main: com.mararok.epicwar.EpicWarPlugin
 author: Mararok
 version: 2.0
-prefix: EW
+prefix: EpicWar
+
+depend: [EpicCore]
 
 commands:
  ew:
  ewf:
  ews:
  ewcp:
+ ewss:
  
+ permissions:
+  epicwar.list: {default: false}
+ 
+  epicwar.sector.create: {default: false}
+  epicwar.sector.delete: {default: false}
+  epicwar.sector.set: {default: false}
+  epicwar.sector.info: {default: true}
+ 
+  epicwar.controlPoint.create: {default: false}
+  epicwar.controlPoint.delete: {default: false}
+  epicwar.controlPoint.set: {default: false}
+  epicwar.controlPoint.info: {default: true}
+ 
+  epicwar.subsector.assign: {default: false}
+  epicwar.subsector.delete: {default: false}
+  epicwar.subsector.info: {default: true}
+ 
+  epicwar.faction.create: {default: false}
+  epicwar.faction.colors: {default: false}
+  epicwar.faction.join: {default: false}
+  epicwar.faction.list: {default: false}
