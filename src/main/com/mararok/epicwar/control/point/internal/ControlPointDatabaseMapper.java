@@ -10,6 +10,7 @@ import java.sql.SQLException;
 
 import com.mararok.epiccore.database.DMQL;
 import com.mararok.epiccore.entity.EntityDatabaseMapper;
+import com.mararok.epiccore.math.Position3D;
 import com.mararok.epicwar.control.ControlPointData;
 
 public class ControlPointDatabaseMapper extends EntityDatabaseMapper<ControlPointImpl, ControlPointData>implements ControlPointMapper {
@@ -18,21 +19,31 @@ public class ControlPointDatabaseMapper extends EntityDatabaseMapper<ControlPoin
 
   public ControlPointDatabaseMapper(DMQL queries, String tableName, ControlPointFactory factory) {
     super(queries, tableName, factory);
-    insertColumns = super.columns("name", "description");
+    insertColumns = columns("name", "x", "y", "z", "radius", "maxPower");
   }
 
   @Override
-  public ControlPointImpl insert(ControlPointData entityData) throws Exception {
-    entityData.id = insert(insertColumns, super.values(entityData.name, entityData.description));
-    return getFactory().create(entityData);
+  public ControlPointImpl insert(ControlPointData data) throws Exception {
+    Position3D position = data.position;
+    data.id = insert(insertColumns,
+        values(data.name,
+            position.x, position.y, position.z,
+            data.radius,
+            data.maxPower));
+    return getFactory().create(data);
   }
 
   @Override
   protected ControlPointData createData(ResultSet resultSet) throws SQLException {
     ControlPointData data = new ControlPointData();
-    data.id = resultSet.getInt(1);
-    data.name = resultSet.getString(2);
-    data.description = resultSet.getString(3);
+    int column = 1;
+    data.id = resultSet.getInt(column++);
+    data.name = resultSet.getString(column++);
+    data.description = resultSet.getString(column++);
+
+    data.position = new Position3D(resultSet.getInt(column++), resultSet.getInt(column++), resultSet.getInt(column++));
+    data.radius = resultSet.getInt(column++);
+    data.maxPower = resultSet.getInt(column++);
     return data;
   }
 }
