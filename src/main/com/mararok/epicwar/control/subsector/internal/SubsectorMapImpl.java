@@ -31,7 +31,7 @@ public class SubsectorMapImpl implements SubsectorMap {
   private War war;
 
   public SubsectorMapImpl(SubsectorMapper mapper, War war) throws Exception {
-    WarSettings.World worldSettings = war.getSettings().world;
+    WarSettings.WorldSettings worldSettings = war.getSettings().world;
     this.startChunkX = worldSettings.startChunkX;
     this.startChunkZ = worldSettings.startChunkZ;
     this.sizeInChunks = worldSettings.sizeInChunks;
