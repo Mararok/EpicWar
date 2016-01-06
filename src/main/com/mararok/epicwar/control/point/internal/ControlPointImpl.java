@@ -6,7 +6,7 @@ package com.mararok.epicwar.control.point.internal;
 
 import java.util.Arrays;
 
-import com.mararok.epiccore.Position3D;
+import com.mararok.epiccore.math.Position3D;
 import com.mararok.epicwar.War;
 import com.mararok.epicwar.control.ControlAreaPower;
 import com.mararok.epicwar.control.ControlPoint;
@@ -32,8 +32,12 @@ public class ControlPointImpl extends NamedControlAreaImpl implements ControlPoi
 
     position = data.position;
     radius = data.radius;
-    power = data.power;
+    power = new ControlAreaPower(data.maxPower);
+
+    owner = war.getFactionManager().findById(data.ownerId);
     occupation = new Occupation(this);
+
+    sector = war.getSectorManager().findById(data.sectorId);
   }
 
   @Override
@@ -49,15 +53,23 @@ public class ControlPointImpl extends NamedControlAreaImpl implements ControlPoi
   @Override
   public void setRadius(int newRadius) {
     if (newRadius < 2) {
-      throw new IllegalArgumentException("Can't set radius < 2 for ControlPoint " + getName());
+      throw new IllegalArgumentException("Can't set radius < 2 for Control Point " + getName());
     }
 
     radius = newRadius;
+
+    onChangeProperty("radius", radius);
   }
 
   @Override
   public ControlAreaPower getPower() {
     return power;
+  }
+
+  public void setMaxPower(int maxPower) {
+    power.setMax(maxPower);
+
+    onChangeProperty("maxPower", power.getMax());
   }
 
   @Override
@@ -67,6 +79,7 @@ public class ControlPointImpl extends NamedControlAreaImpl implements ControlPoi
 
   public void setOwner(Faction newOwner) {
     owner = newOwner;
+    onChangeProperty("ownerId", owner.getId());
   }
 
   @Override
@@ -87,6 +100,7 @@ public class ControlPointImpl extends NamedControlAreaImpl implements ControlPoi
   @Override
   public void setSector(Sector newSector) {
     sector = newSector;
+    onChangeProperty("sectorId", sector.getId());
   }
 
   @Override
@@ -101,6 +115,14 @@ public class ControlPointImpl extends NamedControlAreaImpl implements ControlPoi
     }
 
     controlPoint.connectTo(this);
+
+    String connectionsString = "";
+    for (int i = 0; i < connections.length - 1; ++i) {
+      connectionsString += connections[i].getId() + ",";
+    }
+    connectionsString += connections[connections.length - 1];
+
+    onChangeProperty("connections", connectionsString);
   }
 
   @Override
