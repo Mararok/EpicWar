@@ -8,9 +8,9 @@ package com.mararok.epicwar.command.faction;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import com.mararok.epiccore.Position3D;
 import com.mararok.epiccore.command.CommandArguments;
 import com.mararok.epiccore.command.CommandMetadata;
+import com.mararok.epiccore.math.Position3D;
 import com.mararok.epicwar.EpicWarPlugin;
 import com.mararok.epicwar.War;
 import com.mararok.epicwar.command.EpicWarCommand;
