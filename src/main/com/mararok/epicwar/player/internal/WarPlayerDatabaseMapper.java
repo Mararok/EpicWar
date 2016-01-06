@@ -29,7 +29,7 @@ public class WarPlayerDatabaseMapper extends EntityDatabaseMapper<WarPlayerImpl,
 
   @Override
   public WarPlayerImpl findByUUID(UUID uuid) throws Exception {
-    return findOne("uuid=" + uuid.toString());
+    return findOne("uuid='" + uuid.toString() + "'");
   }
 
   @Override
