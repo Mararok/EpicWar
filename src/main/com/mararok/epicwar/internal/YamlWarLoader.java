@@ -37,7 +37,7 @@ public class YamlWarLoader {
 
   public Collection<WarImpl> loadAll(String warsPath) throws Exception {
     Collection<WarImpl> wars = new Vector<WarImpl>();
-    try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get(basePath, warsPath), "[_]*" + WAR_EXT)) {
+    try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get(basePath, warsPath), "*" + WAR_EXT)) {
       for (Path path : stream) {
         wars.add(load(path));
       }
@@ -97,8 +97,8 @@ public class YamlWarLoader {
     return settings;
   }
 
-  private WarSettings.World loadWorldSettings(YamlConfiguration config) {
-    WarSettings.World world = new WarSettings.World();
+  private WarSettings.WorldSettings loadWorldSettings(YamlConfiguration config) {
+    WarSettings.WorldSettings world = new WarSettings.WorldSettings();
     world.name = config.getString("world.name");
     world.startChunkX = config.getInt("world.startChunkX");
     world.startChunkZ = config.getInt("world.startChunkZ");
@@ -106,8 +106,8 @@ public class YamlWarLoader {
     return world;
   }
 
-  private WarSettings.Points loadPointsSettings(YamlConfiguration config) {
-    WarSettings.Points points = new WarSettings.Points();
+  private WarSettings.PointsSettings loadPointsSettings(YamlConfiguration config) {
+    WarSettings.PointsSettings points = new WarSettings.PointsSettings();
     points.kill = config.getInt("points.kill");
     points.death = config.getInt("points.death");
 
@@ -116,15 +116,15 @@ public class YamlWarLoader {
     return points;
   }
 
-  private WarSettings.Faction loadFactionSettings(YamlConfiguration config) {
-    WarSettings.Faction faction = new WarSettings.Faction();
+  private WarSettings.FactionSettions loadFactionSettings(YamlConfiguration config) {
+    WarSettings.FactionSettions faction = new WarSettings.FactionSettions();
     faction.onlineBalance = config.getBoolean("faction.onlineBalanceEnabled");
     faction.onlineBalancePercentPerFaction = config.getInt("faction.onlineBalancePercentPerFaction");
     return faction;
   }
 
-  private WarSettings.ControlPoint loadControlPointSettings(YamlConfiguration config) {
-    WarSettings.ControlPoint controlPoint = new WarSettings.ControlPoint();
+  private WarSettings.ControlPointSettings loadControlPointSettings(YamlConfiguration config) {
+    WarSettings.ControlPointSettings controlPoint = new WarSettings.ControlPointSettings();
     controlPoint.updateInterval = config.getInt("controlPoint.updateInterval");
     controlPoint.powerDefender = config.getInt("controlPoint.power.defender");
     controlPoint.powerAttacker = config.getInt("controlPoint.power.attacker");
