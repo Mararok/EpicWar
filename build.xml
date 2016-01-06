@@ -6,7 +6,7 @@
 
 	<target name="buildJAR">
 		<jar destfile="${projectHome}/build/EpicWar.jar" manifest="${projectHome}/EpicWar.manifest" update="true" basedir="${projectHome}/bin">
-			<fileset dir="${projectHome}/" includes="sqlscripts/** wars/** lang/** config.yml plugin.yml LICENSE" />
+			<fileset dir="${projectHome}/" includes="sqlscripts/** lang/** config.yml plugin.yml LICENSE" />
 		</jar>
 	</target>
 
