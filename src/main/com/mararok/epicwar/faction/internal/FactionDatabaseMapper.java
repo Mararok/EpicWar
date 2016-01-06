@@ -8,11 +8,9 @@ package com.mararok.epicwar.faction.internal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.bukkit.craftbukkit.libs.joptsimple.internal.Strings;
-
-import com.mararok.epiccore.Position3D;
 import com.mararok.epiccore.database.DMQL;
 import com.mararok.epiccore.entity.EntityDatabaseMapper;
+import com.mararok.epiccore.math.Position3D;
 import com.mararok.epicwar.faction.Faction;
 import com.mararok.epicwar.faction.FactionData;
 
@@ -24,25 +22,28 @@ public class FactionDatabaseMapper extends EntityDatabaseMapper<FactionImpl, Fac
 
   @Override
   public FactionImpl insert(FactionData data) throws Exception {
-    String columns = "id,name,shortcut,color,bannerPattern,spawnPositionX,spawnPositionY,spawnPositionZ";
-    data.id = data.color.ordinal(); // faction id is color;
-    String values = "(" + Strings.join(data.toStringList(), ",") + ")";
-    insert(columns, values);
+    data.id = data.color.ordinal(); // faction id is color
+
+    insert(columns("id", "name", "shortcut", "color", "bannerPattern", "spawnX", "spawnY", "spawnZ"),
+        values(data.id,
+            data.name, data.shortcut,
+            data.color, data.bannerPattern,
+            data.spawnPosition.x, data.spawnPosition.y, data.spawnPosition.z));
     return getFactory().create(data);
   }
 
   @Override
   protected FactionData createData(ResultSet resultSet) throws SQLException {
     FactionData data = new FactionData();
-    data.id = resultSet.getInt(1);
-    data.name = resultSet.getString(2);
-    data.shortcut = resultSet.getString(3);
-    data.description = resultSet.getString(4);
+    int column = 1;
+    data.id = resultSet.getInt(column++);
+    data.name = resultSet.getString(column++);
+    data.shortcut = resultSet.getString(column++);
+    data.description = resultSet.getString(column++);
 
-    data.color = Faction.Color.getByChar(resultSet.getString(5).charAt(0));
-    data.bannerPattern = Faction.BannerPattern.createFromSerialized(resultSet.getString(6));
-
-    data.spawnPosition = new Position3D(resultSet.getInt(7), resultSet.getInt(8), resultSet.getInt(9));
+    data.color = Faction.Color.getByChar(resultSet.getString(column++).charAt(0));
+    data.bannerPattern = Faction.BannerPattern.createFromSerialized(resultSet.getString(column++));
+    data.spawnPosition = new Position3D(resultSet.getInt(column++), resultSet.getInt(column++), resultSet.getInt(column++));
 
     return data;
   }
