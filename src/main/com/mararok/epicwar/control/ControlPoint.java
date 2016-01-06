@@ -5,7 +5,7 @@
  */
 package com.mararok.epicwar.control;
 
-import com.mararok.epiccore.Position3D;
+import com.mararok.epiccore.math.Position3D;
 import com.mararok.epicwar.control.internal.Occupation;
 
 /**

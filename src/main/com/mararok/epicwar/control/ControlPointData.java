@@ -5,7 +5,7 @@
  */
 package com.mararok.epicwar.control;
 
-import com.mararok.epiccore.Position3D;
+import com.mararok.epiccore.math.Position3D;
 
 public class ControlPointData extends NamedControlAreaData {
 
@@ -14,7 +14,7 @@ public class ControlPointData extends NamedControlAreaData {
 
   public Position3D position;
   public int radius;
-  public ControlAreaPower power;
+  public int maxPower;
   public int[] connections;
 
 }
