@@ -18,7 +18,7 @@ public class SectorDatabaseMapper extends EntityDatabaseMapper<SectorImpl, Secto
 
   public SectorDatabaseMapper(DMQL queries, String tableName, SectorFactory factory) {
     super(queries, tableName, factory);
-    insertColumns = columns("name", "description");
+    insertColumns = columns("name");
   }
 
   @Override
@@ -30,9 +30,10 @@ public class SectorDatabaseMapper extends EntityDatabaseMapper<SectorImpl, Secto
   @Override
   protected SectorData createData(ResultSet resultSet) throws SQLException {
     SectorData data = new SectorData();
-    data.id = resultSet.getInt(1);
-    data.name = resultSet.getString(2);
-    data.description = resultSet.getString(3);
+    int column = 1;
+    data.id = resultSet.getInt(column++);
+    data.name = resultSet.getString(column++);
+    data.description = resultSet.getString(column++);
     return data;
   }
 
