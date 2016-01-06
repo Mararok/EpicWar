@@ -11,6 +11,7 @@ import org.bukkit.command.CommandSender;
 
 import com.mararok.epiccore.command.CommandArguments;
 import com.mararok.epiccore.command.CommandMetadata;
+import com.mararok.epiccore.misc.MessageBuilder;
 import com.mararok.epicwar.EpicWarPlugin;
 import com.mararok.epicwar.War;
 
@@ -21,7 +22,7 @@ public class WarListCommand extends EpicWarCommand {
     setMetadata(CommandMetadata.command("list")
         .description(getLanguage().getText("command.war.list"))
         .usage("\\ew list")
-        .permission("epicwar.war.list"));
+        .permission("epicwar.list"));
   }
 
   @Override
@@ -29,13 +30,11 @@ public class WarListCommand extends EpicWarCommand {
     if (checkPermission(sender)) {
       Collection<War> wars = getPlugin().getWarManager().findAll();
       if (!wars.isEmpty()) {
-        String[] messages = new String[wars.size() + 1];
-        messages[0] = getLanguage().getText("message.war.list.header");
-        int i = 1;
-
+        MessageBuilder message = MessageBuilder.message().line(getLanguage().getText("message.war.list.header"));
         for (War war : wars) {
-          messages[i++] = getLanguage().getFormatedText("message.war.list.row", war.getId(), war.getSettings().name, war.getWorld().getName());
+          message.line(getLanguage().getFormatedText("message.war.list.row", war.getId(), war.getSettings().name, war.getWorld().getName()));
         }
+        sender.sendMessage(message.toArray());
       } else {
         sender.sendMessage(getLanguage().getText("message.war.list.empty"));
       }
