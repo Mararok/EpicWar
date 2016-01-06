@@ -7,9 +7,9 @@ package com.mararok.epicwar.command.control.subsector;
 
 import org.bukkit.entity.Player;
 
-import com.mararok.epiccore.MessageBuilder;
 import com.mararok.epiccore.command.CommandArguments;
 import com.mararok.epiccore.command.CommandMetadata;
+import com.mararok.epiccore.misc.MessageBuilder;
 import com.mararok.epicwar.EpicWarPlugin;
 import com.mararok.epicwar.War;
 import com.mararok.epicwar.command.EpicWarCommand;
