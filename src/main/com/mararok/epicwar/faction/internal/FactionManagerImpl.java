@@ -85,21 +85,17 @@ public class FactionManagerImpl implements FactionManager {
 
   @Override
   public void update(Faction faction) throws Exception {
-    FactionImpl f = (FactionImpl) findById(faction.getId());
-    if (f != null) {
-      mapper.update(f);
-    }
+    FactionImpl entity = (FactionImpl) faction;
+    mapper.update(entity);
+    entity.clearChanges();
   }
 
-  /**
-   * TODO remove connection with deleted faction in WarPlayer.
-   */
   @Override
   public void delete(Faction faction) throws Exception {
-    FactionImpl f = (FactionImpl) findById(faction.getId());
-    if (f != null) {
-      mapper.delete(f);
-    }
+    FactionImpl entity = (FactionImpl) faction;
+    mapper.delete(entity);
+
+    factions[faction.getId()] = null;
   }
 
   @Override
