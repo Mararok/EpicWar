@@ -14,39 +14,49 @@ public interface FactionManager {
   /**
    * Returns faction with selected id or null when faction doesn't exists
    */
-  Faction findById(int id);
+  public Faction findById(int id);
 
   /**
    * Returns faction with selected color or null when faction doesn't exists
    */
-  Faction findByColor(Faction.Color color);
+  public Faction findByColor(Faction.Color color);
 
   /**
    * Returns faction with selected shortcut or null when faction doesn't exists
    */
-  Faction findByShortcut(String shortcut);
+  public Faction findByShortcut(String shortcut);
 
   /**
    * Returns faction with selected name or null when faction doesn't exists
    */
-  Faction findByName(String factionName);
+  public Faction findByName(String factionName);
 
   /**
    * Returns all exists factions
    */
-  Collection<Faction> findAll();
+  public Collection<Faction> findAll();
 
   /**
-   * Creates new faction from data. Where id = colorId
+   * Creates new faction from data
+   * WARNING: don't use when war isn't in editMode
    * 
-   * @return faction instance or null when faction with choosen color creates before
+   * @return faction instance
+   * @throws Exception When faction with the same color exists or when internal storage error
    */
-  Faction create(FactionData data) throws Exception;
+  public Faction create(FactionData data) throws Exception;
 
-  void update(Faction faction) throws Exception;
+  /**
+   * Updates properties of faction
+   * WARNING: don't use when war isn't in editMode
+   */
+  public void update(Faction faction) throws Exception;
 
-  void delete(Faction faction) throws Exception;
+  /**
+   * Deletes faction from war
+   * WARNING: don't use when war isn't in editMode
+   */
+  public void delete(Faction faction) throws Exception;
 
-  War getWar();
+  public War getWar();
 
 }
