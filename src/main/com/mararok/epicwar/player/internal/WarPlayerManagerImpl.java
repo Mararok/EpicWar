@@ -5,7 +5,6 @@
  */
 package com.mararok.epicwar.player.internal;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -17,6 +16,7 @@ import com.mararok.epicwar.EpicWarEvent;
 import com.mararok.epicwar.War;
 import com.mararok.epicwar.faction.Faction;
 import com.mararok.epicwar.player.WarPlayer;
+import com.mararok.epicwar.player.WarPlayerData;
 import com.mararok.epicwar.player.WarPlayerManager;
 
 public class WarPlayerManagerImpl implements WarPlayerManager {
@@ -31,18 +31,15 @@ public class WarPlayerManagerImpl implements WarPlayerManager {
   }
 
   public WarPlayer tryJoin(Player nativePlayer) throws Exception {
-    if (war.getWorld() == nativePlayer.getWorld()) {
-      WarPlayer player = findByPlayer(nativePlayer);
-      return player;
-    }
-
-    return null;
+    WarPlayer player = findByPlayer(nativePlayer);
+    return player;
   }
 
+  /**
+   * @TODO remove from ocupation
+   */
   public void unload(Player nativePlayer) {
-    if (war.getWorld() != nativePlayer.getWorld()) {
-      players.remove(nativePlayer.getUniqueId());
-    }
+    players.remove(nativePlayer.getUniqueId());
   }
 
   @Override
@@ -55,7 +52,9 @@ public class WarPlayerManagerImpl implements WarPlayerManager {
     WarPlayerImpl player = players.get(uuid);
     if (player == null) {
       player = mapper.findByUUID(uuid);
-      players.put(uuid, player);
+      if (player != null) {
+        players.put(uuid, player);
+      }
     }
 
     return player;
@@ -63,21 +62,33 @@ public class WarPlayerManagerImpl implements WarPlayerManager {
 
   @Override
   public WarPlayer register(Player nativePlayer, Faction faction) throws Exception {
+    if (findByPlayer(nativePlayer) != null) {
+      WarPlayerData data = new WarPlayerData();
+      data.factionId = faction.getId();
+      data.uuid = nativePlayer.getUniqueId();
+      WarPlayerImpl player = mapper.insert(data);
+
+      players.put(nativePlayer.getUniqueId(), player);
+      return player;
+    }
+
     return null;
   }
 
   @Override
   public void update(WarPlayer player) throws Exception {
-    if (isFromThisWar(player)) {
-      mapper.update((WarPlayerImpl) player);
-    }
+    WarPlayerImpl entity = (WarPlayerImpl) player;
+    mapper.update(entity);
+    entity.clearChanges();
   }
 
+  /**
+   * @TODO adds remove from ocupation.
+   */
   @Override
   public void delete(WarPlayer player) throws Exception {
-    if (isFromThisWar(player)) {
-      mapper.delete((WarPlayerImpl) player);
-    }
+    unload(player.getNativePlayer());
+    mapper.delete((WarPlayerImpl) player);
   }
 
   public void addKill(Player killer, Player victim) throws Exception {
@@ -93,14 +104,6 @@ public class WarPlayerManagerImpl implements WarPlayerManager {
 
   public void dispatchEvent(EpicWarEvent event) {
     war.getWarManager().getPlugin().getEventManager().dispatchEvent(event);
-  }
-
-  public void onServerReload(Collection<Player> playersOnline) {
-
-  }
-
-  public boolean isFromThisWar(WarPlayer player) {
-    return getWar() == player.getWar();
   }
 
   @Override
