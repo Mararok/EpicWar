@@ -7,7 +7,6 @@ package com.mararok.epicwar.faction.internal;
 
 import java.util.Collection;
 import java.util.LinkedList;
-import java.util.List;
 
 import com.mararok.epicwar.War;
 import com.mararok.epicwar.faction.Faction;
@@ -15,12 +14,13 @@ import com.mararok.epicwar.faction.FactionData;
 import com.mararok.epicwar.faction.FactionManager;
 
 public class FactionManagerImpl implements FactionManager {
+  public final static int MAX_FACTIONS = Faction.Color.values().length;
   private FactionImpl[] factions;
   private FactionMapper mapper;
   private War war;
 
   public FactionManagerImpl(FactionMapper mapper, War war) throws Exception {
-    factions = new FactionImpl[Faction.Color.values().length];
+    factions = new FactionImpl[MAX_FACTIONS];
     this.mapper = mapper;
 
     Collection<FactionImpl> collection = mapper.findAll();
@@ -32,7 +32,7 @@ public class FactionManagerImpl implements FactionManager {
 
   @Override
   public Faction findById(int id) {
-    return factions[id];
+    return (id >= 0 && id < MAX_FACTIONS) ? factions[id] : null;
   }
 
   @Override
@@ -43,7 +43,7 @@ public class FactionManagerImpl implements FactionManager {
   @Override
   public Faction findByName(String name) {
     for (Faction faction : factions) {
-      if (faction.getName().equals(name)) {
+      if (faction.getName().equalsIgnoreCase(name)) {
         return faction;
       }
     }
@@ -53,7 +53,7 @@ public class FactionManagerImpl implements FactionManager {
   @Override
   public Faction findByShortcut(String shortcut) {
     for (Faction faction : factions) {
-      if (faction.getShortcut().equals(shortcut)) {
+      if (faction.getShortcut().equalsIgnoreCase(shortcut)) {
         return faction;
       }
     }
@@ -62,7 +62,7 @@ public class FactionManagerImpl implements FactionManager {
 
   @Override
   public Collection<Faction> findAll() {
-    List<Faction> collection = new LinkedList<Faction>();
+    Collection<Faction> collection = new LinkedList<Faction>();
     for (Faction faction : factions) {
       if (faction != null) {
         collection.add(faction);
@@ -80,7 +80,7 @@ public class FactionManagerImpl implements FactionManager {
       return faction;
     }
 
-    return null;
+    throw new Exception("Can't create faction with the same color");
   }
 
   @Override
