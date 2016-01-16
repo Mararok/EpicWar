@@ -14,16 +14,37 @@ import com.mararok.epicwar.War;
  */
 public interface SectorManager {
 
-  Sector findById(int id);
+  /**
+   * Returns sector with selected id or null when sector doesn't exists
+   */
+  public Sector findById(int id);
 
-  Collection<Sector> findAll();
+  /**
+   * Returns all sectors
+   */
+  public Collection<Sector> findAll();
 
-  Sector create(SectorData data) throws Exception;
+  /**
+   * Creates new sector from data
+   * WARNING: don't use when war isn't in editMode
+   * 
+   * @return sector instance
+   * @throws Exception When internal storage error
+   */
+  public Sector create(SectorData data) throws Exception;
 
-  void update(Sector sector) throws Exception;
+  /**
+   * Updates properties of sector
+   * WARNING: don't use when war isn't in editMode
+   */
+  public void update(Sector sector) throws Exception;
 
-  void delete(Sector sector) throws Exception;
+  /**
+   * Deletes sector from war
+   * WARNING: don't use when war isn't in editMode
+   */
+  public void delete(Sector sector) throws Exception;
 
-  War getWar();
+  public War getWar();
 
 }
