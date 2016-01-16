@@ -113,7 +113,7 @@ public class PlayerListener implements Listener {
       try {
         WarPlayer warPlayer = war.getPlayerManager().findByPlayer(player);
         if (warPlayer != null) {
-          ((WarPlayerImpl) warPlayer).update(event.getTo());
+          ((WarPlayerImpl) warPlayer).updatePosition(event.getTo());
         }
       } catch (Exception e) {
         getPlugin().getLogger().log(Level.SEVERE, "exception: ", e);
