@@ -17,14 +17,19 @@ import com.mararok.epicwar.player.PlayerStats;
 import com.mararok.epicwar.player.WarPlayerData;
 
 public class WarPlayerDatabaseMapper extends EntityDatabaseMapper<WarPlayerImpl, WarPlayerData>implements WarPlayerMapper {
+  private String columns;
 
   public WarPlayerDatabaseMapper(DMQL queries, String tableName, WarPlayerFactory factory) {
     super(queries, tableName, factory);
+    columns = columns("uuid", "factionId");
   }
 
   @Override
   public WarPlayerImpl insert(WarPlayerData entityData) throws Exception {
-    return null;
+    entityData.id = insert(columns, values(entityData.uuid, entityData.factionId));
+    entityData.stats = new PlayerStats();
+
+    return getFactory().create(entityData);
   }
 
   @Override
