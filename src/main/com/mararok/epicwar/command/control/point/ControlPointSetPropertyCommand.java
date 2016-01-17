@@ -59,7 +59,7 @@ public class ControlPointSetPropertyCommand extends EpicWarCommand {
           break;
         case "maxpower":
           if (arguments.isNumber(VALUE_ARGUMENT)) {
-            controlPoint.getPower().setMax(Math.abs(arguments.asInt(VALUE_ARGUMENT)));
+            controlPoint.setMaxPower(Math.abs(arguments.asInt(VALUE_ARGUMENT)));
           } else {
             sender.sendMessage(getLanguage().getText("message.controlPoint.error.maxPower"));
           }

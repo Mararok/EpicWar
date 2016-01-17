@@ -54,7 +54,7 @@ public class ControlPointInfoCommand extends EpicWarCommand {
       sender.sendMessage(MessageBuilder.message()
           .line("[" + controlPoint.getId() + "] " + controlPoint.getPosition() + controlPoint.getName())
           .line(controlPoint.getDescription())
-          .line(controlPoint.getPower().getCurrent() + "/" + controlPoint.getPower().getMax())
+          .line(controlPoint.getCurrentPower() + "/" + controlPoint.getMaxPower())
           .toArray());
     }
   }
