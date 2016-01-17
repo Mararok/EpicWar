@@ -9,6 +9,9 @@ import java.util.Collection;
 
 import com.mararok.epicwar.War;
 
+/**
+ * Manages all factions in one war
+ */
 public interface FactionManager {
 
   /**
@@ -46,16 +49,10 @@ public interface FactionManager {
   public Faction create(FactionData data) throws Exception;
 
   /**
-   * Updates properties of faction
+   * Updates changed properties of faction
    * WARNING: don't use when war isn't in editMode
    */
   public void update(Faction faction) throws Exception;
-
-  /**
-   * Deletes faction from war
-   * WARNING: don't use when war isn't in editMode
-   */
-  public void delete(Faction faction) throws Exception;
 
   public War getWar();
 

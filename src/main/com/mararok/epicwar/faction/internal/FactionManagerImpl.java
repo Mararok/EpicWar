@@ -5,8 +5,8 @@
  */
 package com.mararok.epicwar.faction.internal;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedList;
 
 import com.mararok.epicwar.War;
 import com.mararok.epicwar.faction.Faction;
@@ -15,19 +15,23 @@ import com.mararok.epicwar.faction.FactionManager;
 
 public class FactionManagerImpl implements FactionManager {
   public final static int MAX_FACTIONS = Faction.Color.values().length;
-  private FactionImpl[] factions;
+  private Faction[] factions;
   private FactionMapper mapper;
   private War war;
 
   public FactionManagerImpl(FactionMapper mapper, War war) throws Exception {
-    factions = new FactionImpl[MAX_FACTIONS];
+    factions = new Faction[MAX_FACTIONS];
     this.mapper = mapper;
+    this.war = war;
 
+    loadAll();
+  }
+
+  private void loadAll() throws Exception {
     Collection<FactionImpl> collection = mapper.findAll();
     for (FactionImpl faction : collection) {
       factions[faction.getId()] = faction;
     }
-    this.war = war;
   }
 
   @Override
@@ -62,7 +66,7 @@ public class FactionManagerImpl implements FactionManager {
 
   @Override
   public Collection<Faction> findAll() {
-    Collection<Faction> collection = new LinkedList<Faction>();
+    Collection<Faction> collection = new ArrayList<Faction>();
     for (Faction faction : factions) {
       if (faction != null) {
         collection.add(faction);
@@ -75,7 +79,7 @@ public class FactionManagerImpl implements FactionManager {
   @Override
   public Faction create(FactionData data) throws Exception {
     if (findByColor(data.color) == null) {
-      FactionImpl faction = mapper.insert(data);
+      Faction faction = mapper.insert(data);
       factions[faction.getId()] = faction;
       return faction;
     }
@@ -88,14 +92,6 @@ public class FactionManagerImpl implements FactionManager {
     FactionImpl entity = (FactionImpl) faction;
     mapper.update(entity);
     entity.clearChanges();
-  }
-
-  @Override
-  public void delete(Faction faction) throws Exception {
-    FactionImpl entity = (FactionImpl) faction;
-    mapper.delete(entity);
-
-    factions[faction.getId()] = null;
   }
 
   @Override

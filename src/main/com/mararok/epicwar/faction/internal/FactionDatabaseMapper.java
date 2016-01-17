@@ -24,10 +24,9 @@ public class FactionDatabaseMapper extends EntityDatabaseMapper<FactionImpl, Fac
   public FactionImpl insert(FactionData data) throws Exception {
     data.id = data.color.ordinal(); // faction id is color
 
-    insert(columns("id", "name", "shortcut", "color", "bannerPattern", "spawnX", "spawnY", "spawnZ"),
+    insert(columns("id", "name", "shortcut", "color", "spawnX", "spawnY", "spawnZ"),
         values(data.id,
-            data.name, data.shortcut,
-            data.color, data.bannerPattern,
+            data.name, data.shortcut, data.color,
             data.spawnPosition.x, data.spawnPosition.y, data.spawnPosition.z));
     return getFactory().create(data);
   }
