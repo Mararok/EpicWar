@@ -50,6 +50,11 @@ sector:
   description: "That is wild sector, even rats do not go here"
   
 message:
+ war:
+  list:
+   header: "ID | NAME | WORLD"
+   row: "%d | %s | %s"
+ 
  faction:
   supportedColors: "Supported colors: "
   joined: "You joined to faction %s."
