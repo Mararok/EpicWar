@@ -8,14 +8,14 @@ package com.mararok.epicwar.control.event;
 import com.mararok.epicwar.EpicWarEvent;
 import com.mararok.epicwar.control.ControlArea;
 
-public abstract class ControlAreaEvent extends EpicWarEvent {
-  private ControlArea controlArea;
+public abstract class ControlAreaEvent<T extends ControlArea> extends EpicWarEvent {
+  private T controlArea;
 
-  public ControlAreaEvent(ControlArea controlArea) {
+  public ControlAreaEvent(T controlArea) {
     this.controlArea = controlArea;
   }
 
-  public ControlArea getControlArea() {
+  public T getControlArea() {
     return controlArea;
   }
 

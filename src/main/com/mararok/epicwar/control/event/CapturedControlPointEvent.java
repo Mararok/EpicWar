@@ -1,20 +1,20 @@
 /**
  * EpicWar
  * The MIT License
- * Copyright (C) 2015 Mararok <mararok@gmail.com>
+ * Copyright (C) 2016 Mararok <mararok@gmail.com>
  */
 package com.mararok.epicwar.control.event;
 
 import org.bukkit.event.HandlerList;
 
-import com.mararok.epicwar.control.ControlArea;
+import com.mararok.epicwar.control.ControlPoint;
 import com.mararok.epicwar.faction.Faction;
 
-public class CapturedControlAreaEvent extends ControlAreaEvent {
+public class CapturedControlPointEvent extends ControlPointEvent {
   private Faction previousOwner;
 
-  public CapturedControlAreaEvent(ControlArea controlArea, Faction previousOwner) {
-    super(controlArea);
+  public CapturedControlPointEvent(ControlPoint controlPoint, Faction previousOwner) {
+    super(controlPoint);
     this.previousOwner = previousOwner;
   }
 
@@ -26,11 +26,10 @@ public class CapturedControlAreaEvent extends ControlAreaEvent {
 
   @Override
   public HandlerList getHandlers() {
-    return handlers;
+    return getHandlerList();
   }
 
   public static HandlerList getHandlerList() {
     return handlers;
   }
-
 }
