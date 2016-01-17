@@ -5,9 +5,9 @@
  */
 package com.mararok.epicwar.control.sector.internal;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Vector;
 
 import com.mararok.epicwar.War;
 import com.mararok.epicwar.control.Sector;
@@ -15,19 +15,21 @@ import com.mararok.epicwar.control.SectorData;
 import com.mararok.epicwar.control.SectorManager;
 
 public class SectorManagerImpl implements SectorManager {
-  private Vector<SectorImpl> sectors;
+  private ArrayList<Sector> sectors;
   private SectorMapper mapper;
   private War war;
 
   public SectorManagerImpl(SectorMapper mapper, War war) throws Exception {
     this.mapper = mapper;
     this.war = war;
+
     loadAll();
   }
 
   private void loadAll() throws Exception {
     Collection<SectorImpl> collection = mapper.findAll();
-    for (SectorImpl sector : collection) {
+    sectors.ensureCapacity(collection.size() + 1);
+    for (Sector sector : collection) {
       sectors.set(sector.getId(), sector);
     }
   }
@@ -45,27 +47,16 @@ public class SectorManagerImpl implements SectorManager {
   @Override
   public Sector create(SectorData data) throws Exception {
     SectorImpl sector = mapper.insert(data);
+    sectors.ensureCapacity(sector.getId() + 1);
     sectors.set(sector.getId(), sector);
     return sector;
   }
 
   @Override
   public void update(Sector sector) throws Exception {
-    SectorImpl s = (SectorImpl) findById(sector.getId());
-    if (s != null) {
-      mapper.update(s);
-    }
-  }
-
-  /**
-   * TODO unlink all references to deleted sector in control points
-   */
-  @Override
-  public void delete(Sector sector) throws Exception {
-    SectorImpl s = (SectorImpl) findById(sector.getId());
-    if (s != null) {
-      mapper.delete(s);
-    }
+    SectorImpl entity = (SectorImpl) sector;
+    mapper.update(entity);
+    entity.clearChanges();
   }
 
   @Override

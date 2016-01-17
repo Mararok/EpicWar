@@ -5,11 +5,7 @@
  */
 package com.mararok.epicwar.control.sector.internal;
 
-import java.util.Collection;
-import java.util.List;
-
 import com.mararok.epicwar.War;
-import com.mararok.epicwar.control.ControlPoint;
 import com.mararok.epicwar.control.Sector;
 import com.mararok.epicwar.control.SectorData;
 import com.mararok.epicwar.control.internal.NamedControlAreaImpl;
@@ -17,35 +13,18 @@ import com.mararok.epicwar.faction.Faction;
 
 public class SectorImpl extends NamedControlAreaImpl implements Sector {
   private Faction owner;
-  private List<ControlPoint> controlPoints;
   private War war;
 
   public SectorImpl(SectorData data, War war) {
     super(data);
+    this.owner = war.getFactionManager().findById(data.ownerId);
     this.war = war;
   }
 
+  // @TODO implement method
   @Override
   public boolean canCapture(Faction faction) {
-    for (ControlPoint controlPoint : controlPoints) {
-      if (controlPoint.isOwner(faction))
-        return false;
-    }
-    return true;
-  }
-
-  public void addControlPoint(ControlPoint point) {
-    point.setSector(this);
-    controlPoints.add(point);
-  }
-
-  @Override
-  public Collection<ControlPoint> getControlPoints() {
-    return controlPoints;
-  }
-
-  public void setControlPoints(List<ControlPoint> newControlPoints) {
-    controlPoints = newControlPoints;
+    return false;
   }
 
   @Override
@@ -56,6 +35,7 @@ public class SectorImpl extends NamedControlAreaImpl implements Sector {
   @Override
   public void setOwner(Faction newOwner) {
     owner = newOwner;
+    onChangeProperty("ownerId", owner.getId());
   }
 
   @Override
