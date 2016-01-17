@@ -39,12 +39,6 @@ public interface SectorManager {
    */
   public void update(Sector sector) throws Exception;
 
-  /**
-   * Deletes sector from war
-   * WARNING: don't use when war isn't in editMode
-   */
-  public void delete(Sector sector) throws Exception;
-
   public War getWar();
 
 }

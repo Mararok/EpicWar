@@ -12,6 +12,7 @@ import com.mararok.epicwar.faction.Faction;
  * Base interface for all controlable area
  */
 public interface ControlArea {
+
   public int getId();
 
   public boolean isOwner(Faction faction);

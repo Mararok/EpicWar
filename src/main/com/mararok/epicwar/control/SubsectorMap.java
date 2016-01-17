@@ -16,7 +16,9 @@ import com.mararok.epicwar.War;
  */
 public interface SubsectorMap {
 
-  /** Returns subsector or null when isn't exists */
+  /**
+   * Returns subsector or null when isn't exists
+   */
   Subsector get(Chunk chunk);
 
   Subsector get(int chunkX, int chunkZ);
@@ -25,7 +27,9 @@ public interface SubsectorMap {
 
   int getLocalIndex(int localChunkX, int localChunkZ);
 
-  /** Converts world chunk x coordinate to local subsector map coordinate */
+  /**
+   * Converts world chunk x coordinate to local subsector map coordinate
+   */
   int getLocalChunkX(int chunkX);
 
   /** Converts world chunk y coordinate to local subsector map coordinate */

@@ -10,15 +10,14 @@ import java.util.Collection;
 import com.mararok.epicwar.War;
 
 public interface ControlPointManager {
-  ControlPoint findById(int id);
 
-  Collection<ControlPoint> findAll();
+  public ControlPoint findById(int id);
 
-  ControlPoint create(ControlPointData data) throws Exception;
+  public Collection<ControlPoint> findAll();
 
-  void update(ControlPoint controlPoint) throws Exception;
+  public ControlPoint create(ControlPointData data) throws Exception;
 
-  void delete(ControlPoint controlPoint) throws Exception;
+  public void update(ControlPoint controlPoint) throws Exception;
 
-  War getWar();
+  public War getWar();
 }
