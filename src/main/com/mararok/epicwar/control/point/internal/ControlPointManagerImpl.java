@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
-import java.util.List;
+import java.util.logging.Level;
 
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -19,22 +19,24 @@ import com.mararok.epicwar.control.ControlPointData;
 import com.mararok.epicwar.control.ControlPointManager;
 
 public class ControlPointManagerImpl implements ControlPointManager {
-  private List<ControlPoint> controlPoints;
+  private ArrayList<ControlPoint> controlPoints;
+
   private Collection<ControlPointImpl> occupiedControlPoints;
-  private ControlPointMapper mapper;
   private UpdateTask updateTask;
+
+  private ControlPointMapper mapper;
   private War war;
 
   public ControlPointManagerImpl(ControlPointMapper mapper, War war) throws Exception {
+    controlPoints = new ArrayList<ControlPoint>();
     this.mapper = mapper;
     this.war = war;
-
-    controlPoints = new ArrayList<ControlPoint>();
     loadAll();
   }
 
   private void loadAll() throws Exception {
     Collection<ControlPointImpl> collection = mapper.findAll();
+    controlPoints.ensureCapacity(collection.size() + 1);
     for (ControlPoint controlPoint : collection) {
       controlPoints.set(controlPoint.getId(), controlPoint);
     }
@@ -48,10 +50,7 @@ public class ControlPointManagerImpl implements ControlPointManager {
 
   @Override
   public ControlPoint findById(int id) {
-    if (id > 0 && id < controlPoints.size()) {
-      return controlPoints.get(id);
-    }
-    return null;
+    return (id > 0 && id < controlPoints.size()) ? controlPoints.get(id) : null;
   }
 
   @Override
@@ -62,6 +61,7 @@ public class ControlPointManagerImpl implements ControlPointManager {
   @Override
   public ControlPoint create(ControlPointData data) throws Exception {
     ControlPointImpl controlPoint = mapper.insert(data);
+    controlPoints.ensureCapacity(controlPoint.getId() + 1);
     controlPoints.set(controlPoint.getId(), controlPoint);
     return controlPoint;
   }
@@ -70,13 +70,7 @@ public class ControlPointManagerImpl implements ControlPointManager {
   public void update(ControlPoint controlPoint) throws Exception {
     ControlPointImpl entity = (ControlPointImpl) controlPoint;
     mapper.update(entity);
-  }
-
-  @Override
-  public void delete(ControlPoint controlPoint) throws Exception {
-    ControlPointImpl entity = (ControlPointImpl) controlPoint;
-    mapper.delete(entity);
-    controlPoints.remove(entity.getId());
+    entity.clearChanges();
   }
 
   @Override
@@ -87,10 +81,24 @@ public class ControlPointManagerImpl implements ControlPointManager {
   private class UpdateTask extends BukkitRunnable {
     @Override
     public void run() {
-      for (ControlPointImpl controlPoint : occupiedControlPoints) {
-        controlPoint.getOccupation().update();
+      try {
+        for (ControlPointImpl controlPoint : occupiedControlPoints) {
+          controlPoint.getOccupation().update();
+        }
+      } catch (Exception e) {
+        war.getPlugin().getLogger().log(Level.SEVERE, "Exception in control point occupation update", e);
       }
     }
+  }
+
+  public void addOccupied(ControlPointImpl controlPoint) {
+    if (!occupiedControlPoints.contains(controlPoint)) {
+      occupiedControlPoints.add(controlPoint);
+    }
+  }
+
+  public void removeOccupied(ControlPointImpl controlPoint) {
+    occupiedControlPoints.remove(controlPoint);
   }
 
 }
