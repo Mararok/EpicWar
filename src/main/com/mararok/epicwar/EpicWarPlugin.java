@@ -70,11 +70,13 @@ public final class EpicWarPlugin extends JavaPlugin {
     updateSqlScripts();
 
     DatabaseConnectionConfig connectionConfig = new DatabaseConnectionConfig();
-    connectionConfig.host = getConfig().getString("datatabase.host");
-    connectionConfig.port = getConfig().getInt("datatabase.port");
-    connectionConfig.name = getConfig().getString("datatabase.name");
-    connectionConfig.user = getConfig().getString("datatabase.user");
-    connectionConfig.password = getConfig().getString("datatabase.password");
+    connectionConfig.engine = getConfig().getString("database.engine");
+    connectionConfig.host = getConfig().getString("database.host");
+    connectionConfig.port = getConfig().getInt("database.port");
+    connectionConfig.name = getConfig().getString("database.name");
+    connectionConfig.user = getConfig().getString("database.user");
+    connectionConfig.password = getConfig().getString("database.password");
+
     databaseConnection = DatabaseConnectionFactory.newConnection(connectionConfig);
   }
 
