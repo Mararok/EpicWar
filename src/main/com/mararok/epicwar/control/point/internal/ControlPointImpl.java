@@ -4,13 +4,17 @@
  */
 package com.mararok.epicwar.control.point.internal;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 
 import com.mararok.epiccore.math.Position3D;
+import com.mararok.epiccore.misc.StringUtils;
 import com.mararok.epicwar.War;
 import com.mararok.epicwar.control.ControlAreaPower;
 import com.mararok.epicwar.control.ControlPoint;
 import com.mararok.epicwar.control.ControlPointData;
+import com.mararok.epicwar.control.ControlPointManager;
 import com.mararok.epicwar.control.Sector;
 import com.mararok.epicwar.control.internal.NamedControlAreaImpl;
 import com.mararok.epicwar.control.internal.Occupation;
@@ -24,7 +28,7 @@ public class ControlPointImpl extends NamedControlAreaImpl implements ControlPoi
   private Faction owner;
   private Occupation occupation;
 
-  private ControlPoint[] connections;
+  private int[] connections;
   private Sector sector;
 
   public ControlPointImpl(ControlPointData data, War war) {
@@ -37,7 +41,10 @@ public class ControlPointImpl extends NamedControlAreaImpl implements ControlPoi
     owner = war.getFactionManager().findById(data.ownerId);
     occupation = new Occupation(this);
 
+    connections = data.connections;
+
     sector = war.getSectorManager().findById(data.sectorId);
+
   }
 
   @Override
@@ -52,23 +59,33 @@ public class ControlPointImpl extends NamedControlAreaImpl implements ControlPoi
 
   @Override
   public void setRadius(int newRadius) {
-    if (newRadius < 2) {
-      throw new IllegalArgumentException("Can't set radius < 2 for Control Point " + getName());
-    }
-
     radius = newRadius;
-
     onChangeProperty("radius", radius);
   }
 
   @Override
-  public ControlAreaPower getPower() {
-    return power;
+  public int getCurrentPower() {
+    return power.getCurrent();
   }
 
+  @Override
+  public void setCurrentPower(int currentPower) {
+    power.set(currentPower);
+  }
+
+  @Override
+  public boolean canCapture() {
+    return power.canCapture();
+  }
+
+  @Override
+  public int getMaxPower() {
+    return power.getMax();
+  }
+
+  @Override
   public void setMaxPower(int maxPower) {
     power.setMax(maxPower);
-
     onChangeProperty("maxPower", power.getMax());
   }
 
@@ -77,9 +94,9 @@ public class ControlPointImpl extends NamedControlAreaImpl implements ControlPoi
     return owner;
   }
 
-  public void setOwner(Faction newOwner) {
-    owner = newOwner;
-    onChangeProperty("ownerId", owner.getId());
+  public void setOwner(Faction owner) {
+    this.owner = owner;
+    onChangeProperty("ownerId", (this.owner == null) ? 0 : this.owner.getId());
   }
 
   @Override
@@ -87,9 +104,80 @@ public class ControlPointImpl extends NamedControlAreaImpl implements ControlPoi
     return owner == faction;
   }
 
-  @Override
   public Occupation getOccupation() {
     return occupation;
+  }
+
+  @Override
+  public boolean isFactionHasAnyConnection(Faction faction) {
+    if (connections != null) {
+      ControlPointManager manager = getWar().getControlPointManager();
+      for (int connection : connections) {
+        if (manager.findById(connection).isOwner(faction)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  @Override
+  public boolean isConnectedTo(ControlPoint controlPoint) {
+    for (int connection : connections) {
+      if (controlPoint.getId() == connection) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  @Override
+  public Collection<ControlPoint> getConnections() {
+    Collection<ControlPoint> collection = new ArrayList<ControlPoint>();
+    if (connections != null) {
+      ControlPointManager manager = getWar().getControlPointManager();
+      for (int connection : connections) {
+        collection.add(manager.findById(connection));
+      }
+    }
+
+    return collection;
+  }
+
+  @Override
+  public void connectTo(ControlPoint controlPoint) {
+    if (connections == null) {
+      connections = new int[1];
+      connections[0] = controlPoint.getId();
+    } else {
+      if (isConnectedTo(controlPoint)) {
+        return;
+      }
+
+      int oldSize = connections.length;
+      connections = Arrays.copyOf(connections, oldSize + 1);
+      connections[oldSize] = controlPoint.getId();
+    }
+
+    controlPoint.connectTo(this);
+    onChangeProperty("connections", StringUtils.join(connections, ","));
+  }
+
+  @Override
+  public void disconnectFrom(ControlPoint controlPoint) {
+    if (connections != null && isConnectedTo(controlPoint)) {
+      int[] tmpConnections = new int[connections.length - 1];
+      int i = 0;
+      for (int connection : connections) {
+        if (controlPoint.getId() != connection) {
+          tmpConnections[i++] = connection;
+        }
+      }
+      connections = tmpConnections;
+      disconnectFrom(this);
+      onChangeProperty("connections", StringUtils.join(connections, ","));
+    }
   }
 
   @Override
@@ -98,40 +186,9 @@ public class ControlPointImpl extends NamedControlAreaImpl implements ControlPoi
   }
 
   @Override
-  public void setSector(Sector newSector) {
-    sector = newSector;
-    onChangeProperty("sectorId", sector.getId());
-  }
-
-  @Override
-  public void connectTo(ControlPoint controlPoint) {
-    if (connections == null) {
-      connections = new ControlPoint[1];
-      connections[0] = controlPoint;
-    } else {
-      int oldSize = connections.length;
-      connections = Arrays.copyOf(connections, oldSize + 1);
-      connections[oldSize] = controlPoint;
-    }
-
-    controlPoint.connectTo(this);
-
-    String connectionsString = "";
-    for (int i = 0; i < connections.length - 1; ++i) {
-      connectionsString += connections[i].getId() + ",";
-    }
-    connectionsString += connections[connections.length - 1];
-
-    onChangeProperty("connections", connectionsString);
-  }
-
-  @Override
-  public ControlPoint[] getConnections() {
-    return connections;
-  }
-
-  public void setConnections(ControlPoint[] connections) {
-    this.connections = connections;
+  public void setSector(Sector sector) {
+    this.sector = sector;
+    onChangeProperty("sectorId", this.sector.getId());
   }
 
   @Override
