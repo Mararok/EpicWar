@@ -16,9 +16,9 @@ import com.mararok.epicwar.command.EpicWarCommand;
 import com.mararok.epicwar.control.ControlPoint;
 import com.mararok.epicwar.player.WarPlayer;
 
-public class ControlPointInfoCommand extends EpicWarCommand {
+public class InfoControlPointCommand extends EpicWarCommand {
 
-  public ControlPointInfoCommand(EpicWarPlugin plugin) {
+  public InfoControlPointCommand(EpicWarPlugin plugin) {
     super(plugin);
 
     setMetadata(CommandMetadata.command("info")

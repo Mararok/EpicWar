@@ -15,13 +15,13 @@ import com.mararok.epicwar.command.EpicWarCommand;
 import com.mararok.epicwar.control.ControlPoint;
 import com.mararok.epicwar.control.ControlPointData;
 
-public class ControlPointCreateCommand extends EpicWarCommand {
+public class CreateControlPointCommand extends EpicWarCommand {
   private final static int SECTORID_ARGUMENT = 0;
   private final static int RADIUS_ARGUMENT = 1;
   private final static int MAXPOWER_ARGUMENT = 2;
   private final static int NAME_ARGUMENT = 3;
 
-  public ControlPointCreateCommand(EpicWarPlugin plugin) {
+  public CreateControlPointCommand(EpicWarPlugin plugin) {
     super(plugin);
 
     setMetadata(CommandMetadata.command("create")

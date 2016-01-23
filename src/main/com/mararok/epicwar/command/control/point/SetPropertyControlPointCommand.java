@@ -15,13 +15,13 @@ import com.mararok.epicwar.command.EpicWarCommand;
 import com.mararok.epicwar.control.ControlPoint;
 import com.mararok.epicwar.control.Sector;
 
-public class ControlPointSetPropertyCommand extends EpicWarCommand {
+public class SetPropertyControlPointCommand extends EpicWarCommand {
 
   private final static int ID_ARGUMENT = 0;
   private final static int PROPERTY_ARGUMENT = 1;
   private final static int VALUE_ARGUMENT = 2;
 
-  public ControlPointSetPropertyCommand(EpicWarPlugin plugin) {
+  public SetPropertyControlPointCommand(EpicWarPlugin plugin) {
     super(plugin);
 
     setMetadata(CommandMetadata.command("set")
