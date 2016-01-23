@@ -6,6 +6,7 @@
 package com.mararok.epicwar.control.sector.internal;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -15,7 +16,7 @@ import com.mararok.epicwar.control.SectorData;
 import com.mararok.epicwar.control.SectorManager;
 
 public class SectorManagerImpl implements SectorManager {
-  private ArrayList<Sector> sectors;
+  private Sector[] sectors;
   private SectorMapper mapper;
   private War war;
 
@@ -28,27 +29,37 @@ public class SectorManagerImpl implements SectorManager {
 
   private void loadAll() throws Exception {
     Collection<SectorImpl> collection = mapper.findAll();
-    sectors.ensureCapacity(collection.size() + 1);
+    sectors = new Sector[collection.size() + 1];
     for (Sector sector : collection) {
-      sectors.set(sector.getId(), sector);
+      sectors[sector.getId()] = sector;
     }
   }
 
   @Override
   public Sector findById(int id) {
-    return sectors.get(id);
+    return (id >= 0 && id < sectors.length) ? sectors[id] : null;
   }
 
   @Override
   public Collection<Sector> findAll() {
-    return Collections.unmodifiableCollection(sectors);
+    Collection<Sector> collection;
+    if (sectors.length == 1) {
+      collection = Collections.emptyList();
+    } else {
+      collection = new ArrayList<Sector>(sectors.length - 1);
+
+      for (int i = 1; i < sectors.length - 1; i++) {
+        collection.add(sectors[i]);
+      }
+    }
+    return Collections.unmodifiableCollection(collection);
   }
 
   @Override
   public Sector create(SectorData data) throws Exception {
-    SectorImpl sector = mapper.insert(data);
-    sectors.ensureCapacity(sector.getId() + 1);
-    sectors.set(sector.getId(), sector);
+    Sector sector = mapper.insert(data);
+    sectors = Arrays.copyOf(sectors, sectors.length + 1);
+    sectors[sector.getId()] = sector;
     return sector;
   }
 
