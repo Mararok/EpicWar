@@ -44,6 +44,14 @@ public class ControlPointDatabaseMapper extends EntityDatabaseMapper<ControlPoin
     data.position = new Position3D(resultSet.getInt(column++), resultSet.getInt(column++), resultSet.getInt(column++));
     data.radius = resultSet.getInt(column++);
     data.maxPower = resultSet.getInt(column++);
+
+    String connections[] = resultSet.getString(column++).split(",");
+    data.connections = new int[connections.length];
+
+    int i = 0;
+    for (String connection : connections) {
+      data.connections[i++] = Integer.parseInt(connection);
+    }
     return data;
   }
 }
