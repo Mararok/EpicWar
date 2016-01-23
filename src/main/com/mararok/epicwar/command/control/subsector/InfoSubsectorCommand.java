@@ -16,9 +16,9 @@ import com.mararok.epicwar.command.EpicWarCommand;
 import com.mararok.epicwar.control.Subsector;
 import com.mararok.epicwar.player.WarPlayer;
 
-public class SubsectorInfoCommand extends EpicWarCommand {
+public class InfoSubsectorCommand extends EpicWarCommand {
 
-  public SubsectorInfoCommand(EpicWarPlugin plugin) {
+  public InfoSubsectorCommand(EpicWarPlugin plugin) {
     super(plugin);
 
     setMetadata(CommandMetadata.command("info")

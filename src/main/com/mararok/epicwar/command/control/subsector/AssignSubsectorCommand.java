@@ -17,9 +17,9 @@ import com.mararok.epicwar.command.EpicWarCommand;
 import com.mararok.epicwar.control.ControlPoint;
 import com.mararok.epicwar.control.Subsector;
 
-public class SubsectorAssignCommand extends EpicWarCommand {
+public class AssignSubsectorCommand extends EpicWarCommand {
 
-  public SubsectorAssignCommand(EpicWarPlugin plugin) {
+  public AssignSubsectorCommand(EpicWarPlugin plugin) {
     super(plugin);
 
     setMetadata(CommandMetadata.command("assign")

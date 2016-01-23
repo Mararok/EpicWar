@@ -14,9 +14,9 @@ import com.mararok.epicwar.War;
 import com.mararok.epicwar.command.EpicWarCommand;
 import com.mararok.epicwar.control.Subsector;
 
-public class SubsectorDeleteCommand extends EpicWarCommand {
+public class DeleteSubsectorCommand extends EpicWarCommand {
 
-  public SubsectorDeleteCommand(EpicWarPlugin plugin) {
+  public DeleteSubsectorCommand(EpicWarPlugin plugin) {
     super(plugin);
 
     setMetadata(CommandMetadata.command("delete")

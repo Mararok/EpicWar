@@ -18,10 +18,10 @@ public class SubsectorCommands extends ParentPluginCommand<EpicWarPlugin> {
         .description(plugin.getLanguage().getText("command.subsector.all"))
         .usage("\\ewss [subcommand]"));
 
-    addCommand(new SubsectorAssignCommand(plugin));
-    addCommand(new SubsectorDeleteCommand(plugin));
+    addCommand(new AssignSubsectorCommand(plugin));
+    addCommand(new DeleteSubsectorCommand(plugin));
 
-    addCommand(new SubsectorInfoCommand(plugin));
+    addCommand(new InfoSubsectorCommand(plugin));
   }
 
 }
