@@ -14,9 +14,9 @@ import com.mararok.epicwar.War;
 import com.mararok.epicwar.command.EpicWarCommand;
 import com.mararok.epicwar.control.Sector;
 
-public class SectorSetPropertyCommand extends EpicWarCommand {
+public class SetPropertySectorCommand extends EpicWarCommand {
 
-  public SectorSetPropertyCommand(EpicWarPlugin plugin) {
+  public SetPropertySectorCommand(EpicWarPlugin plugin) {
     super(plugin);
     setMetadata(CommandMetadata.command("set")
         .description(getLanguage().getText("command.sector.set"))

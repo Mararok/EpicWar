@@ -15,9 +15,9 @@ import com.mararok.epicwar.command.EpicWarCommand;
 import com.mararok.epicwar.control.Sector;
 import com.mararok.epicwar.control.SectorData;
 
-public class SectorCreateCommand extends EpicWarCommand {
+public class CreateSectorCommand extends EpicWarCommand {
 
-  public SectorCreateCommand(EpicWarPlugin plugin) {
+  public CreateSectorCommand(EpicWarPlugin plugin) {
     super(plugin);
 
     setMetadata(CommandMetadata.command("create")

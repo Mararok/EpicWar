@@ -18,10 +18,9 @@ public class SectorCommands extends ParentPluginCommand<EpicWarPlugin> {
         .description(plugin.getLanguage().getText("command.sector.all"))
         .usage("\\ews [subcommand]"));
 
-    addCommand(new SectorCreateCommand(plugin));
-    addCommand(new SectorDeleteCommand(plugin));
-    addCommand(new SectorSetPropertyCommand(plugin));
+    addCommand(new CreateSectorCommand(plugin));
+    addCommand(new SetPropertySectorCommand(plugin));
 
-    addCommand(new SectorInfoCommand(plugin));
+    addCommand(new InfoSectorCommand(plugin));
   }
 }
