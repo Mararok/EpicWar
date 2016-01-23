@@ -3,6 +3,13 @@ prefix: en
 author: Mararok
 version: 0.1
 
+constants:
+ faction:
+  neutral:
+   name: "Neutral Faction"
+   shortcut: "NF"
+   description: "Neutral faction"
+
 command: 
  all: "Shows all EpicWar subcommands"
  dump: "Dumps selected war data to file"
