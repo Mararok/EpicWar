@@ -45,16 +45,18 @@ public interface Faction {
 
   public void setSpawnLocation(Location location);
 
+  public boolean isNeutral();
+
   public War getWar();
 
   public static enum Color {
 
+    WHITE(ChatColor.WHITE, DyeColor.WHITE),
     BLACK(ChatColor.BLACK, DyeColor.BLACK),
     BLUE(ChatColor.BLUE, DyeColor.BLUE),
     GRAY(ChatColor.GRAY, DyeColor.GRAY),
     GREEN(ChatColor.GREEN, DyeColor.GREEN),
     RED(ChatColor.RED, DyeColor.RED),
-    WHITE(ChatColor.WHITE, DyeColor.WHITE),
     YELLOW(ChatColor.YELLOW, DyeColor.YELLOW);
 
     private ChatColor chatColor;

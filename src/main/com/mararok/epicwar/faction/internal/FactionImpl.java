@@ -101,4 +101,9 @@ public class FactionImpl extends ObservedEntity implements Faction {
     onChangeProperty("spawnZ", spawnLocation.getBlockZ());
   }
 
+  @Override
+  public boolean isNeutral() {
+    return false;
+  }
+
 }

@@ -8,6 +8,7 @@ package com.mararok.epicwar.faction.internal;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import com.mararok.epiccore.math.Position3D;
 import com.mararok.epicwar.War;
 import com.mararok.epicwar.faction.Faction;
 import com.mararok.epicwar.faction.FactionData;
@@ -32,6 +33,21 @@ public class FactionManagerImpl implements FactionManager {
     for (FactionImpl faction : collection) {
       factions[faction.getId()] = faction;
     }
+
+    factions[0] = createNeutralFaction();
+
+  }
+
+  private NeutralFaction createNeutralFaction() {
+    FactionData neturalFactionData = new FactionData();
+    neturalFactionData.id = 0;
+    neturalFactionData.name = war.getPlugin().getLanguage().getText("constants.faction.neutral.name");
+    neturalFactionData.shortcut = war.getPlugin().getLanguage().getText("constants.faction.neutral.shortcut");
+    neturalFactionData.description = war.getPlugin().getLanguage().getText("constants.faction.neutral.description");
+    neturalFactionData.color = Faction.Color.WHITE;
+    neturalFactionData.spawnPosition = new Position3D(0, 0, 0);
+
+    return new NeutralFaction(neturalFactionData, war);
   }
 
   @Override
@@ -89,9 +105,11 @@ public class FactionManagerImpl implements FactionManager {
 
   @Override
   public void update(Faction faction) throws Exception {
-    FactionImpl entity = (FactionImpl) faction;
-    mapper.update(entity);
-    entity.clearChanges();
+    if (!faction.isNeutral()) {
+      FactionImpl entity = (FactionImpl) faction;
+      mapper.update(entity);
+      entity.clearChanges();
+    }
   }
 
   @Override
