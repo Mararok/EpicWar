@@ -14,9 +14,9 @@ import com.mararok.epicwar.War;
 import com.mararok.epicwar.command.EpicWarCommand;
 import com.mararok.epicwar.faction.Faction;
 
-public class FactionSetSpawnCommand extends EpicWarCommand {
+public class SetSpawnFactionCommand extends EpicWarCommand {
 
-  public FactionSetSpawnCommand(EpicWarPlugin plugin) {
+  public SetSpawnFactionCommand(EpicWarPlugin plugin) {
     super(plugin);
 
     setMetadata(CommandMetadata.command("setspawn")

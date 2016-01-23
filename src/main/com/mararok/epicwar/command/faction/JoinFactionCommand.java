@@ -15,9 +15,9 @@ import com.mararok.epicwar.command.EpicWarCommand;
 import com.mararok.epicwar.faction.Faction;
 import com.mararok.epicwar.player.WarPlayer;
 
-public class FactionJoinCommand extends EpicWarCommand {
+public class JoinFactionCommand extends EpicWarCommand {
 
-  public FactionJoinCommand(EpicWarPlugin plugin) {
+  public JoinFactionCommand(EpicWarPlugin plugin) {
     super(plugin);
 
     setMetadata(CommandMetadata.command("join")

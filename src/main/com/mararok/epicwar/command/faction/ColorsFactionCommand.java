@@ -14,14 +14,15 @@ import org.bukkit.entity.Player;
 
 import com.mararok.epiccore.command.CommandArguments;
 import com.mararok.epiccore.command.CommandMetadata;
+import com.mararok.epiccore.misc.MessageBuilder;
 import com.mararok.epicwar.EpicWarPlugin;
 import com.mararok.epicwar.War;
 import com.mararok.epicwar.command.EpicWarCommand;
 import com.mararok.epicwar.faction.Faction;
 
-public class FactionColorsCommand extends EpicWarCommand {
+public class ColorsFactionCommand extends EpicWarCommand {
 
-  public FactionColorsCommand(EpicWarPlugin plugin) {
+  public ColorsFactionCommand(EpicWarPlugin plugin) {
     super(plugin);
 
     setMetadata(CommandMetadata.command("colors")
@@ -32,10 +33,7 @@ public class FactionColorsCommand extends EpicWarCommand {
 
   @Override
   protected boolean onCommandOnWarWorld(War war, Player sender, CommandArguments<EpicWarPlugin> arguments) throws Exception {
-    String[] messages = new String[Faction.Color.values().length + 1];
-    messages[0] = getPlugin().getLanguage().getText("message.faction.supportedColors");
-    int i = 1;
-
+    MessageBuilder message = MessageBuilder.message().line(getLanguage().getText("message.faction.supportedColors"));
     Map<Faction.Color, Faction> colors = new EnumMap<Faction.Color, Faction>(Faction.Color.class);
     for (Faction faction : war.getFactionManager().findAll()) {
       colors.put(faction.getColor(), faction);
@@ -44,10 +42,10 @@ public class FactionColorsCommand extends EpicWarCommand {
     for (Entry<Faction.Color, Faction> entry : colors.entrySet()) {
       Faction.Color color = entry.getKey();
       Faction faction = entry.getValue();
-      messages[i++] = color.getChatColor() + color.name() + ChatColor.RESET + ((faction != null) ? faction.getName() : "");
+      message.line(color.getChatColor() + color.name() + ChatColor.RESET + ((faction != null) ? faction.getName() : ""));
     }
 
-    sender.sendMessage(messages);
+    sender.sendMessage(message.toArray());
     return true;
   }
 }

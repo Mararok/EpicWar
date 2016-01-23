@@ -18,8 +18,8 @@ import com.mararok.epicwar.faction.Faction;
 import com.mararok.epicwar.faction.FactionData;
 import com.mararok.epicwar.faction.FactionManager;
 
-public class FactionCreateCommand extends EpicWarCommand {
-  public FactionCreateCommand(EpicWarPlugin plugin) {
+public class CreateFactionCommand extends EpicWarCommand {
+  public CreateFactionCommand(EpicWarPlugin plugin) {
     super(plugin);
 
     setMetadata(CommandMetadata.command("create")

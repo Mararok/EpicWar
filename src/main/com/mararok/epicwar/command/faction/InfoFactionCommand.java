@@ -17,9 +17,9 @@ import com.mararok.epicwar.command.EpicWarCommand;
 import com.mararok.epicwar.faction.Faction;
 import com.mararok.epicwar.player.WarPlayer;
 
-public class FactionInfoCommand extends EpicWarCommand {
+public class InfoFactionCommand extends EpicWarCommand {
 
-  public FactionInfoCommand(EpicWarPlugin plugin) {
+  public InfoFactionCommand(EpicWarPlugin plugin) {
     super(plugin);
 
     setMetadata(CommandMetadata.command("info")

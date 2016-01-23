@@ -17,9 +17,9 @@ import com.mararok.epicwar.War;
 import com.mararok.epicwar.command.EpicWarCommand;
 import com.mararok.epicwar.faction.Faction;
 
-public class FactionListCommand extends EpicWarCommand {
+public class ListFactionCommand extends EpicWarCommand {
 
-  public FactionListCommand(EpicWarPlugin plugin) {
+  public ListFactionCommand(EpicWarPlugin plugin) {
     super(plugin);
     setMetadata(CommandMetadata.command("list")
         .description(plugin.getLanguage().getText("command.faction.list"))
