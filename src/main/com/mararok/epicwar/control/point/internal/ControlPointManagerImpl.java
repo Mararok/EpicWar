@@ -6,6 +6,7 @@
 package com.mararok.epicwar.control.point.internal;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -19,7 +20,7 @@ import com.mararok.epicwar.control.ControlPointData;
 import com.mararok.epicwar.control.ControlPointManager;
 
 public class ControlPointManagerImpl implements ControlPointManager {
-  private ArrayList<ControlPoint> controlPoints;
+  private ControlPoint[] controlPoints;
 
   private Collection<ControlPointImpl> occupiedControlPoints;
   private UpdateTask updateTask;
@@ -28,7 +29,6 @@ public class ControlPointManagerImpl implements ControlPointManager {
   private War war;
 
   public ControlPointManagerImpl(ControlPointMapper mapper, War war) throws Exception {
-    controlPoints = new ArrayList<ControlPoint>();
     this.mapper = mapper;
     this.war = war;
     loadAll();
@@ -36,9 +36,9 @@ public class ControlPointManagerImpl implements ControlPointManager {
 
   private void loadAll() throws Exception {
     Collection<ControlPointImpl> collection = mapper.findAll();
-    controlPoints.ensureCapacity(collection.size() + 1);
+    controlPoints = new ControlPoint[collection.size() + 1];
     for (ControlPoint controlPoint : collection) {
-      controlPoints.set(controlPoint.getId(), controlPoint);
+      controlPoints[controlPoint.getId()] = controlPoint;
     }
 
     if (!war.getSettings().editMode) {
@@ -50,19 +50,29 @@ public class ControlPointManagerImpl implements ControlPointManager {
 
   @Override
   public ControlPoint findById(int id) {
-    return (id > 0 && id < controlPoints.size()) ? controlPoints.get(id) : null;
+    return (id >= 0 && id < controlPoints.length) ? controlPoints[id] : null;
   }
 
   @Override
   public Collection<ControlPoint> findAll() {
-    return Collections.unmodifiableCollection(controlPoints);
+    Collection<ControlPoint> collection;
+    if (controlPoints.length == 1) {
+      collection = Collections.emptyList();
+    } else {
+      collection = new ArrayList<ControlPoint>(controlPoints.length - 1);
+
+      for (int i = 1; i < controlPoints.length - 1; i++) {
+        collection.add(controlPoints[i]);
+      }
+    }
+    return Collections.unmodifiableCollection(collection);
   }
 
   @Override
   public ControlPoint create(ControlPointData data) throws Exception {
     ControlPointImpl controlPoint = mapper.insert(data);
-    controlPoints.ensureCapacity(controlPoint.getId() + 1);
-    controlPoints.set(controlPoint.getId(), controlPoint);
+    controlPoints = Arrays.copyOf(controlPoints, controlPoints.length + 1);
+    controlPoints[controlPoint.getId()] = controlPoint;
     return controlPoint;
   }
 
