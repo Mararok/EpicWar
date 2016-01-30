@@ -25,10 +25,12 @@ public class ControlPointManagerImpl implements ControlPointManager {
   private Collection<ControlPointImpl> occupiedControlPoints;
   private UpdateTask updateTask;
 
+  private ControlPointRenderer renderer;
   private ControlPointMapper mapper;
   private War war;
 
   public ControlPointManagerImpl(ControlPointMapper mapper, War war) throws Exception {
+    this.renderer = new ControlPointRenderer(war);
     this.mapper = mapper;
     this.war = war;
     loadAll();
@@ -81,6 +83,15 @@ public class ControlPointManagerImpl implements ControlPointManager {
     ControlPointImpl entity = (ControlPointImpl) controlPoint;
     mapper.update(entity);
     entity.clearChanges();
+  }
+
+  @Override
+  public void render(ControlPoint controlPoint, boolean updateOnly) {
+    if (updateOnly) {
+      renderer.update(controlPoint);
+    } else {
+      renderer.render(controlPoint);
+    }
   }
 
   @Override

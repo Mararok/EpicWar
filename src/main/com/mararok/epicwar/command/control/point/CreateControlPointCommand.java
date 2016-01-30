@@ -5,10 +5,12 @@
  */
 package com.mararok.epicwar.command.control.point;
 
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import com.mararok.epiccore.command.CommandArguments;
 import com.mararok.epiccore.command.CommandMetadata;
+import com.mararok.epiccore.math.Vector3i;
 import com.mararok.epicwar.EpicWarPlugin;
 import com.mararok.epicwar.War;
 import com.mararok.epicwar.command.EpicWarCommand;
@@ -55,7 +57,13 @@ public class CreateControlPointCommand extends EpicWarCommand {
       data.maxPower = arguments.asInt(MAXPOWER_ARGUMENT);
       data.name = arguments.join(NAME_ARGUMENT, " ");
 
+      Location position = sender.getLocation();
+      data.position = new Vector3i(position.getBlockX(), position.getBlockY(), position.getBlockZ());
+
       ControlPoint controlPoint = war.getControlPointManager().create(data);
+      war.getSubsectorMap().assignToControlPoint(position.getChunk(), controlPoint);
+      war.getControlPointManager().render(controlPoint, false);
+
       sendSuccessMessage(sender, controlPoint);
     }
 
