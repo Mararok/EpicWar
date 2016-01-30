@@ -8,7 +8,7 @@ package com.mararok.epicwar.faction.internal;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.mararok.epiccore.math.Position3D;
+import com.mararok.epiccore.math.Vector3i;
 import com.mararok.epicwar.War;
 import com.mararok.epicwar.faction.Faction;
 import com.mararok.epicwar.faction.FactionData;
@@ -45,7 +45,7 @@ public class FactionManagerImpl implements FactionManager {
     neturalFactionData.shortcut = war.getPlugin().getLanguage().getText("constants.faction.neutral.shortcut");
     neturalFactionData.description = war.getPlugin().getLanguage().getText("constants.faction.neutral.description");
     neturalFactionData.color = Faction.Color.WHITE;
-    neturalFactionData.spawnPosition = new Position3D(0, 0, 0);
+    neturalFactionData.spawnPosition = new Vector3i(0, 0, 0);
 
     return new NeutralFaction(neturalFactionData, war);
   }

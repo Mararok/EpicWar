@@ -10,7 +10,7 @@ import java.sql.SQLException;
 
 import com.mararok.epiccore.database.DMQL;
 import com.mararok.epiccore.entity.EntityDatabaseMapper;
-import com.mararok.epiccore.math.Position3D;
+import com.mararok.epiccore.math.Vector3i;
 import com.mararok.epicwar.control.ControlPointData;
 
 public class ControlPointDatabaseMapper extends EntityDatabaseMapper<ControlPointImpl, ControlPointData>implements ControlPointMapper {
@@ -24,7 +24,7 @@ public class ControlPointDatabaseMapper extends EntityDatabaseMapper<ControlPoin
 
   @Override
   public ControlPointImpl insert(ControlPointData data) throws Exception {
-    Position3D position = data.position;
+    Vector3i position = data.position;
     data.id = insert(insertColumns,
         values(data.name,
             position.x, position.y, position.z,
@@ -41,7 +41,7 @@ public class ControlPointDatabaseMapper extends EntityDatabaseMapper<ControlPoin
     data.name = resultSet.getString(column++);
     data.description = resultSet.getString(column++);
 
-    data.position = new Position3D(resultSet.getInt(column++), resultSet.getInt(column++), resultSet.getInt(column++));
+    data.position = new Vector3i(resultSet.getInt(column++), resultSet.getInt(column++), resultSet.getInt(column++));
     data.radius = resultSet.getInt(column++);
     data.maxPower = resultSet.getInt(column++);
 

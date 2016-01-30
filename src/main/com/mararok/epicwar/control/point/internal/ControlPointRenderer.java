@@ -10,7 +10,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
 import com.mararok.epiccore.block.BlockHelper;
-import com.mararok.epiccore.math.Position3D;
+import com.mararok.epiccore.math.Vector3i;
 import com.mararok.epicwar.War;
 import com.mararok.epicwar.control.ControlPoint;
 
@@ -29,7 +29,7 @@ public class ControlPointRenderer {
    * Used when create controlPoint
    */
   public void render(ControlPoint controlPoint) {
-    Position3D centerPosition = controlPoint.getPosition();
+    Vector3i centerPosition = controlPoint.getPosition();
     Block centerBlock = war.getWorld().getBlockAt(centerPosition.x, centerPosition.y, centerPosition.z);
 
     Block goldPlatformBlock = centerBlock.getRelative(-1, -1, -1);
@@ -48,7 +48,7 @@ public class ControlPointRenderer {
    * Rendering only changed elements of Control Point representation based on Faction
    */
   public void update(ControlPoint controlPoint) {
-    Position3D centerPosition = controlPoint.getPosition();
+    Vector3i centerPosition = controlPoint.getPosition();
     Block glassBlock = war.getWorld().getBlockAt(centerPosition.x, centerPosition.y + 1, centerPosition.z);
     BlockHelper.setBlockColor(glassBlock, controlPoint.getOwner().getColor().getDyeColor());
   }

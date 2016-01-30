@@ -5,14 +5,14 @@
  */
 package com.mararok.epicwar.control;
 
-import com.mararok.epiccore.math.Position3D;
+import com.mararok.epiccore.math.Vector3i;
 
 public class ControlPointData extends NamedControlAreaData {
 
   public int ownerId;
   public int sectorId;
 
-  public Position3D position;
+  public Vector3i position;
   public int radius;
   public int maxPower;
   public int[] connections;

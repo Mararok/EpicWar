@@ -9,7 +9,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import com.mararok.epiccore.entity.ObservedEntity;
-import com.mararok.epiccore.math.Position3D;
+import com.mararok.epiccore.math.Vector3i;
 import com.mararok.epicwar.War;
 import com.mararok.epicwar.control.ControlPoint;
 import com.mararok.epicwar.control.Sector;
@@ -24,7 +24,7 @@ public class WarPlayerImpl extends ObservedEntity implements WarPlayer {
   private PlayerStats stats;
   private Faction faction;
 
-  private Position3D position = new Position3D();
+  private Vector3i position = new Vector3i();
   private Subsector subsector;
 
   public WarPlayerImpl(WarPlayerData data, Player nativePlayer, War war) {
@@ -33,7 +33,7 @@ public class WarPlayerImpl extends ObservedEntity implements WarPlayer {
     this.stats = data.stats;
 
     this.faction = war.getFactionManager().findById(data.factionId);
-    position = new Position3D();
+    position = new Vector3i();
   }
 
   public void updatePosition(Location nextPosition) {
@@ -113,7 +113,7 @@ public class WarPlayerImpl extends ObservedEntity implements WarPlayer {
     return subsector != null;
   }
 
-  public Position3D getPosition() {
+  public Vector3i getPosition() {
     return position.clone();
   }
 

@@ -6,7 +6,7 @@
 package com.mararok.epicwar.faction;
 
 import com.mararok.epiccore.entity.EntityData;
-import com.mararok.epiccore.math.Position3D;
+import com.mararok.epiccore.math.Vector3i;
 
 public class FactionData extends EntityData {
   public String name;
@@ -16,5 +16,5 @@ public class FactionData extends EntityData {
   public Faction.Color color;
   public Faction.BannerPattern bannerPattern;
 
-  public Position3D spawnPosition;
+  public Vector3i spawnPosition;
 }

@@ -7,7 +7,7 @@ package com.mararok.epicwar.control;
 
 import java.util.Collection;
 
-import com.mararok.epiccore.math.Position3D;
+import com.mararok.epiccore.math.Vector3i;
 import com.mararok.epicwar.faction.Faction;
 
 /**
@@ -19,7 +19,7 @@ import com.mararok.epicwar.faction.Faction;
  */
 public interface ControlPoint extends NamedControlArea {
 
-  public Position3D getPosition();
+  public Vector3i getPosition();
 
   public int getRadius();
 

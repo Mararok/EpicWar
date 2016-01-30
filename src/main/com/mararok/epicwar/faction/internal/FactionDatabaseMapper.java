@@ -10,7 +10,7 @@ import java.sql.SQLException;
 
 import com.mararok.epiccore.database.DMQL;
 import com.mararok.epiccore.entity.EntityDatabaseMapper;
-import com.mararok.epiccore.math.Position3D;
+import com.mararok.epiccore.math.Vector3i;
 import com.mararok.epicwar.faction.Faction;
 import com.mararok.epicwar.faction.FactionData;
 
@@ -42,7 +42,7 @@ public class FactionDatabaseMapper extends EntityDatabaseMapper<FactionImpl, Fac
 
     data.color = Faction.Color.getByChar(resultSet.getString(column++).charAt(0));
     data.bannerPattern = Faction.BannerPattern.createFromSerialized(resultSet.getString(column++));
-    data.spawnPosition = new Position3D(resultSet.getInt(column++), resultSet.getInt(column++), resultSet.getInt(column++));
+    data.spawnPosition = new Vector3i(resultSet.getInt(column++), resultSet.getInt(column++), resultSet.getInt(column++));
 
     return data;
   }

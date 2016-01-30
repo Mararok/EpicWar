@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
-import com.mararok.epiccore.math.Position3D;
+import com.mararok.epiccore.math.Vector3i;
 import com.mararok.epiccore.misc.StringUtils;
 import com.mararok.epicwar.War;
 import com.mararok.epicwar.control.ControlAreaPower;
@@ -21,7 +21,7 @@ import com.mararok.epicwar.control.internal.Occupation;
 import com.mararok.epicwar.faction.Faction;
 
 public class ControlPointImpl extends NamedControlAreaImpl implements ControlPoint {
-  private Position3D position;
+  private Vector3i position;
   private int radius;
   private ControlAreaPower power;
 
@@ -48,7 +48,7 @@ public class ControlPointImpl extends NamedControlAreaImpl implements ControlPoi
   }
 
   @Override
-  public Position3D getPosition() {
+  public Vector3i getPosition() {
     return position.clone();
   }
 

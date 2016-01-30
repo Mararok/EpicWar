@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 
 import com.mararok.epiccore.command.CommandArguments;
 import com.mararok.epiccore.command.CommandMetadata;
-import com.mararok.epiccore.math.Position3D;
+import com.mararok.epiccore.math.Vector3i;
 import com.mararok.epicwar.EpicWarPlugin;
 import com.mararok.epicwar.War;
 import com.mararok.epicwar.command.EpicWarCommand;
@@ -52,7 +52,7 @@ public class CreateFactionCommand extends EpicWarCommand {
     data.color = factionColor;
 
     Location spawnLoc = sender.getLocation();
-    data.spawnPosition = new Position3D(spawnLoc.getBlockX(), spawnLoc.getBlockY(), spawnLoc.getBlockZ());
+    data.spawnPosition = new Vector3i(spawnLoc.getBlockX(), spawnLoc.getBlockY(), spawnLoc.getBlockZ());
 
     factions.create(data);
     String message = getPlugin().getLanguage().getFormatedText("message.faction.created", factionName, factionColor.getChatColor());
