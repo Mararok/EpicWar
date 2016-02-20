@@ -67,29 +67,28 @@ public class SubsectorMapImpl implements SubsectorMap {
 
   @Override
   public Subsector assignToControlPoint(int chunkX, int chunkZ, ControlPoint controlPoint) throws Exception {
-    if (controlPoint.getWar() != war) {
-      throw new Exception("Control Point must be in same war");
-    }
-
     int localChunkX = getLocalChunkX(chunkX);
     int localChunkZ = getLocalChunkZ(chunkZ);
 
     if (isLocalPointInner(localChunkX, localChunkZ)) {
-      Subsector current = getLocal(localChunkX, localChunkZ);
-      if (current != null) {
-        current.setControlPoint(controlPoint);
-        mapper.update((SubsectorImpl) current);
+      Subsector subsector = getLocal(localChunkX, localChunkZ);
+      if (subsector != null) {
+        subsector.setControlPoint(controlPoint);
+        mapper.update((SubsectorImpl) subsector);
       } else {
         SubsectorData data = new SubsectorData();
         data.id = getLocalIndex(localChunkX, localChunkZ);
         data.chunkX = chunkX;
         data.chunkZ = chunkZ;
         data.controlPointId = controlPoint.getId();
-        Subsector subsector = mapper.insert(data);
+        subsector = mapper.insert(data);
         set(subsector);
       }
+
+      return subsector;
     }
-    throw new Exception(String.format("Chunk[%s, %s] isn't in war area", chunkX, chunkZ));
+
+    throw new Exception(String.format("Chunk[%d, %d], local[%d, %d] isn't in war area", chunkX, chunkZ, localChunkX, localChunkZ));
 
   }
 
