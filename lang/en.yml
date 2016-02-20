@@ -32,21 +32,19 @@ command:
   
  sector: 
   all: "Shows all sectors subcommands"
-  info: "Shows current sector info or when parameter given shows subsector or control point"
-  create: "c"
-  delete: "d"
+  info: "Shows current sector info"
+  create: "Creates new sector with selected parameters"
   
  controlPoint:
   all: "Shows all Control Points subcommands"
-  info: "i"
-  create: "c"
-  delete: "d"
+  info: "Shows info about selected controlPoint"
+  create: "Creates new control point on player position with selected parameters"
  
  subsector: 
   all: "Shows all Control Points subcommands"
-  info: "i"
-  assign: "a"
-  delete: "d"
+  info: "Shows info about selected subsector"
+  assign: "Assigns subsector to selected ControlPoint"
+  delete: "Removes connection between subsector and ControlPoint"
   
  error:
   NotEnoughArguments: "Not enough arguments, Usage: %s"
@@ -80,7 +78,7 @@ message:
   list:
    header: "ID | NAME | OWNER NAME"
    row: "%d | %s | %s"
-   empty: "no one control point defined yet"
+   empty: "no one sector defined yet"
    
  controlPoint:
   create:
@@ -88,6 +86,10 @@ message:
     radius: "You can't create control point with radius: %d, min is %d."
     power: "You can't create control point with power: %d, min is %d."
   notExists: "Control point with id: %d isn't exists."
+  list:
+   header: "ID | NAME | OWNER NAME"
+   row: "%d | %s | %s"
+   empty: "no one control point defined yet"
   
  subsector:
   assignedToControlPoint: "Assigned subsector %d[%d, %d] to control point"
