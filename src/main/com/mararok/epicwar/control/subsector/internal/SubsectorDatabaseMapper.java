@@ -18,12 +18,12 @@ public class SubsectorDatabaseMapper extends EntityDatabaseMapper<SubsectorImpl,
 
   public SubsectorDatabaseMapper(DMQL queries, String tableName, SubsectorFactory factory) {
     super(queries, tableName, factory);
-    insertColumns = super.columns("id", "chunkX", "chunkZ", "controlPointId");
+    insertColumns = columns("id", "chunkX", "chunkZ", "controlPointId");
   }
 
   @Override
   public SubsectorImpl insert(SubsectorData data) throws Exception {
-    insert(insertColumns, super.values(data.id, data.chunkX, data.chunkZ, data.controlPointId));
+    insert(insertColumns, values(data.id, data.chunkX, data.chunkZ, data.controlPointId));
     return getFactory().create(data);
   }
 
