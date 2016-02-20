@@ -15,6 +15,7 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Vector;
+import java.util.logging.Logger;
 
 import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -80,14 +81,19 @@ public class YamlWarLoader {
   }
 
   private WarSettings loadSettings(YamlConfiguration config) throws Exception {
+    Logger log = plugin.getLogger();
     WarSettings settings = new WarSettings();
     settings.name = config.getString("name");
+    log.info("name: " + settings.name);
     settings.description = config.getString("description");
+    log.info("description: " + settings.description);
 
     SimpleDateFormat format = new SimpleDateFormat("DD.MM.YYYY HH:MM");
     settings.startDateTime = format.parse(config.getString("startDateTime"));
+    log.info("startDateTime: " + settings.startDateTime);
 
     settings.editMode = config.getBoolean("editMode");
+    log.info("editMode: " + settings.editMode);
 
     settings.world = loadWorldSettings(config);
     settings.points = loadPointsSettings(config);
@@ -98,21 +104,32 @@ public class YamlWarLoader {
   }
 
   private WarSettings.WorldSettings loadWorldSettings(YamlConfiguration config) {
+    Logger log = plugin.getLogger();
     WarSettings.WorldSettings world = new WarSettings.WorldSettings();
     world.name = config.getString("world.name");
-    world.startChunkX = config.getInt("world.startChunkX");
-    world.startChunkZ = config.getInt("world.startChunkZ");
-    world.sizeInChunks = config.getInt("world.sizeInChunks");
+    log.info("world.name: " + world.name);
+
+    world.startChunkX = config.getInt("world.fightArea.startChunk.x");
+    log.info("world.fightArea.startChunkX: " + world.startChunkX);
+    world.startChunkZ = config.getInt("world.fightArea.startChunk.z");
+    log.info("world.fightArea.startChunkZ: " + world.startChunkZ);
+    world.sizeInChunks = config.getInt("world.fightArea.sizeInChunks");
+    log.info("world.fightArea.sizeInChunks: " + world.sizeInChunks);
     return world;
   }
 
   private WarSettings.PointsSettings loadPointsSettings(YamlConfiguration config) {
+    Logger log = plugin.getLogger();
     WarSettings.PointsSettings points = new WarSettings.PointsSettings();
     points.kill = config.getInt("points.kill");
+    log.info("points.kill: " + points.kill);
     points.death = config.getInt("points.death");
+    log.info("points.death: " + points.death);
 
     points.captureControlPoint = config.getInt("points.capture.point");
+    log.info("points.captureControlPoint: " + points.captureControlPoint);
     points.captureSector = config.getInt("points.capture.sector");
+    log.info("points.captureSector: " + points.captureSector);
     return points;
   }
 
