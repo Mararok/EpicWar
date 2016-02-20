@@ -15,9 +15,9 @@ import com.mararok.epiccore.misc.MessageBuilder;
 import com.mararok.epicwar.EpicWarPlugin;
 import com.mararok.epicwar.War;
 
-public class WarListCommand extends EpicWarCommand {
+public class ListWarCommand extends EpicWarCommand {
 
-  public WarListCommand(EpicWarPlugin plugin) {
+  public ListWarCommand(EpicWarPlugin plugin) {
     super(plugin);
     setMetadata(CommandMetadata.command("list")
         .description(getLanguage().getText("command.war.list"))
