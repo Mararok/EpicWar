@@ -23,7 +23,7 @@ public class InfoControlPointCommand extends EpicWarCommand {
 
     setMetadata(CommandMetadata.command("info")
         .description(getLanguage().getText("command.controlPoint.info"))
-        .usage("\\ewcp info [id]"));
+        .usage("/ewcp info [id]"));
   }
 
   @Override

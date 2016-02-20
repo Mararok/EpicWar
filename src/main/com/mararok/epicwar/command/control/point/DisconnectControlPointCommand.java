@@ -22,7 +22,7 @@ public class DisconnectControlPointCommand extends EpicWarCommand {
     super(plugin);
     setMetadata(CommandMetadata.command("disconnect")
         .description(getLanguage().getText("command.controlPoint.disconnect"))
-        .usage("\\ewcp disconnect <controlPointId> <otherControlPointId>")
+        .usage("/ewcp disconnect <controlPointId> <otherControlPointId>")
         .permission("epicwar.controlPoint.disconnect")
         .requiredArguments(2));
   }

@@ -21,7 +21,7 @@ public class DeleteSubsectorCommand extends EpicWarCommand {
 
     setMetadata(CommandMetadata.command("delete")
         .description(getLanguage().getText("command.sector.delete"))
-        .usage("\\ewss delete <id>")
+        .usage("/ewss delete <id>")
         .permission("epicwar.subsector.delete")
         .requiredArguments(1));
   }

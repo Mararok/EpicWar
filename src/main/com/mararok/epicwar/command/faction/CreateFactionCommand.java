@@ -24,7 +24,7 @@ public class CreateFactionCommand extends EpicWarCommand {
 
     setMetadata(CommandMetadata.command("create")
         .description(plugin.getLanguage().getText("command.faction.create"))
-        .usage("\\ewf create <name> <colorName>")
+        .usage("/ewf create <name> <colorName>")
         .permission("epicwar.faction.create")
         .requiredArguments(2));
 

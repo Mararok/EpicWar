@@ -24,7 +24,7 @@ public class InfoFactionCommand extends EpicWarCommand {
 
     setMetadata(CommandMetadata.command("info")
         .description(plugin.getLanguage().getText("command.faction.info"))
-        .usage("\\ewf info [shortcut]"));
+        .usage("/ewf info [shortcut]"));
   }
 
   @Override

@@ -26,7 +26,7 @@ public class AssignSubsectorCommand extends EpicWarCommand {
 
     setMetadata(CommandMetadata.command("assign")
         .description(getLanguage().getText("command.subsector.assign"))
-        .usage("\\ewss assign <controlPointId> [radius]")
+        .usage("/ewss assign <controlPointId> [radius]")
         .permission("epicwar.subsector.assign")
         .requiredArguments(1));
   }

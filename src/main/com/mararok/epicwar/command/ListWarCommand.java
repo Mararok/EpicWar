@@ -21,7 +21,7 @@ public class ListWarCommand extends EpicWarCommand {
     super(plugin);
     setMetadata(CommandMetadata.command("list")
         .description(getLanguage().getText("command.war.list"))
-        .usage("\\ew list")
+        .usage("/ew list")
         .permission("epicwar.list"));
   }
 

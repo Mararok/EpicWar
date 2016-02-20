@@ -27,7 +27,7 @@ public class ColorsFactionCommand extends EpicWarCommand {
 
     setMetadata(CommandMetadata.command("colors")
         .description(plugin.getLanguage().getText("command.faction.colors"))
-        .usage("\\ewf colors"));
+        .usage("/ewf colors"));
 
   }
 

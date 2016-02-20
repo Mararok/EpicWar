@@ -16,11 +16,14 @@ public class ControlPointCommands extends ParentPluginCommand<EpicWarPlugin> {
 
     setMetadata(CommandMetadata.command("ewcp")
         .description(plugin.getLanguage().getText("command.controlPoint.all"))
-        .usage("\\ewcp [subcommand]"));
+        .usage("/ewcp [subcommand]"));
 
     addCommand(new CreateControlPointCommand(plugin));
     addCommand(new InfoControlPointCommand(plugin));
     addCommand(new SetPropertyControlPointCommand(plugin));
+    addCommand(new ListControlPointCommand(plugin));
+    addCommand(new ConnectControlPointCommand(plugin));
+    addCommand(new DisconnectControlPointCommand(plugin));
   }
 
 }

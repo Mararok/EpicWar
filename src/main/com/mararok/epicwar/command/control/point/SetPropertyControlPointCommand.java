@@ -26,7 +26,7 @@ public class SetPropertyControlPointCommand extends EpicWarCommand {
 
     setMetadata(CommandMetadata.command("set")
         .description(getLanguage().getText("command.controlPoint.set"))
-        .usage("\\ewcp set <id> <property> <value>")
+        .usage("/ewcp set <id> <property> <value>")
         .permission("epicwar.controlPoint.set")
         .requiredArguments(3));
 

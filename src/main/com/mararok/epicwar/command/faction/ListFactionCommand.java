@@ -23,7 +23,7 @@ public class ListFactionCommand extends EpicWarCommand {
     super(plugin);
     setMetadata(CommandMetadata.command("list")
         .description(plugin.getLanguage().getText("command.faction.list"))
-        .usage("\\ewf list"));
+        .usage("/ewf list"));
   }
 
   @Override

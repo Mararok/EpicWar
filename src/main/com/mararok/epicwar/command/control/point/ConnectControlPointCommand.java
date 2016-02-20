@@ -22,7 +22,7 @@ public class ConnectControlPointCommand extends EpicWarCommand {
     super(plugin);
     setMetadata(CommandMetadata.command("connect")
         .description(getLanguage().getText("command.controlPoint.connect"))
-        .usage("\\ewcp connect <controlPointId> <otherControlPointId>")
+        .usage("/ewcp connect <controlPointId> <otherControlPointId>")
         .permission("epicwar.controlPoint.connect")
         .requiredArguments(2));
   }

@@ -17,7 +17,7 @@ public class SpawnFactionCommand extends EpicWarCommand {
     super(plugin);
     setMetadata(CommandMetadata.command("spawn")
         .description(plugin.getLanguage().getText("command.faction.spawn"))
-        .usage("\\ewf spawn"));
+        .usage("/ewf spawn"));
   }
 
   @Override

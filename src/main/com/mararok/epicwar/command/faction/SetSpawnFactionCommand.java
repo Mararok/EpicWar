@@ -21,7 +21,7 @@ public class SetSpawnFactionCommand extends EpicWarCommand {
 
     setMetadata(CommandMetadata.command("setspawn")
         .description(plugin.getLanguage().getText("command.faction.setspawn"))
-        .usage("\\ewf setspawn <factionShortcut>")
+        .usage("/ewf setspawn <factionShortcut>")
         .requiredArguments(1)
         .permission("epicwar.faction.setspawn"));
   }

@@ -19,7 +19,7 @@ public class Commands extends ParentPluginCommand<EpicWarPlugin> {
 
     setMetadata(CommandMetadata.command("ew")
         .description(plugin.getLanguage().getText("command.all"))
-        .usage("\\ew [subcommand]"));
+        .usage("/ew [subcommand]"));
 
     addCommand(new ListWarCommand(plugin));
   }

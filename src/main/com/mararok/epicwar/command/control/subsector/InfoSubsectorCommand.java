@@ -23,7 +23,7 @@ public class InfoSubsectorCommand extends EpicWarCommand {
 
     setMetadata(CommandMetadata.command("info")
         .description(getLanguage().getText("command.subsector.info"))
-        .usage("\\ewss info [chunkX] [chunkZ]"));
+        .usage("/ewss info [chunkX] [chunkZ]"));
   }
 
   @Override

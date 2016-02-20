@@ -13,7 +13,9 @@ public class FactionCommands extends ParentPluginCommand<EpicWarPlugin> {
   public FactionCommands(EpicWarPlugin plugin) {
     super(plugin);
 
-    setMetadata(CommandMetadata.command("ew").description(plugin.getLanguage().getText("command.faction.all")).usage("\\ewf [subcommand]"));
+    setMetadata(CommandMetadata.command("ew")
+        .description(plugin.getLanguage().getText("command.faction.all"))
+        .usage("/ewf [subcommand]"));
 
     addCommand(new JoinFactionCommand(plugin));
     addCommand(new ListFactionCommand(plugin));
