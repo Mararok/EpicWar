@@ -19,17 +19,13 @@ public class ControlPointDatabaseMapper extends EntityDatabaseMapper<ControlPoin
 
   public ControlPointDatabaseMapper(DMQL queries, String tableName, ControlPointFactory factory) {
     super(queries, tableName, factory);
-    insertColumns = columns("name", "x", "y", "z", "radius", "maxPower");
+    insertColumns = columns("name", "sectorId", "x", "y", "z", "radius", "maxPower");
   }
 
   @Override
   public ControlPointImpl insert(ControlPointData data) throws Exception {
     Vector3i position = data.position;
-    data.id = insert(insertColumns,
-        values(data.name,
-            position.x, position.y, position.z,
-            data.radius,
-            data.maxPower));
+    data.id = insert(insertColumns, values(data.name, data.sectorId, position.x, position.y, position.z, data.radius, data.maxPower));
     return getFactory().create(data);
   }
 
