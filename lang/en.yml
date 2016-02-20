@@ -75,12 +75,21 @@ message:
   lostSector: "Your faction lost %s sector."
   capturedPoint: "Your faction captured %s point in %s sector."
   lostPoint: "Your faction lost %s point in %s sector."
-  
+ 
+ sector:
+  list:
+   header: "ID | NAME | OWNER NAME"
+   row: "%d | %s | %s"
+   empty: "no one control point defined yet"
+   
  controlPoint:
   create:
    error:
     radius: "You can't create control point with radius: %d, min is %d."
     power: "You can't create control point with power: %d, min is %d."
   notExists: "Control point with id: %d isn't exists."
+  
+ subsector:
+  assignedToControlPoint: "Assigned subsector %d[%d, %d] to control point"
   
   
