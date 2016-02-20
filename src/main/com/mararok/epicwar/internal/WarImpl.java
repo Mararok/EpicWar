@@ -36,15 +36,15 @@ public class WarImpl implements War {
     this.id = id;
     this.settings = settings;
     this.world = warManager.getPlugin().getServer().getWorld(settings.world.name);
+    this.warManager = warManager;
 
     playerManager = warFactory.newPlayerManager(this);
     factionManager = warFactory.newFactionManager(this);
 
+    sectorManager = warFactory.newSectorManager(this);
     controlPointManager = warFactory.newControlPointManager(this);
     subsectorMap = warFactory.newSubsectorMap(this);
-    sectorManager = warFactory.newSectorManager(this);
 
-    this.warManager = warManager;
   }
 
   @Override
