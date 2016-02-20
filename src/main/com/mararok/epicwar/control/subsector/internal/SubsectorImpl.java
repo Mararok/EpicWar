@@ -25,6 +25,8 @@ public class SubsectorImpl extends ControlAreaImpl implements Subsector {
 
   public SubsectorImpl(SubsectorData data, War war) {
     super(data);
+    chunkX = data.chunkX;
+    chunkZ = data.chunkZ;
     controlPoint = war.getControlPointManager().findById(data.controlPointId);
   }
 
