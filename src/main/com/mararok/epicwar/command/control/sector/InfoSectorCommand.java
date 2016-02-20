@@ -23,7 +23,7 @@ public class InfoSectorCommand extends EpicWarCommand {
 
     setMetadata(CommandMetadata.command("info")
         .description(plugin.getLanguage().getText("command.sector.info"))
-        .usage("\\ews info [sectorId]"));
+        .usage("/ews info [sectorId]"));
   }
 
   @Override

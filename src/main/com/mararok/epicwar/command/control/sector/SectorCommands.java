@@ -16,11 +16,12 @@ public class SectorCommands extends ParentPluginCommand<EpicWarPlugin> {
 
     setMetadata(CommandMetadata.command("ews")
         .description(plugin.getLanguage().getText("command.sector.all"))
-        .usage("\\ews [subcommand]"));
+        .usage("/ews [subcommand]"));
 
     addCommand(new CreateSectorCommand(plugin));
     addCommand(new SetPropertySectorCommand(plugin));
 
     addCommand(new InfoSectorCommand(plugin));
+    addCommand(new ListSectorCommand(plugin));
   }
 }

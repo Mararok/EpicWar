@@ -22,7 +22,7 @@ public class CreateSectorCommand extends EpicWarCommand {
 
     setMetadata(CommandMetadata.command("create")
         .description(getLanguage().getText("command.sector.create"))
-        .usage("\\ews create <name>")
+        .usage("/ews create <name>")
         .permission("epicwar.sector.create")
         .requiredArguments(1));
   }

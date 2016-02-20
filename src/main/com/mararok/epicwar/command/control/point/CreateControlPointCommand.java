@@ -28,7 +28,7 @@ public class CreateControlPointCommand extends EpicWarCommand {
 
     setMetadata(CommandMetadata.command("create")
         .description(getLanguage().getText("command.controlPoint.create"))
-        .usage("\\ewcp create <sectorId> <radius> <maxPower> <name>")
+        .usage("/ewcp create <sectorId> <radius> <maxPower> <name>")
         .permission("epicwar.controlPoint.create")
         .requiredArguments(4));
   }

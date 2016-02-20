@@ -20,7 +20,7 @@ public class SetPropertySectorCommand extends EpicWarCommand {
     super(plugin);
     setMetadata(CommandMetadata.command("set")
         .description(getLanguage().getText("command.sector.set"))
-        .usage("\\ews set <id> <propertyName> <value>")
+        .usage("/ews set <id> <propertyName> <value>")
         .permission("epicwar.sector.set")
         .requiredArguments(3));
 

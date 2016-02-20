@@ -21,7 +21,7 @@ public class Commands extends ParentPluginCommand<EpicWarPlugin> {
         .description(plugin.getLanguage().getText("command.all"))
         .usage("\\ew [subcommand]"));
 
-    addCommand(new WarListCommand(plugin));
+    addCommand(new ListWarCommand(plugin));
   }
 
   public void register() {

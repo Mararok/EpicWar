@@ -18,6 +18,8 @@ import com.mararok.epicwar.control.ControlPoint;
 import com.mararok.epicwar.control.Subsector;
 
 public class AssignSubsectorCommand extends EpicWarCommand {
+  private final static int CONTROLPOINT_ARGUMENT = 0;
+  private final static int RADIUS_ARGUMENT = 1;
 
   public AssignSubsectorCommand(EpicWarPlugin plugin) {
     super(plugin);
@@ -32,19 +34,23 @@ public class AssignSubsectorCommand extends EpicWarCommand {
   @Override
   protected boolean onCommandOnWarWorld(War war, Player sender, CommandArguments<EpicWarPlugin> arguments) throws Exception {
     if (checkIsEditableWar(sender, war)) {
-      if (!arguments.isNumber(0)) {
+      if (!arguments.isNumber(CONTROLPOINT_ARGUMENT)) {
         return false;
       }
 
-      int controlPointId = arguments.asInt(0);
+      int controlPointId = arguments.asInt(CONTROLPOINT_ARGUMENT);
       ControlPoint controlPoint = war.getControlPointManager().findById(controlPointId);
+      if (controlPoint == null) {
+        sender.sendMessage(getLanguage().getFormatedText("controlPoint.notExists", controlPointId));
+        return true;
+      }
 
-      if (arguments.isExists(1)) {
-        if (!arguments.isNumber(1)) {
+      if (arguments.isExists(RADIUS_ARGUMENT)) {
+        if (!arguments.isNumber(RADIUS_ARGUMENT)) {
           return false;
         }
 
-        int radius = arguments.asInt(1);
+        int radius = arguments.asInt(RADIUS_ARGUMENT);
         Collection<Subsector> subsectors = war.getSubsectorMap().assignToControlPointInRadius(sender.getLocation().getChunk(), radius, controlPoint);
         for (Subsector subsector : subsectors) {
           sendAssignedMessage(sender, subsector);
