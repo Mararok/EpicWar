@@ -1,13 +1,12 @@
-CREATE TABLE IF NOT EXISTS [ew%s_Factions] (
-  [id] INT PRIMARY KEY,
-  [name] CHAR(32) NOT NULL, 
-  [shortcut] CHAR(8) NOT NULL,
-  [description] VARCHAR(255) DEFAULT 'Default description',
-  
-  [color] CHAR(1) NOT NULL,
-  [banner] VARCHAR(255) NOT NULL
-  
-  [spawnX] INT NOT NULL,
-  [spawnY] INT NOT NULL,
-  [spawnZ] INT NOT NULL,
- );
+CREATE TABLE IF NOT EXISTS `ew%s_Factions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) COLLATE utf8_bin NOT NULL,
+  `shortcut` char(8) COLLATE utf8_bin NOT NULL,
+  `description` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT 'Default description',
+  `color` char(1) COLLATE utf8_bin NOT NULL,
+  `banner` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `spawnX` int(11) NOT NULL,
+  `spawnY` int(11) NOT NULL,
+  `spawnZ` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
