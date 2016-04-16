@@ -22,7 +22,5 @@ public interface WarPlayerManager {
 
   public void update(WarPlayer player) throws Exception;
 
-  public void delete(WarPlayer player) throws Exception;
-
   public War getWar();
 }
