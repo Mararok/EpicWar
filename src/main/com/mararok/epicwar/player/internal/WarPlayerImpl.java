@@ -14,6 +14,7 @@ import com.mararok.epicwar.War;
 import com.mararok.epicwar.control.ControlPoint;
 import com.mararok.epicwar.control.Sector;
 import com.mararok.epicwar.control.Subsector;
+import com.mararok.epicwar.control.point.internal.ControlPointImpl;
 import com.mararok.epicwar.faction.Faction;
 import com.mararok.epicwar.player.PlayerStats;
 import com.mararok.epicwar.player.WarPlayer;
@@ -24,7 +25,7 @@ public class WarPlayerImpl extends ObservedEntity implements WarPlayer {
   private PlayerStats stats;
   private Faction faction;
 
-  private Vector3i position = new Vector3i();
+  private Vector3i position;
   private Subsector subsector;
 
   public WarPlayerImpl(WarPlayerData data, Player nativePlayer, War war) {
@@ -36,26 +37,37 @@ public class WarPlayerImpl extends ObservedEntity implements WarPlayer {
     position = new Vector3i();
   }
 
+  @Override
+  public void sendMessage(String message) {
+    nativePlayer.sendMessage(message);
+  }
+
   public void updatePosition(Location nextPosition) {
     int newX = nextPosition.getBlockX();
     int newY = nextPosition.getBlockY();
     int newZ = nextPosition.getBlockZ();
 
-    if (position.y != newY || position.x != newX || position.z != newZ) {
+    if (position.y != newY || position.x != newX || position.z != newZ) { // checks for any difference
+      if (position.x != newX || position.z != newZ) { // checks for any difference in horizontal(maybe player changed subsector)
+        Subsector newSubsector = getWar().getSubsectorMap().get(newX, newZ);
+        if (subsector != newSubsector) {
+          if (isWithinControlPointRange()) {
+            ((ControlPointImpl) getControlPoint()).getOccupation().removePlayer(this);
+          }
+          subsector = newSubsector;
+        }
+      }
+
       position.set(newX, newY, newZ);
-      if (position.x != newX || position.z != newZ) {
-        subsector = getWar().getSubsectorMap().get(nextPosition.getChunk());
+      if (isWithinControlPointRange()) {
+        ((ControlPointImpl) getControlPoint()).getOccupation().addPlayer(this);
       }
     }
   }
 
-  public boolean isWithinControlPointRange() {
-    return position.isWithinSphere(getControlPoint().getPosition(), getControlPoint().getRadius());
-  }
-
   @Override
-  public Player getNativePlayer() {
-    return nativePlayer;
+  public boolean isWithinControlPointRange() {
+    return isInWarArea() && position.isWithinSphere(getControlPoint().getPosition(), getControlPoint().getRadius());
   }
 
   @Override
@@ -115,6 +127,21 @@ public class WarPlayerImpl extends ObservedEntity implements WarPlayer {
 
   public Vector3i getPosition() {
     return position.clone();
+  }
+
+  @Override
+  public void teleport(Location location) {
+    nativePlayer.teleport(location);
+  }
+
+  @Override
+  public void teleportToFactionCapital() {
+    teleport(getFaction().getSpawnLocation());
+  }
+
+  @Override
+  public Player getNativePlayer() {
+    return nativePlayer;
   }
 
   @Override
