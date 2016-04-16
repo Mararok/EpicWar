@@ -47,7 +47,7 @@ command:
   delete: "Removes connection between subsector and ControlPoint"
   
  error:
-  NotEnoughArguments: "Not enough arguments, Usage: %s"
+  NotEnoughArguments: "Not enough arguments, Usage: %1$s"
 
 sector:
  wild: 
@@ -58,40 +58,41 @@ message:
  war:
   list:
    header: "ID | NAME | WORLD"
-   row: "%d | %s | %s"
- 
+   row: "%1$d | %2$s | %3$s"
+  player:
+   login: "Player %1$s from faction %2$s loged into war"
  faction:
   supportedColors: "Supported colors: "
-  joined: "You joined to faction %s."
-  full: "Faction %s is full, you can't join."
-  created: "Faction %s created."
-  exists: "Faction with name %s exists!"
-  notExists: "Faction %s not exists."
-  colorNotSupportedOrUsed: "Can't create faction, color: %s not supported or used."
+  joined: "You joined to faction %1$s."
+  full: "Faction %1$s is full, you can't join."
+  created: "Faction %1$s created."
+  exists: "Faction with name %1$s exists!"
+  notExists: "Faction %1$s not exists."
+  colorNotSupportedOrUsed: "Can't create faction, color: %1$s not supported or used."
   mustLeaveBefore: "You can't join to new faction, you must leave current."
-  capturedSector: "Your faction captured %s sector."
-  lostSector: "Your faction lost %s sector."
-  capturedPoint: "Your faction captured %s point in %s sector."
-  lostPoint: "Your faction lost %s point in %s sector."
+  capturedSector: "Your faction captured %1$s sector."
+  lostSector: "Your faction lost %1$s sector."
+  capturedPoint: "Your faction captured %1$s point in %2$s sector."
+  lostPoint: "Your faction lost %1$s point in %2$s sector."
  
  sector:
   list:
    header: "ID | NAME | OWNER NAME"
-   row: "%d | %s | %s"
+   row: "%1$d | %2$s | %3$s"
    empty: "no one sector defined yet"
    
  controlPoint:
   create:
    error:
-    radius: "You can't create control point with radius: %d, min is %d."
-    power: "You can't create control point with power: %d, min is %d."
+    radius: "You can't create control point with radius: %1$d, min is %2$d."
+    power: "You can't create control point with power: %1$d, min is %2$d."
   notExists: "Control point with id: %d isn't exists."
   list:
    header: "ID | NAME | OWNER NAME"
-   row: "%d | %s | %s"
+   row: "%1$d | %2$s | %3$s"
    empty: "no one control point defined yet"
   
  subsector:
-  assignedToControlPoint: "Assigned subsector %d[%d, %d] to control point"
+  assignedToControlPoint: "Assigned subsector %1$d[%2$d, %3$d] to control point"
   
   
