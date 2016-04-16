@@ -7,10 +7,12 @@ package com.mararok.epicwar.control.point.internal;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Random;
 
 import com.mararok.epiccore.database.DMQL;
 import com.mararok.epiccore.entity.EntityDatabaseMapper;
 import com.mararok.epiccore.math.Vector3i;
+import com.mararok.epiccore.misc.SpawnPointList;
 import com.mararok.epicwar.control.ControlPointData;
 
 public class ControlPointDatabaseMapper extends EntityDatabaseMapper<ControlPointImpl, ControlPointData>implements ControlPointMapper {
@@ -32,22 +34,40 @@ public class ControlPointDatabaseMapper extends EntityDatabaseMapper<ControlPoin
   @Override
   protected ControlPointData createData(ResultSet resultSet) throws SQLException {
     ControlPointData data = new ControlPointData();
-    int column = 1;
-    data.id = resultSet.getInt(column++);
-    data.name = resultSet.getString(column++);
-    data.description = resultSet.getString(column++);
 
-    data.position = new Vector3i(resultSet.getInt(column++), resultSet.getInt(column++), resultSet.getInt(column++));
-    data.radius = resultSet.getInt(column++);
-    data.maxPower = resultSet.getInt(column++);
+    data.id = resultSet.getInt("id");
+    data.name = resultSet.getString("name");
+    data.description = resultSet.getString("description");
+    data.sectorId = resultSet.getInt("sectorId");
+    data.ownerId = resultSet.getInt("ownerId");
+    data.position = new Vector3i(resultSet.getInt("x"), resultSet.getInt("y"), resultSet.getInt("z"));
+    data.radius = resultSet.getInt("radius");
+    data.maxPower = resultSet.getInt("maxPower");
 
-    String connections[] = resultSet.getString(column++).split(",");
-    data.connections = new int[connections.length];
-
-    int i = 0;
-    for (String connection : connections) {
-      data.connections[i++] = Integer.parseInt(connection);
+    String connectionsString = resultSet.getString("connections");
+    if (!connectionsString.isEmpty()) {
+      String connections[] = connectionsString.split(",");
+      data.connections = new int[connections.length];
+      int i = 0;
+      for (String connection : connections) {
+        data.connections[i++] = Integer.parseInt(connection);
+      }
     }
+
+    Vector3i[] points = null;
+    String spawnPointsString = resultSet.getString("spawnPointList");
+    if (!spawnPointsString.isEmpty()) {
+      String[] spawnPoints = connectionsString.split("|");
+      points = new Vector3i[spawnPoints.length];
+      int i = 0;
+      for (String p : spawnPoints) {
+        String[] components = p.split(",");
+        points[i++] = new Vector3i(Integer.parseInt(components[0]), Integer.parseInt(components[1]), Integer.parseInt(components[2]));
+      }
+    }
+
+    data.spawnPointList = new SpawnPointList(new Random(), points);
+
     return data;
   }
 }
