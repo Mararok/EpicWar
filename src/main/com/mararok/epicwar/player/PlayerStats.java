@@ -5,6 +5,9 @@
  */
 package com.mararok.epicwar.player;
 
+/**
+ * Collects all player war statistics like kills, points
+ */
 public class PlayerStats {
   public int kills;
   public int deaths;
