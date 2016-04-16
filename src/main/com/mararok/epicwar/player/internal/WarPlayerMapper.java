@@ -13,6 +13,7 @@ import com.mararok.epiccore.entity.EntityMapper;
 import com.mararok.epicwar.player.WarPlayerData;
 
 public interface WarPlayerMapper extends EntityMapper<WarPlayerImpl, WarPlayerData> {
+
   public WarPlayerImpl findByUUID(UUID uuid) throws Exception;
 
   public WarPlayerImpl findByPlayer(Player player) throws Exception;
