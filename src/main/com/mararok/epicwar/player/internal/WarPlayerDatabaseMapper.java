@@ -45,23 +45,24 @@ public class WarPlayerDatabaseMapper extends EntityDatabaseMapper<WarPlayerImpl,
   @Override
   protected WarPlayerData createData(ResultSet resultSet) throws SQLException {
     WarPlayerData data = new WarPlayerData();
-    int column = 1;
-    data.id = resultSet.getInt(column++);
-    data.uuid = UUID.fromString(resultSet.getString(column++));
-    data.factionId = resultSet.getInt(column++);
-    data.stats = createStats(resultSet, column);
+
+    data.id = resultSet.getInt("id");
+    data.uuid = UUID.fromString(resultSet.getString("uuid"));
+    data.factionId = resultSet.getInt("factionId");
+    data.stats = createStats(resultSet);
+    
     return data;
   }
 
-  private PlayerStats createStats(ResultSet resultSet, int statsOffset) throws SQLException {
+  private PlayerStats createStats(ResultSet resultSet) throws SQLException {
     PlayerStats stats = new PlayerStats();
-    stats.kills = resultSet.getInt(statsOffset++);
-    stats.teamkills = resultSet.getInt(statsOffset++);
-    stats.deaths = resultSet.getInt(statsOffset++);
-    stats.teamkills = resultSet.getInt(statsOffset++);
-    stats.points = resultSet.getInt(statsOffset++);
-    stats.capturedControlPoints = resultSet.getInt(statsOffset++);
-    stats.capturedSectors = resultSet.getInt(statsOffset++);
+    stats.kills = resultSet.getInt("kills");
+    stats.teamkills = resultSet.getInt("teamkills");
+    stats.deaths = resultSet.getInt("deaths");
+    stats.points = resultSet.getInt("points");
+    stats.capturedControlPoints = resultSet.getInt("capturedControlPoints");
+    stats.capturedSectors = resultSet.getInt("capturedSectors");
+    
     return stats;
   }
 
