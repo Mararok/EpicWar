@@ -34,15 +34,15 @@ public class FactionDatabaseMapper extends EntityDatabaseMapper<FactionImpl, Fac
   @Override
   protected FactionData createData(ResultSet resultSet) throws SQLException {
     FactionData data = new FactionData();
-    int column = 1;
-    data.id = resultSet.getInt(column++);
-    data.name = resultSet.getString(column++);
-    data.shortcut = resultSet.getString(column++);
-    data.description = resultSet.getString(column++);
 
-    data.color = Faction.Color.getByChar(resultSet.getString(column++).charAt(0));
-    data.bannerPattern = Faction.BannerPattern.createFromSerialized(resultSet.getString(column++));
-    data.spawnPosition = new Vector3i(resultSet.getInt(column++), resultSet.getInt(column++), resultSet.getInt(column++));
+    data.id = resultSet.getInt("id");
+    data.name = resultSet.getString("name");
+    data.shortcut = resultSet.getString("shortcut");
+    data.description = resultSet.getString("description");
+
+    data.color = Faction.Color.getByChar(resultSet.getString("color").charAt(0));
+    data.bannerPattern = Faction.BannerPattern.createFromSerialized(resultSet.getString("bannerPattern"));
+    data.spawnPosition = new Vector3i(resultSet.getInt("spawnX"), resultSet.getInt("spawnY"), resultSet.getInt("spawnZ"));
 
     return data;
   }
