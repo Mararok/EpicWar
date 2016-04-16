@@ -18,6 +18,7 @@ import com.mararok.epicwar.War;
 import com.mararok.epicwar.control.ControlPoint;
 import com.mararok.epicwar.control.ControlPointData;
 import com.mararok.epicwar.control.ControlPointManager;
+import com.mararok.epicwar.control.Sector;
 
 public class ControlPointManagerImpl implements ControlPointManager {
   private ControlPoint[] controlPoints;
@@ -53,6 +54,23 @@ public class ControlPointManagerImpl implements ControlPointManager {
   @Override
   public ControlPoint findById(int id) {
     return (id >= 0 && id < controlPoints.length) ? controlPoints[id] : null;
+  }
+
+  @Override
+  public Collection<ControlPoint> findBySector(Sector sector) {
+    Collection<ControlPoint> collection;
+    if (controlPoints.length == 1) {
+      collection = Collections.emptyList();
+    } else {
+      collection = new ArrayList<ControlPoint>(controlPoints.length - 1);
+
+      for (int i = 1; i < controlPoints.length - 1; i++) {
+        if (controlPoints[i].getSector() == sector) {
+          collection.add(controlPoints[i]);
+        }
+      }
+    }
+    return Collections.unmodifiableCollection(collection);
   }
 
   @Override

@@ -16,6 +16,8 @@ public interface ControlPointManager {
 
   public ControlPoint findById(int id);
 
+  public Collection<ControlPoint> findBySector(Sector sector);
+
   public Collection<ControlPoint> findAll();
 
   public ControlPoint create(ControlPointData data) throws Exception;
