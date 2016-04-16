@@ -29,9 +29,7 @@ public class PlayerListener implements Listener {
 
   public PlayerListener(WarManager warManager) {
     this.warManager = warManager;
-
-    plugin = warManager.getPlugin();
-    plugin.getServer().getPluginManager().registerEvents(this, plugin);
+    getPlugin().getServer().getPluginManager().registerEvents(this, plugin);
   }
 
   @EventHandler(priority = EventPriority.MONITOR)
@@ -41,47 +39,55 @@ public class PlayerListener implements Listener {
     if (war != null) {
       WarPlayerManagerImpl playerManager = (WarPlayerManagerImpl) war.getPlayerManager();
       try {
-        playerManager.tryJoin(player);
+        WarPlayer warPlayer = playerManager.tryJoin(player);
+        if (warPlayer != null) {
+          warPlayer.teleport(warPlayer.getFaction().getSpawnLocation());
+          event.setJoinMessage(getPlugin().getLanguage().getFormatedText("war.player.login",
+              warPlayer.getNativePlayer().getDisplayName(),
+              warPlayer.getFaction().getName()));
+        }
       } catch (Exception e) {
-        getPlugin().getLogger().log(Level.SEVERE, "exception: ", e);
-        player.sendMessage("INTERNAL ERROR");
+        onException(player, "Exception when player try joined to war", e);
       }
     }
 
   }
 
-  private EpicWarPlugin getPlugin() {
-    return plugin;
-  }
-
   @EventHandler(priority = EventPriority.MONITOR)
   public void onPlayerQuite(PlayerQuitEvent event) {
     Player player = event.getPlayer();
-    War war = warManager.findByWorld(player.getWorld());
-    if (war != null) {
-      WarPlayerManagerImpl playerManager = (WarPlayerManagerImpl) war.getPlayerManager();
-      playerManager.unload(player);
+    try {
+      War war = warManager.findByWorld(player.getWorld());
+      if (war != null) {
+        WarPlayerManagerImpl playerManager = (WarPlayerManagerImpl) war.getPlayerManager();
+        playerManager.unload(player);
+      }
+    } catch (Exception e) {
+      onException(player, "Exception when player quite", e);
     }
   }
 
   @EventHandler(priority = EventPriority.MONITOR)
   public void onPlayerChangedWorld(PlayerChangedWorldEvent event) {
     Player player = event.getPlayer();
-    War war = warManager.findByWorld(event.getFrom());
-    if (war != null) {
-      WarPlayerManagerImpl playerManager = (WarPlayerManagerImpl) war.getPlayerManager();
-      playerManager.unload(player);
-    }
-
-    war = warManager.findByWorld(player.getWorld());
-    if (war != null) {
-      WarPlayerManagerImpl playerManager = (WarPlayerManagerImpl) war.getPlayerManager();
-      try {
-        playerManager.tryJoin(player);
-      } catch (Exception e) {
-        getPlugin().getLogger().log(Level.SEVERE, "exception: ", e);
-        player.sendMessage("INTERNAL ERROR");
+    try {
+      War war = warManager.findByWorld(event.getFrom());
+      if (war != null) {
+        WarPlayerManagerImpl playerManager = (WarPlayerManagerImpl) war.getPlayerManager();
+        playerManager.unload(player);
       }
+
+      war = warManager.findByWorld(player.getWorld());
+      if (war != null) {
+        WarPlayerManagerImpl playerManager = (WarPlayerManagerImpl) war.getPlayerManager();
+        WarPlayer warPlayer = playerManager.tryJoin(player);
+        if (warPlayer != null) {
+          warPlayer.teleport(warPlayer.getFaction().getSpawnLocation());
+        }
+      }
+
+    } catch (Exception e) {
+      onException(player, "Exception when player changed world", e);
     }
   }
 
@@ -96,10 +102,11 @@ public class PlayerListener implements Listener {
         WarPlayerManagerImpl playerManager = (WarPlayerManagerImpl) war.getPlayerManager();
         try {
           playerManager.addKill(killer, victim);
+          WarPlayer victimWar = playerManager.findByPlayer(victim);
+          victimWar.teleport(victimWar.getFaction().getSpawnLocation());
         } catch (Exception e) {
-          getPlugin().getLogger().log(Level.SEVERE, "exception: ", e);
-          killer.sendMessage("INTERNAL ERROR");
-          victim.sendMessage("INTERNAL ERROR");
+          onException(killer, "Exception when player killed other", e);
+          onException(victim, "Exception when player was killed by other", e);
         }
       }
     }
@@ -116,10 +123,18 @@ public class PlayerListener implements Listener {
           ((WarPlayerImpl) warPlayer).updatePosition(event.getTo());
         }
       } catch (Exception e) {
-        getPlugin().getLogger().log(Level.SEVERE, "exception: ", e);
-        player.sendMessage("INTERNAL ERROR");
+        onException(player, "Exception when player moved", e);
       }
     }
+  }
+
+  private void onException(Player player, String message, Exception e) {
+    getPlugin().getLogger().log(Level.SEVERE, message, e);
+    player.sendMessage("EPICWAR INTERNAL ERROR");
+  }
+
+  private EpicWarPlugin getPlugin() {
+    return warManager.getPlugin();
   }
 
 }
