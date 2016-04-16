@@ -65,7 +65,7 @@ public class FactionManagerImpl implements FactionManager {
   @Override
   public Faction findByName(String name) {
     for (Faction faction : factions) {
-      if (faction.getName().equalsIgnoreCase(name)) {
+      if (faction != null && faction.getName().equalsIgnoreCase(name)) {
         return faction;
       }
     }
@@ -75,7 +75,7 @@ public class FactionManagerImpl implements FactionManager {
   @Override
   public Faction findByShortcut(String shortcut) {
     for (Faction faction : factions) {
-      if (faction.getShortcut().equalsIgnoreCase(shortcut)) {
+      if (faction != null && faction.getShortcut().equalsIgnoreCase(shortcut)) {
         return faction;
       }
     }
