@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 
 import com.mararok.epicwar.EpicWarEvent;
 import com.mararok.epicwar.War;
+import com.mararok.epicwar.control.point.internal.ControlPointImpl;
 import com.mararok.epicwar.faction.Faction;
 import com.mararok.epicwar.player.WarPlayer;
 import com.mararok.epicwar.player.WarPlayerData;
@@ -32,14 +33,21 @@ public class WarPlayerManagerImpl implements WarPlayerManager {
 
   public WarPlayer tryJoin(Player nativePlayer) throws Exception {
     WarPlayer player = findByPlayer(nativePlayer);
+    if (player != null) {
+      ((WarPlayerImpl) player).updatePosition(nativePlayer.getLocation());
+    }
     return player;
   }
 
-  /**
-   * @TODO remove from ocupation
-   */
-  public void unload(Player nativePlayer) {
-    players.remove(nativePlayer.getUniqueId());
+  public void unload(Player nativePlayer) throws Exception {
+    WarPlayer player = findByPlayer(nativePlayer);
+    if (player != null) {
+      if (player.isWithinControlPointRange()) {
+        ((ControlPointImpl) player.getControlPoint()).getOccupation().removePlayer(player);
+      }
+
+      players.remove(nativePlayer.getUniqueId());
+    }
   }
 
   @Override
@@ -82,22 +90,15 @@ public class WarPlayerManagerImpl implements WarPlayerManager {
     entity.clearChanges();
   }
 
-  /**
-   * @TODO adds remove from ocupation.
-   */
-  @Override
-  public void delete(WarPlayer player) throws Exception {
-    unload(player.getNativePlayer());
-    mapper.delete((WarPlayerImpl) player);
-  }
-
   public void addKill(Player killer, Player victim) throws Exception {
     if (killer.getType() == EntityType.PLAYER && victim.getType() == EntityType.PLAYER) {
       WarPlayer warKiller = findByPlayer(killer);
       WarPlayer warVictim = findByPlayer(victim);
       if (warKiller != null && warVictim != null) {
-        // warKiller.addKills();
-        // warVictim.addDeaths();
+        warKiller.addKill();
+        update(warKiller);
+        warVictim.addDeath();
+        update(warVictim);
       }
     }
   }
