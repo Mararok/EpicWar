@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import com.mararok.epiccore.math.Vector3i;
+import com.mararok.epiccore.misc.SpawnPointList;
 import com.mararok.epiccore.misc.StringUtils;
 import com.mararok.epicwar.War;
 import com.mararok.epicwar.control.ControlAreaPower;
@@ -29,6 +30,7 @@ public class ControlPointImpl extends NamedControlAreaImpl implements ControlPoi
   private Occupation occupation;
 
   private int[] connections;
+  private SpawnPointList spawnPointList;
   private Sector sector;
 
   public ControlPointImpl(ControlPointData data, War war) {
@@ -42,6 +44,7 @@ public class ControlPointImpl extends NamedControlAreaImpl implements ControlPoi
     occupation = new Occupation(this);
 
     connections = data.connections;
+    spawnPointList = data.spawnPointList;
 
     sector = war.getSectorManager().findById(data.sectorId);
 
