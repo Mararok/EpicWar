@@ -30,11 +30,11 @@ public class SubsectorDatabaseMapper extends EntityDatabaseMapper<SubsectorImpl,
   @Override
   protected SubsectorData createData(ResultSet resultSet) throws SQLException {
     SubsectorData data = new SubsectorData();
-    int column = 1;
-    data.id = resultSet.getInt(column++);
-    data.chunkX = resultSet.getInt(column++);
-    data.chunkZ = resultSet.getInt(column++);
-    data.controlPointId = resultSet.getInt(column++);
+
+    data.id = resultSet.getInt("id");
+    data.chunkX = resultSet.getInt("chunkX");
+    data.chunkZ = resultSet.getInt("chunkZ");
+    data.controlPointId = resultSet.getInt("controlPointId");
     return data;
   }
 }
