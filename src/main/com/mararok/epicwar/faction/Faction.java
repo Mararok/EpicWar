@@ -21,6 +21,7 @@ import com.mararok.epicwar.War;
  * Represents faction of war
  */
 public interface Faction {
+
   public int getId();
 
   public String getName();
@@ -49,6 +50,9 @@ public interface Faction {
 
   public War getWar();
 
+  /**
+   * List of avaliable colors for factions
+   */
   public static enum Color {
 
     WHITE(ChatColor.WHITE, DyeColor.WHITE),
@@ -118,6 +122,9 @@ public interface Faction {
 
   }
 
+  /**
+   * Represents faction banner pattern used on all banners,shield and other banner paintable places
+   */
   public static class BannerPattern {
     private List<Pattern> patterns = new ArrayList<Pattern>();
 
