@@ -122,22 +122,37 @@ public class SubsectorMapImpl implements SubsectorMap {
 
   @Override
   public void delete(Subsector subsector) throws Exception {
-    subsectors[subsector.getId()] = null;
+    subsectors[getLocalIndex(subsector)] = null;
     mapper.delete((SubsectorImpl) subsector);
   }
 
-  public void set(Subsector subsector) {
-    subsectors[subsector.getId()] = subsector;
+  protected void set(Subsector subsector) {
+    subsectors[getLocalIndex(subsector)] = subsector;
+  }
+
+  @Override
+  public int getLocalIndex(Subsector subsector) {
+    return getLocalIndex(getLocalChunkX(subsector), getLocalChunkZ(subsector));
   }
 
   @Override
   public int getLocalIndex(int localChunkX, int localChunkZ) {
-    return localChunkX * sizeInChunks + localChunkX;
+    return localChunkZ * sizeInChunks + localChunkX;
+  }
+
+  @Override
+  public int getLocalChunkX(Subsector subsector) {
+    return getLocalChunkX(subsector.getChunkX());
   }
 
   @Override
   public int getLocalChunkX(int chunkX) {
     return chunkX - startChunkX;
+  }
+
+  @Override
+  public int getLocalChunkZ(Subsector subsector) {
+    return getLocalChunkZ(subsector.getChunkZ());
   }
 
   @Override

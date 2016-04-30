@@ -32,8 +32,14 @@ public interface SubsectorMap {
    */
   int getLocalChunkX(int chunkX);
 
-  /** Converts world chunk y coordinate to local subsector map coordinate */
+  int getLocalChunkX(Subsector subsector);
+
+  /**
+   * Converts world chunk y coordinate to local subsector map coordinate
+   */
   int getLocalChunkZ(int chunkZ);
+
+  int getLocalChunkZ(Subsector subsector);
 
   boolean isLocalPointInner(int localChunkX, int localChunkZ);
 
@@ -63,5 +69,7 @@ public interface SubsectorMap {
   int getSizeInChunks();
 
   War getWar();
+
+  int getLocalIndex(Subsector subsector);
 
 }
