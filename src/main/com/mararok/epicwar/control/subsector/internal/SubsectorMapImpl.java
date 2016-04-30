@@ -77,7 +77,6 @@ public class SubsectorMapImpl implements SubsectorMap {
         mapper.update((SubsectorImpl) subsector);
       } else {
         SubsectorData data = new SubsectorData();
-        data.id = getLocalIndex(localChunkX, localChunkZ);
         data.chunkX = chunkX;
         data.chunkZ = chunkZ;
         data.controlPointId = controlPoint.getId();
