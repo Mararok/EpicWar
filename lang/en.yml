@@ -63,19 +63,20 @@ message:
    login: "Player %1$s from faction %2$s loged into war"
  faction:
   supportedColors: "Supported colors: "
-  joined: "You joined to faction %1$s."
-  full: "Faction %1$s is full, you can't join."
-  created: "Faction %1$s created."
-  exists: "Faction with name %1$s exists!"
-  notExists: "Faction %1$s not exists."
-  colorNotSupportedOrUsed: "Can't create faction, color: %1$s not supported or used."
-  mustLeaveBefore: "You can't join to new faction, you must leave current."
-  capturedSector: "Your faction captured %1$s sector."
-  lostSector: "Your faction lost %1$s sector."
-  capturedPoint: "Your faction captured %1$s point in %2$s sector."
-  lostPoint: "Your faction lost %1$s point in %2$s sector."
+  joined: "You joined to faction '%1$s'"
+  full: "Faction '%1$s' is full, you can't join"
+  created: "Faction '%1$s' created"
+  exists: "Faction with name '%1$s' exists!"
+  notExists: "Faction '%1$s' not exists"
+  colorNotSupportedOrUsed: "Can't create faction, color: %1$s not supported or used"
+  mustLeaveBefore: "You can't join to new faction, you must leave current"
+  capturedSector: "Your faction captured '%1$s' sector"
+  lostSector: "Your faction lost '%1$s' sector."
+  capturedPoint: "Your faction captured '%1$s' point in '%2$s' sector"
+  lostPoint: "Your faction lost '%1$s' point in '%2$s' sector"
  
  sector:
+  created: "Created sector '%1$s' with id %2$d"
   list:
    header: "ID | NAME | OWNER NAME"
    row: "%1$d | %2$s | %3$s"
@@ -84,9 +85,9 @@ message:
  controlPoint:
   create:
    error:
-    radius: "You can't create control point with radius: %1$d, min is %2$d."
-    power: "You can't create control point with power: %1$d, min is %2$d."
-  notExists: "Control point with id: %d isn't exists."
+    radius: "You can't create control point with radius: %1$d, min is %2$d"
+    power: "You can't create control point with power: %1$d, min is %2$d"
+  notExists: "Control point with id: %d isn't exists"
   list:
    header: "ID | NAME | OWNER NAME"
    row: "%1$d | %2$s | %3$s"
