@@ -24,16 +24,17 @@ public class CreateFactionCommand extends EpicWarCommand {
 
     setMetadata(CommandMetadata.command("create")
         .description(plugin.getLanguage().getText("command.faction.create"))
-        .usage("/ewf create <name> <colorName>")
+        .usage("/ewf create <name> <shortcut> <colorName>")
         .permission("epicwar.faction.create")
-        .requiredArguments(2));
+        .requiredArguments(3));
 
   }
 
   @Override
   protected boolean onCommandOnWarWorld(War war, Player sender, CommandArguments<EpicWarPlugin> arguments) throws Exception {
     String factionName = arguments.get(0);
-    String colorName = arguments.get(1);
+    String shortcut = arguments.get(1);
+    String colorName = arguments.get(2);
 
     FactionManager factions = war.getFactionManager();
     if (factions.findByName(factionName) != null) {
@@ -41,14 +42,20 @@ public class CreateFactionCommand extends EpicWarCommand {
       return true;
     }
 
+    if (factions.findByShortcut(shortcut) != null) {
+      sender.sendMessage(getPlugin().getLanguage().getFormatedText("message.faction.exists", factionName));
+      return true;
+    }
+
     Faction.Color factionColor = Faction.Color.getByName(colorName);
     if (factionColor == null || factions.findByColor(factionColor) != null) {
-      sender.sendMessage(getPlugin().getLanguage().getFormatedText("message.faction.colorNotSupportedOrUsed", factionColor));
+      sender.sendMessage(getPlugin().getLanguage().getFormatedText("message.faction.colorNotSupportedOrUsed", colorName));
       return true;
     }
 
     FactionData data = new FactionData();
     data.name = factionName;
+    data.shortcut = shortcut;
     data.color = factionColor;
 
     Location spawnLoc = sender.getLocation();

@@ -26,7 +26,7 @@ public class WarPlayerDatabaseMapper extends EntityDatabaseMapper<WarPlayerImpl,
 
   @Override
   public WarPlayerImpl insert(WarPlayerData entityData) throws Exception {
-    entityData.id = insert(columns, values(entityData.uuid, entityData.factionId));
+    entityData.id = insert(columns, values(entityData.uuid.toString(), entityData.factionId));
     entityData.stats = new PlayerStats();
 
     return getFactory().create(entityData);
@@ -50,7 +50,7 @@ public class WarPlayerDatabaseMapper extends EntityDatabaseMapper<WarPlayerImpl,
     data.uuid = UUID.fromString(resultSet.getString("uuid"));
     data.factionId = resultSet.getInt("factionId");
     data.stats = createStats(resultSet);
-    
+
     return data;
   }
 
@@ -62,7 +62,7 @@ public class WarPlayerDatabaseMapper extends EntityDatabaseMapper<WarPlayerImpl,
     stats.points = resultSet.getInt("points");
     stats.capturedControlPoints = resultSet.getInt("capturedControlPoints");
     stats.capturedSectors = resultSet.getInt("capturedSectors");
-    
+
     return stats;
   }
 

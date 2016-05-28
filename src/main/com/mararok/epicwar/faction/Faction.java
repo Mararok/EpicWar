@@ -94,7 +94,7 @@ public interface Faction {
     public static Color getByName(String name) {
       name = name.toUpperCase();
       for (Color color : Color.values()) {
-        if (color.name() == name) {
+        if (color.name().equals(name)) {
           return color;
         }
       }

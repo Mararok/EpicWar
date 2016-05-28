@@ -35,8 +35,7 @@ public class ControlPointRenderer {
     Block goldPlatformBlock = centerBlock.getRelative(-1, -1, -1);
     for (int x = 0; x < 3; x++) {
       for (int z = 0; z < 3; z++) {
-        goldPlatformBlock.setType(Material.GOLD_BLOCK);
-        goldPlatformBlock = goldPlatformBlock.getRelative(x, 0, z);
+        goldPlatformBlock.getRelative(x, 0, z).setType(Material.GOLD_BLOCK);
       }
     }
 

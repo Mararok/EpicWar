@@ -63,7 +63,6 @@ public class ControlPointManagerImpl implements ControlPointManager {
       collection = Collections.emptyList();
     } else {
       collection = new ArrayList<ControlPoint>(controlPoints.length - 1);
-
       for (int i = 1; i < controlPoints.length - 1; i++) {
         if (controlPoints[i].getSector() == sector) {
           collection.add(controlPoints[i]);
@@ -80,7 +79,6 @@ public class ControlPointManagerImpl implements ControlPointManager {
       collection = Collections.emptyList();
     } else {
       collection = new ArrayList<ControlPoint>(controlPoints.length - 1);
-
       for (int i = 1; i < controlPoints.length - 1; i++) {
         collection.add(controlPoints[i]);
       }

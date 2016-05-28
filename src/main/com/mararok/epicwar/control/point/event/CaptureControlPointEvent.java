@@ -3,17 +3,19 @@
  * The MIT License
  * Copyright (C) 2016 Mararok <mararok@gmail.com>
  */
-package com.mararok.epicwar.control.event;
+package com.mararok.epicwar.control.point.event;
 
 import org.bukkit.event.HandlerList;
 
 import com.mararok.epicwar.control.ControlPoint;
 import com.mararok.epicwar.faction.Faction;
 
-public class CapturedControlPointEvent extends ControlPointEvent {
+public class CaptureControlPointEvent extends ControlPointEvent {
+
+  private static final HandlerList handlers = new HandlerList();
   private Faction previousOwner;
 
-  public CapturedControlPointEvent(ControlPoint controlPoint, Faction previousOwner) {
+  public CaptureControlPointEvent(ControlPoint controlPoint, Faction previousOwner) {
     super(controlPoint);
     this.previousOwner = previousOwner;
   }
@@ -21,8 +23,6 @@ public class CapturedControlPointEvent extends ControlPointEvent {
   public Faction getPreviousOwner() {
     return previousOwner;
   }
-
-  private static final HandlerList handlers = new HandlerList();
 
   @Override
   public HandlerList getHandlers() {

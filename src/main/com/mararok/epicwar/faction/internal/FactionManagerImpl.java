@@ -30,12 +30,12 @@ public class FactionManagerImpl implements FactionManager {
   }
 
   private void loadAll() throws Exception {
+    factions[0] = createNeutralFaction();
+
     Collection<FactionImpl> collection = mapper.findAll();
     for (FactionImpl faction : collection) {
       factions[faction.getId()] = faction;
     }
-
-    factions[0] = createNeutralFaction();
 
   }
 

@@ -47,7 +47,7 @@ public class PlayerListener implements Listener {
               warPlayer.getFaction().getName()));
         }
       } catch (Exception e) {
-        onException(player, "Exception when player try joined to war", e);
+        onException(player, "Exception when player try join to war", e);
       }
     }
 

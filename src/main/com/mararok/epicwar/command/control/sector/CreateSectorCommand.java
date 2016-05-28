@@ -33,7 +33,7 @@ public class CreateSectorCommand extends EpicWarCommand {
     data.name = arguments.join(0, " ");
     Sector sector = war.getSectorManager().create(data);
 
-    sender.sendMessage(getLanguage().getFormatedText("message.sector.created", sector.getId()));
+    sender.sendMessage(getLanguage().getFormatedText("message.sector.created", sector.getName(), sector.getId()));
     return true;
   }
 

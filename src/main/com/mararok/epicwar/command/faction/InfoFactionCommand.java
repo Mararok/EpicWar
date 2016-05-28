@@ -54,8 +54,7 @@ public class InfoFactionCommand extends EpicWarCommand {
 
   private void sendFactionInfoToPlayer(Faction faction, Player sender) {
     sender.sendMessage(MessageBuilder.message()
-        .line(faction.getColor().getChatColor() + "[" + faction.getShortcut() + "]" + ChatColor.RESET)
-        .line(faction.getName())
+        .line(faction.getColor().getChatColor() + "[" + faction.getShortcut() + "]" + ChatColor.RESET + faction.getName())
         .line(faction.getDescription()).toArray());
   }
 

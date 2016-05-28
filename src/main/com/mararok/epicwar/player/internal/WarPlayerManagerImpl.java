@@ -70,7 +70,7 @@ public class WarPlayerManagerImpl implements WarPlayerManager {
 
   @Override
   public WarPlayer register(Player nativePlayer, Faction faction) throws Exception {
-    if (findByPlayer(nativePlayer) != null) {
+    if (findByPlayer(nativePlayer) == null) {
       WarPlayerData data = new WarPlayerData();
       data.factionId = faction.getId();
       data.uuid = nativePlayer.getUniqueId();

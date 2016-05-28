@@ -26,7 +26,7 @@ public class FactionDatabaseMapper extends EntityDatabaseMapper<FactionImpl, Fac
 
     insert(columns("id", "name", "shortcut", "color", "spawnX", "spawnY", "spawnZ"),
         values(data.id,
-            data.name, data.shortcut, data.color,
+            data.name, data.shortcut, data.color.name(),
             data.spawnPosition.x, data.spawnPosition.y, data.spawnPosition.z));
     return getFactory().create(data);
   }
@@ -40,7 +40,7 @@ public class FactionDatabaseMapper extends EntityDatabaseMapper<FactionImpl, Fac
     data.shortcut = resultSet.getString("shortcut");
     data.description = resultSet.getString("description");
 
-    data.color = Faction.Color.getByChar(resultSet.getString("color").charAt(0));
+    data.color = Faction.Color.getByName(resultSet.getString("color"));
     data.bannerPattern = Faction.BannerPattern.createFromSerialized(resultSet.getString("bannerPattern"));
     data.spawnPosition = new Vector3i(resultSet.getInt("spawnX"), resultSet.getInt("spawnY"), resultSet.getInt("spawnZ"));
 

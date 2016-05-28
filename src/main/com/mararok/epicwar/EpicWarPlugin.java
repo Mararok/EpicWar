@@ -6,6 +6,7 @@
 
 package com.mararok.epicwar;
 
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.logging.Level;
 
@@ -44,19 +45,31 @@ public final class EpicWarPlugin extends JavaPlugin {
         return;
       }
 
-      initLanguage();
       initDatabase();
+      initLanguage();
       initEventManager();
       initWarManager();
       initCommands();
 
       checkReload();
 
-    } catch (Exception exception) {
-      getLogger().log(Level.SEVERE, "Fatal error, can't continue: ", exception);
+    } catch (Exception e) {
+      getLogger().log(Level.SEVERE, "Fatal error, can't continue: ", e);
       setEnabled(false);
     }
 
+  }
+
+  @Override
+  public void onDisable() {
+    if (databaseConnection != null) {
+      try {
+        databaseConnection.close();
+      } catch (SQLException e) {
+        getLogger().log(Level.SEVERE, "Fatal error, can't continue: ", e);
+      }
+    }
+    super.onDisable();
   }
 
   private void initLanguage() throws Exception {

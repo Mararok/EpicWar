@@ -10,6 +10,9 @@ import org.bukkit.Location;
 import com.mararok.epicwar.War;
 import com.mararok.epicwar.faction.FactionData;
 
+/**
+ * Represents faction with id 0
+ */
 public class NeutralFaction extends FactionImpl {
 
   public NeutralFaction(FactionData data, War war) {

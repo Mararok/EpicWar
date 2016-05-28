@@ -3,24 +3,19 @@
  * The MIT License
  * Copyright (C) 2015 Mararok <mararok@gmail.com>
  */
-package com.mararok.epicwar.control.internal;
+package com.mararok.epicwar.control.point.internal;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import com.mararok.epicwar.control.ControlPoint;
-import com.mararok.epicwar.control.event.ControlAreaEvent;
-import com.mararok.epicwar.control.event.PlayerAttackingControlAreaEvent;
-import com.mararok.epicwar.control.event.PlayerDefendingControlAreaEvent;
-import com.mararok.epicwar.control.event.PlayerLeavingControlAreaEvent;
-import com.mararok.epicwar.control.point.internal.ControlPointImpl;
-import com.mararok.epicwar.control.point.internal.ControlPointManagerImpl;
 import com.mararok.epicwar.faction.Faction;
 import com.mararok.epicwar.faction.FactionManager;
 import com.mararok.epicwar.faction.internal.FactionManagerImpl;
 import com.mararok.epicwar.player.WarPlayer;
 
 public class Occupation {
+
   private int defenders;
   private List<WarPlayer> players = new LinkedList<WarPlayer>();
 
@@ -34,11 +29,9 @@ public class Occupation {
     if (!players.contains(player)) {
       if (isDefender(player)) {
         ++defenders;
-        dispatchEvent(new PlayerDefendingControlAreaEvent(player, controlPoint));
       } else {
         ControlPointManagerImpl internal = (ControlPointManagerImpl) controlPoint.getWar().getControlPointManager();
         internal.addOccupied(controlPoint);
-        dispatchEvent(new PlayerAttackingControlAreaEvent(player, controlPoint));
       }
 
       players.add(player);
@@ -53,9 +46,7 @@ public class Occupation {
         ControlPointManagerImpl internal = (ControlPointManagerImpl) controlPoint.getWar().getControlPointManager();
         internal.removeOccupied(controlPoint);
       }
-
       players.remove(player);
-      dispatchEvent(new PlayerLeavingControlAreaEvent(player, controlPoint));
     }
   }
 
@@ -100,7 +91,11 @@ public class Occupation {
   private void capture() throws Exception {
     Faction newOwner = findNewOwner();
     controlPoint.setOwner(newOwner);
+    controlPoint.setCurrentPower(calculateDefendersPower() * 2);
     controlPoint.getWar().getControlPointManager().update(controlPoint);
+    if (controlPoint.getSector().canCapture(newOwner)) {
+      controlPoint.getSector().setOwner(newOwner);
+    }
   }
 
   private Faction findNewOwner() {
@@ -122,9 +117,5 @@ public class Occupation {
 
     defenders = newDefenders;
     return factionManager.findById(newOwnerId);
-  }
-
-  private void dispatchEvent(ControlAreaEvent event) {
-    controlPoint.getWar().getPlugin().getEventManager().dispatchEvent(event);
   }
 }

@@ -18,8 +18,8 @@ import com.mararok.epicwar.control.ControlPointData;
 import com.mararok.epicwar.control.ControlPointManager;
 import com.mararok.epicwar.control.Sector;
 import com.mararok.epicwar.control.internal.NamedControlAreaImpl;
-import com.mararok.epicwar.control.internal.Occupation;
 import com.mararok.epicwar.faction.Faction;
+import com.mararok.epicwar.player.WarPlayer;
 
 public class ControlPointImpl extends NamedControlAreaImpl implements ControlPoint {
   private Vector3i position;
@@ -181,6 +181,20 @@ public class ControlPointImpl extends NamedControlAreaImpl implements ControlPoi
       disconnectFrom(this);
       onChangeProperty("connections", StringUtils.join(connections, ","));
     }
+  }
+
+  public void addSpawnPoint(Vector3i point) {
+    spawnPointList.addPoint(point);
+    onChangeProperty("spawnPointList", spawnPointList);
+  }
+
+  public void removeSpawnPoint(Vector3i point) {
+    spawnPointList.removePoint(point);
+    onChangeProperty("spawnPointList", spawnPointList);
+  }
+
+  public void randomTeleportPlayer(WarPlayer warPlayer) {
+    spawnPointList.randomTeleport(warPlayer.getNativePlayer());
   }
 
   @Override

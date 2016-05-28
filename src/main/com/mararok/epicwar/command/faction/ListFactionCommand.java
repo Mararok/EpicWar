@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 
 import com.mararok.epiccore.command.CommandArguments;
 import com.mararok.epiccore.command.CommandMetadata;
+import com.mararok.epiccore.misc.MessageBuilder;
 import com.mararok.epicwar.EpicWarPlugin;
 import com.mararok.epicwar.War;
 import com.mararok.epicwar.command.EpicWarCommand;
@@ -29,14 +30,13 @@ public class ListFactionCommand extends EpicWarCommand {
   @Override
   protected boolean onCommandOnWarWorld(War war, Player sender, CommandArguments<EpicWarPlugin> arguments) throws Exception {
     Collection<Faction> factions = war.getFactionManager().findAll();
-    String[] messages = new String[factions.size() + 1];
-    messages[0] = getPlugin().getLanguage().getText("message.faction.list");
-    int i = 1;
+    MessageBuilder message = new MessageBuilder();
+    message.line(getLanguage().getText("message.faction.list"));
     for (Faction faction : factions) {
-      messages[i++] = faction.getColor().getChatColor() + "[" + faction.getShortcut() + "] " + ChatColor.RESET + faction.getName();
+      message.line(faction.getColor().getChatColor() + "[" + faction.getShortcut() + "] " + ChatColor.RESET + faction.getName());
     }
 
-    sender.sendMessage(messages);
+    sender.sendMessage(message.toArray());
     return true;
   }
 

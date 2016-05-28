@@ -22,7 +22,7 @@ public class JoinFactionCommand extends EpicWarCommand {
 
     setMetadata(CommandMetadata.command("join")
         .description(plugin.getLanguage().getText("command.faction.join"))
-        .usage("/ewf join <factionName>")
+        .usage("/ewf join <factionShortcut>")
         .requiredArguments(1));
   }
 
